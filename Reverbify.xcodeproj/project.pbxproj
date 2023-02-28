@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200038C29ADF4B0001F8105 /* LoginViewController.swift */; };
 		D23E58D629ADC08D00D17EA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D529ADC08D00D17EA7 /* AppDelegate.swift */; };
 		D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */; };
 		D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D929ADC08D00D17EA7 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D200038C29ADF4B0001F8105 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D23E58D229ADC08D00D17EA7 /* Reverbify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reverbify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D23E58D529ADC08D00D17EA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				D23E58E329ADC08F00D17EA7 /* LaunchScreen.storyboard */,
 				D23E58E629ADC08F00D17EA7 /* Info.plist */,
 				D23E58DE29ADC08D00D17EA7 /* Reverbify.xcdatamodeld */,
+				D200038C29ADF4B0001F8105 /* LoginViewController.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D23E58D629ADC08D00D17EA7 /* AppDelegate.swift in Sources */,
+				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
