@@ -9,9 +9,9 @@ import UIKit
 
 class LoginController : UIViewController {
     
-    @IBOutlet weak var userName: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    
 }
