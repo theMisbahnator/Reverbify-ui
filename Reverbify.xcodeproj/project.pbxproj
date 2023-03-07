@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893329B6BC2700F9D215 /* HomePageViewController.swift */; };
+		1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893529B6C7B300F9D215 /* SongPageViewController.swift */; };
 		C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AC29B105290032428B /* FirebaseAnalytics */; };
 		C92E55AF29B105290032428B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AE29B105290032428B /* FirebaseAnalyticsOnDeviceConversion */; };
 		C92E55B129B105290032428B /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55B029B105290032428B /* FirebaseAnalyticsSwift */; };
@@ -95,6 +97,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1944893329B6BC2700F9D215 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
+		1944893529B6C7B300F9D215 /* SongPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPageViewController.swift; sourceTree = "<group>"; };
 		C92E55E229B107E10032428B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C92E55E629B137220032428B /* GothicA1-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-SemiBold.ttf"; sourceTree = "<group>"; };
 		C92E55E729B137230032428B /* GothicA1-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Thin.ttf"; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				C92E55EE29B137230032428B /* GothicA1-Regular.ttf */,
 				C92E55E629B137220032428B /* GothicA1-SemiBold.ttf */,
 				C92E55E729B137230032428B /* GothicA1-Thin.ttf */,
+				1944893329B6BC2700F9D215 /* HomePageViewController.swift */,
+				1944893529B6C7B300F9D215 /* SongPageViewController.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -435,6 +441,8 @@
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
+				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
+				1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
