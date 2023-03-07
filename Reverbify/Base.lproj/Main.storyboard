@@ -153,7 +153,6 @@
                         <outlet property="loginButton" destination="QXP-MT-F15" id="EDC-jm-TFy"/>
                         <outlet property="passwordField" destination="NoJ-DM-tAN" id="wBU-MR-gzy"/>
                         <outlet property="signUpButton" destination="aQ5-KM-5qv" id="Ziy-Ex-au8"/>
-                        <segue destination="zwL-87-LA7" kind="presentation" identifier="loginSegue" id="JPg-ux-6X6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BYY-JU-MZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -169,7 +168,7 @@
                         <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="R5d-d6-tUi">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -185,7 +184,7 @@
             <objects>
                 <viewController id="0Fo-3v-CI7" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HwI-z4-RhK">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="ete-ZQ-EGM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -373,7 +372,7 @@
                         <imageReference key="image" image="music.note" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Syg-0c-sDw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -400,7 +399,7 @@
                     </tabBarItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xqe-Y3-5yZ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -419,7 +418,7 @@
                         <imageReference key="image" image="music.note.list" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9oe-gE-VeW">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -438,7 +437,7 @@
                         <imageReference key="image" image="gearshape.fill" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2hS-b8-yz8">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -454,7 +453,7 @@
             <objects>
                 <viewController id="QVr-vf-cCr" customClass="SettingsController" customModule="Reverbify" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Yq-p4-2J0">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWG-ET-rJr">
@@ -483,7 +482,6 @@
                     <navigationItem key="navigationItem" title="Settings" id="yE1-lM-ztL"/>
                     <connections>
                         <outlet property="logoutButton" destination="JWG-ET-rJr" id="Qr4-1e-NVC"/>
-                        <segue destination="KVl-iq-QzD" kind="presentation" identifier="logoutSegue" modalPresentationStyle="fullScreen" id="wfH-kU-UBi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKd-sI-9oK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -495,7 +493,7 @@
             <objects>
                 <viewController id="vPC-CX-XtR" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dai-dz-znq">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="8oz-Pt-kf2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -511,7 +509,7 @@
             <objects>
                 <viewController id="gMs-o8-bzf" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wcl-uL-ww0">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="rHP-ZK-Ltp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -527,7 +525,7 @@
             <objects>
                 <viewController id="IMU-NP-sVV" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uE1-7p-s74">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="082-Nm-O1j"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -540,8 +538,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JPg-ux-6X6"/>
-        <segue reference="wfH-kU-UBi"/>
+        <segue reference="7le-c7-ZYC"/>
+        <segue reference="0MH-iR-WpB"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.93748067670000002" green="0.35273405730000001" blue="0.33749830749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
