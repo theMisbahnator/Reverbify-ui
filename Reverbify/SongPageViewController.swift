@@ -19,9 +19,9 @@ class SongPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        songsLabel.text = "Song: \(songName)"
-        let songIndex = songs.firstIndex(of: songName)
-        artistsLabel.text = "\(artists[songIndex!])"
+//        songsLabel.text = "Song: \(songName)"
+//        let songIndex = songsArray.firstIndex(of: songName)
+//        artistsLabel.text = "\(artistsArray[songIndex!])"
     }
     
 
