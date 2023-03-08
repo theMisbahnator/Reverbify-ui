@@ -1,5 +1,5 @@
 //
-//  SignUpController.swift
+//  RegisterController.swift
 //  Reverbify
 //
 //  Created by Ayush Patel on 3/7/23.
@@ -7,22 +7,18 @@
 
 import UIKit
 import FirebaseAuth
-class SignUpController: UIViewController, UITextFieldDelegate{
 
-//    @IBOutlet weak var emailField: UITextField!
-//    @IBOutlet weak var passwordField: UITextField!
-//    @IBOutlet weak var confirmPasswordField: UITextField!
-//
-//    @IBOutlet weak var errorMessage: UILabel!
-//
-//    @IBOutlet weak var loginButton: UIButton!
-//
-//    @IBOutlet weak var signUpButton: UIButton!
+class RegisterController: UIViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var confirmPasswordField: UITextField!
     
+    @IBOutlet weak var errorMessage: UILabel!
     
+    @IBOutlet weak var loginButton: UIButton!
     
-    
-    
+    @IBOutlet weak var signUpButton: UIButton!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -70,7 +66,6 @@ class SignUpController: UIViewController, UITextFieldDelegate{
         confirmPasswordField.delegate = self
         // Do any additional setup after loading the view.
     }
-    
     func isValidEmail(_ email: String) -> Bool {
        let emailRegEx =
            "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -79,7 +74,18 @@ class SignUpController: UIViewController, UITextFieldDelegate{
        return emailPred.evaluate(with: email)
     }
     
-    @IBAction func signUpButton(_ sender: Any) {
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+    @IBAction func signUpButtonPressed(_ sender: Any) {
         guard let email = emailField.text else {
             self.errorMessage.text = "Please enter an email"
             return
@@ -117,7 +123,6 @@ class SignUpController: UIViewController, UITextFieldDelegate{
             }
         }
     }
-    
     func textFieldShouldReturn(_ textField:UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -128,5 +133,4 @@ class SignUpController: UIViewController, UITextFieldDelegate{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
 }

@@ -68,9 +68,9 @@
 		C92E560729B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
 		C92E560829B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
 		C92E560929B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
-		C972827029B7999C00C2400F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C972826F29B7999C00C2400F /* SignUpController.swift */; };
 		C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6D7629B7EFA9004864B5 /* SettingsController.swift */; };
 		C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */; };
+		C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D3A9C229B84A2F00817F16 /* RegisterController.swift */; };
 		D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200038C29ADF4B0001F8105 /* LoginViewController.swift */; };
 		D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */; };
 		D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D929ADC08D00D17EA7 /* ViewController.swift */; };
@@ -119,6 +119,7 @@
 		C972826F29B7999C00C2400F /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		C99B6D7629B7EFA9004864B5 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C9D3A9C229B84A2F00817F16 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		D200038C29ADF4B0001F8105 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D23E58D229ADC08D00D17EA7 /* Reverbify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reverbify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +200,7 @@
 		D23E58C929ADC08D00D17EA7 = {
 			isa = PBXGroup;
 			children = (
+				C9D3A9C229B84A2F00817F16 /* RegisterController.swift */,
 				D23E58D429ADC08D00D17EA7 /* Reverbify */,
 				D23E58EE29ADC08F00D17EA7 /* ReverbifyTests */,
 				D23E58F829ADC08F00D17EA7 /* ReverbifyUITests */,
@@ -459,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */,
 				1914B58629B82446002D08B4 /* ItemCell.swift in Sources */,
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
