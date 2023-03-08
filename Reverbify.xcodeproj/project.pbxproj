@@ -66,6 +66,8 @@
 		C92E560729B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
 		C92E560829B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
 		C92E560929B137230032428B /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C92E55EE29B137230032428B /* GothicA1-Regular.ttf */; };
+		C972827029B7999C00C2400F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C972826F29B7999C00C2400F /* SignUpController.swift */; };
+		C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6D7629B7EFA9004864B5 /* SettingsController.swift */; };
 		C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */; };
 		D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200038C29ADF4B0001F8105 /* LoginViewController.swift */; };
 		D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */; };
@@ -109,6 +111,9 @@
 		C92E55EC29B137230032428B /* GothicA1-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Light.ttf"; sourceTree = "<group>"; };
 		C92E55ED29B137230032428B /* GothicA1-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Black.ttf"; sourceTree = "<group>"; };
 		C92E55EE29B137230032428B /* GothicA1-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Regular.ttf"; sourceTree = "<group>"; };
+		C972826C29B7962A00C2400F /* Reverbify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Reverbify.entitlements; sourceTree = "<group>"; };
+		C972826F29B7999C00C2400F /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		C99B6D7629B7EFA9004864B5 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D200038C29ADF4B0001F8105 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D23E58D229ADC08D00D17EA7 /* Reverbify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reverbify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +206,7 @@
 		D23E58D429ADC08D00D17EA7 /* Reverbify */ = {
 			isa = PBXGroup;
 			children = (
+				C972826C29B7962A00C2400F /* Reverbify.entitlements */,
 				C92E55E229B107E10032428B /* GoogleService-Info.plist */,
 				D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */,
 				D23E58D929ADC08D00D17EA7 /* ViewController.swift */,
@@ -211,6 +217,8 @@
 				D23E58E629ADC08F00D17EA7 /* Info.plist */,
 				D23E58DE29ADC08D00D17EA7 /* Reverbify.xcdatamodeld */,
 				D200038C29ADF4B0001F8105 /* LoginViewController.swift */,
+				C99B6D7629B7EFA9004864B5 /* SettingsController.swift */,
+				C972826F29B7999C00C2400F /* SignUpController.swift */,
 				C92E55ED29B137230032428B /* GothicA1-Black.ttf */,
 				C92E55EB29B137230032428B /* GothicA1-Bold.ttf */,
 				C92E55E929B137230032428B /* GothicA1-ExtraBold.ttf */,
@@ -439,6 +447,7 @@
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
+				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
@@ -617,9 +626,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Reverbify/Reverbify.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8SXGRXKG4G;
+				DEVELOPMENT_TEAM = D7898R5BD6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Reverbify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -645,9 +655,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Reverbify/Reverbify.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8SXGRXKG4G;
+				DEVELOPMENT_TEAM = D7898R5BD6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Reverbify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
