@@ -153,6 +153,7 @@
                         <outlet property="loginButton" destination="QXP-MT-F15" id="EDC-jm-TFy"/>
                         <outlet property="passwordField" destination="NoJ-DM-tAN" id="wBU-MR-gzy"/>
                         <outlet property="signUpButton" destination="aQ5-KM-5qv" id="Ziy-Ex-au8"/>
+                        <segue destination="zwL-87-LA7" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" id="yiQ-ye-uqT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BYY-JU-MZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -182,18 +183,57 @@
         <!--Home-->
         <scene sceneID="qd9-xu-5RA">
             <objects>
-                <viewController id="0Fo-3v-CI7" sceneMemberID="viewController">
+                <viewController id="0Fo-3v-CI7" customClass="HomeController" customModule="Reverbify" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HwI-z4-RhK">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-fX-kUA">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" textLabel="GEK-H8-t0u" detailTextLabel="YKE-4x-leJ" style="IBUITableViewCellStyleValue1" id="Aan-P2-IFR">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Aan-P2-IFR" id="Kh6-hj-yp1">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GEK-H8-t0u">
+                                                    <rect key="frame" x="20" y="15" width="25" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YKE-4x-leJ">
+                                                    <rect key="frame" x="340.33333333333331" y="15" width="32.666666666666664" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="byz-ic-rkI" kind="show" identifier="SongPageIdentifier" id="Tu6-BA-kFZ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="ete-ZQ-EGM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="7ic-WV-2fJ"/>
+                    <connections>
+                        <outlet property="tableView" destination="S7s-fX-kUA" id="y63-M0-vXI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlq-A6-jIi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1555" y="3205"/>
+            <point key="canvasLocation" x="1554.9618320610687" y="3204.929577464789"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="TA5-3R-jOf">
@@ -482,6 +522,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="yE1-lM-ztL"/>
                     <connections>
                         <outlet property="logoutButton" destination="JWG-ET-rJr" id="Qr4-1e-NVC"/>
+                        <segue destination="KVl-iq-QzD" kind="presentation" identifier="logoutSegue" modalPresentationStyle="fullScreen" id="6rL-Gg-zAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKd-sI-9oK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -536,10 +577,46 @@
             </objects>
             <point key="canvasLocation" x="2323" y="3205"/>
         </scene>
+        <!--Song Page View Controller-->
+        <scene sceneID="Jru-8C-Ese">
+            <objects>
+                <viewController id="byz-ic-rkI" customClass="SongPageViewController" customModule="Reverbify" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j15-iy-kzo">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Songs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfx-ZQ-HgL">
+                                <rect key="frame" x="7" y="216" width="378" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sro-q4-3Zn">
+                                <rect key="frame" x="16" y="341" width="361" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="sww-s7-hZP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MFD-E6-gP0"/>
+                    <connections>
+                        <outlet property="artistsLabel" destination="Sro-q4-3Zn" id="YHM-mH-6z5"/>
+                        <outlet property="songsLabel" destination="dfx-ZQ-HgL" id="gBs-lF-gjq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2xQ-qH-Y2O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1554.9618320610687" y="3912.6760563380285"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7le-c7-ZYC"/>
-        <segue reference="0MH-iR-WpB"/>
+        <segue reference="PXr-WT-i8K"/>
+        <segue reference="6rL-Gg-zAv"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.93748067670000002" green="0.35273405730000001" blue="0.33749830749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
