@@ -27,3 +27,5 @@ Vu Bui (25%).
 
 - We did not implement all the sections of the home page as we were not able to make it dynamic to be able to find "recently" played songs.
 - We did not make the homepage dynamic in the sense that it displays data retreived from the API just yet.
+- We were not able to fully finish all songs page
+- Constraints were not added to any of the pages, Sign up page is clear victim of this
