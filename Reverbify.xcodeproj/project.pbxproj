@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1914B58629B82446002D08B4 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1914B58429B82446002D08B4 /* ItemCell.swift */; };
+		1914B58729B82446002D08B4 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1914B58529B82446002D08B4 /* ItemCell.xib */; };
 		1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893329B6BC2700F9D215 /* HomePageViewController.swift */; };
 		1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893529B6C7B300F9D215 /* SongPageViewController.swift */; };
 		C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AC29B105290032428B /* FirebaseAnalytics */; };
@@ -99,6 +101,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1914B58429B82446002D08B4 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		1914B58529B82446002D08B4 /* ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		1944893329B6BC2700F9D215 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1944893529B6C7B300F9D215 /* SongPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPageViewController.swift; sourceTree = "<group>"; };
 		C92E55E229B107E10032428B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1914B58329B8242A002D08B4 /* ItemCell */ = {
+			isa = PBXGroup;
+			children = (
+				1914B58429B82446002D08B4 /* ItemCell.swift */,
+				1914B58529B82446002D08B4 /* ItemCell.xib */,
+			);
+			path = ItemCell;
+			sourceTree = "<group>";
+		};
 		D23E58C929ADC08D00D17EA7 = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				C972826C29B7962A00C2400F /* Reverbify.entitlements */,
+				1914B58329B8242A002D08B4 /* ItemCell */,
 				C92E55E229B107E10032428B /* GoogleService-Info.plist */,
 				D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */,
 				D23E58D929ADC08D00D17EA7 /* ViewController.swift */,
@@ -391,6 +405,7 @@
 				D23E58E529ADC08F00D17EA7 /* LaunchScreen.storyboard in Resources */,
 				C92E55F229B137230032428B /* GothicA1-Thin.ttf in Resources */,
 				C92E55E329B107E10032428B /* GoogleService-Info.plist in Resources */,
+				1914B58729B82446002D08B4 /* ItemCell.xib in Resources */,
 				C92E55F829B137230032428B /* GothicA1-ExtraBold.ttf in Resources */,
 				D23E58E229ADC08F00D17EA7 /* Assets.xcassets in Resources */,
 				D23E58DD29ADC08D00D17EA7 /* Main.storyboard in Resources */,
@@ -444,6 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1914B58629B82446002D08B4 /* ItemCell.swift in Sources */,
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
