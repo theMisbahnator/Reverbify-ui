@@ -1,51 +1,85 @@
-////
-////  AddSongPageController.swift
-////  Reverbify
-////
-////  Created by Misbah Imtiaz on 3/7/23.
-////
 //
-//import UIKit
+//  AddSongPageController.swift
+//  Reverbify
 //
-//class Song {
-//    var title: String
-//    var author: String
-//    var duration: String
-//    var timestamp: String
+//  Created by Misbah Imtiaz on 3/7/23.
 //
-//    init(title: String, author: String, duration: String, timestamp: String) {
-//        self.title = title
-//        self.author = author
-//        self.duration = duration
-//        self.timestamp = timestamp
-//    }
-//}
-//
-//class AddSongPageController: UIViewController {
-//
-//    let reverbDict = ["Small": "7", "Medium": "8", "Large": "9"]
-//
-//    @IBOutlet weak var youtubeLinkField: UITextField!
-//    @IBOutlet weak var songNameOptional: UITextField!
-//    @IBOutlet weak var artistNameOptional: UITextField!
-//    @IBOutlet weak var bassBoostSlider: UISwitch!
-//    @IBOutlet weak var reverbLabel: UILabel!
-//    @IBOutlet weak var pitchSlider: UISlider!
-//    @IBOutlet weak var pitchLabel: UILabel!
-//    @IBOutlet weak var errorLabel: UILabel!
-//
-//    var song:Song!
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        errorLabel.text = ""
-//        pitchSlider.minimumValue = 0.5
-//        pitchSlider.maximumValue = 1.5
-//        pitchSlider.value = 1.00
-//        self.song = Song(title: "", author: "", duration: "", timestamp:"")
-//    }
-//
-//    @IBAction func onReverbSelect(_ sender: Any) {
+
+import UIKit
+
+class Song {
+    var title: String
+    var author: String
+    var duration: String
+    var timestamp: String
+
+    init(title: String, author: String, duration: String, timestamp: String) {
+        self.title = title
+        self.author = author
+        self.duration = duration
+        self.timestamp = timestamp
+    }
+}
+
+class AddSongPageController: UIViewController {
+
+    let reverbDict = ["Small": "7", "Medium": "8", "Large": "9"]
+    @IBOutlet weak var youtubeLinkField: UITextField!
+    @IBOutlet weak var songNameOptional: UITextField!
+    @IBOutlet weak var artistNameOptional: UITextField!
+    @IBOutlet weak var bassBoostSwitch: UISwitch!
+    @IBOutlet weak var reverbLabel: UILabel!
+    @IBOutlet weak var pitchSlider: UISlider!
+    @IBOutlet weak var pitchLabel: UILabel!
+
+    var song:Song!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        pitchSlider.minimumValue = 0.5
+        pitchSlider.maximumValue = 1.5
+        pitchSlider.value = 1.00
+        self.song = Song(title: "", author: "", duration: "", timestamp:"")
+    }
+    
+    
+    @IBAction func onReverbSelect(_ sender: Any) {
+                let alertController = UIAlertController(title: "Select Reverb", message: "Choose a reverb level:", preferredStyle: .actionSheet)
+                let small = UIAlertAction(title: "Small", style: .default) { _ in
+                    self.reverbLabel.text = "Small"
+                    self.reverbLabel.textColor = UIColor.black
+                }
+                alertController.addAction(small)
+        
+                let medium = UIAlertAction(title: "Medium", style: .default) { _ in
+                    self.reverbLabel.text = "Medium"
+                    self.reverbLabel.textColor = UIColor.black
+                }
+                alertController.addAction(medium)
+                let large = UIAlertAction(title: "Large", style: .default) { _ in
+                    self.reverbLabel.text = "Large"
+                    self.reverbLabel.textColor = UIColor.black
+                }
+                alertController.addAction(large)
+        
+                let none = UIAlertAction(title: "None", style: .default) { _ in
+                    self.reverbLabel.text = "None"
+                    self.reverbLabel.textColor = UIColor.gray
+                }
+                alertController.addAction(none)
+                present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func onPitchChange(_ sender: Any) {
+    }
+    
+    @IBAction func onBoostSelect(_ sender: Any) {
+    }
+    
+    @IBAction func onSubmit(_ sender: Any) {
+    }
+    //    @IBAction func onReverbSelect(_ sender: Any) {
 //        let alertController = UIAlertController(title: "Select Reverb", message: "Choose a reverb level:", preferredStyle: .actionSheet)
 //
 //        let small = UIAlertAction(title: "Small", style: .default) { _ in
@@ -72,17 +106,17 @@
 //        alertController.addAction(none)
 //        present(alertController, animated: true, completion: nil)
 //    }
-//
+
 //    @IBAction func onPitchChange(_ sender: Any) {
 //        pitchLabel.text = String(round(pitchSlider.value * 100) / 100)
 //    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "AllSongsSegue" {
-//            // songsList.append(self.song)
-//        }
-//    }
-//
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AllSongsSegue" {
+            // songsList.append(self.song)
+        }
+    }
+
 //    @IBAction func onSubmit(_ sender: Any) {
 //        if youtubeLinkField.text == "" {
 //            errorLabel.text = "Youtube Link not entered. "
@@ -164,4 +198,4 @@
 //            errorLabel.text = "Invalid Request Body"
 //        }
 //    }
-//}
+}

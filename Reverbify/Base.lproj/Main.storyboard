@@ -764,10 +764,10 @@
             </objects>
             <point key="canvasLocation" x="1554.9618320610687" y="3912.6760563380285"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Song Page Controller-->
         <scene sceneID="jOF-KS-EDH">
             <objects>
-                <viewController id="p4h-M1-pa0" sceneMemberID="viewController">
+                <viewController id="p4h-M1-pa0" customClass="AddSongPageController" customModule="Reverbify" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TA9-xU-vwV">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="863"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -884,6 +884,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Change Reverb"/>
+                                        <connections>
+                                            <action selector="onReverbSelect:" destination="p4h-M1-pa0" eventType="touchUpInside" id="SNN-IM-cv0"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GLT-WT-aCj">
                                         <rect key="frame" x="51" y="330" width="113" height="35"/>
@@ -893,6 +896,9 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Bass Boost" subtitle=""/>
+                                        <connections>
+                                            <action selector="onBoostSelect:" destination="p4h-M1-pa0" eventType="touchUpInside" id="r6G-cS-sP3"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umc-yY-VAU">
                                         <rect key="frame" x="141" y="580" width="137" height="34"/>
@@ -901,9 +907,15 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Submit!" cornerStyle="capsule"/>
+                                        <connections>
+                                            <action selector="onSubmit:" destination="p4h-M1-pa0" eventType="touchUpInside" id="1jX-He-qlv"/>
+                                        </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="prC-xs-d5F">
                                         <rect key="frame" x="56" y="474" width="306" height="31"/>
+                                        <connections>
+                                            <action selector="onPitchChange:" destination="p4h-M1-pa0" eventType="valueChanged" id="MhE-Yu-74y"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.00" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" showsExpansionTextWhenTruncated="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5A-hS-z1H">
                                         <rect key="frame" x="177.33333333333334" y="523" width="64.666666666666657" height="21"/>
@@ -980,6 +992,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="02f-a7-MB1"/>
+                    <connections>
+                        <outlet property="artistNameOptional" destination="vir-wB-K0c" id="2Q3-aI-nLh"/>
+                        <outlet property="bassBoostButton" destination="GLT-WT-aCj" id="Cgy-WA-mMQ"/>
+                        <outlet property="bassBoostSwitch" destination="7wp-bN-Vml" id="yxP-me-YY9"/>
+                        <outlet property="pitchLabel" destination="l5A-hS-z1H" id="PcU-I6-yel"/>
+                        <outlet property="pitchSlider" destination="prC-xs-d5F" id="L6W-0w-Dt8"/>
+                        <outlet property="reverbLabel" destination="NEc-Jh-q61" id="Lkp-N0-tCk"/>
+                        <outlet property="songNameOptional" destination="m04-ZJ-TgR" id="FTB-Zd-dch"/>
+                        <outlet property="youtubeLinkField" destination="tLf-QU-Uga" id="mEs-dO-88S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPW-3J-9wo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
