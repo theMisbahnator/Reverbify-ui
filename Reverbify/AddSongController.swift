@@ -14,6 +14,7 @@ class AddSongController: UIViewController {
     @IBOutlet weak var reverbLabel: UILabel!
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var pitchSlider: UISlider!
+    @IBOutlet weak var bassSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,11 @@ class AddSongController: UIViewController {
     
     @IBAction func onPitchChange(_ sender: Any) {
         pitchLabel.text = String(round(pitchSlider.value * 100) / 100)
+    }
+    
+    
+    @IBAction func onBassClick(_ sender: Any) {
+        bassSwitch.setOn(!bassSwitch.isOn, animated: true)
     }
     
     @IBAction func changeReverb(_ sender: Any) {

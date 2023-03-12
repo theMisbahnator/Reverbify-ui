@@ -896,6 +896,9 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Bass Boost" subtitle=""/>
+                                        <connections>
+                                            <action selector="onBassClick:" destination="p4h-M1-pa0" eventType="touchUpInside" id="dCf-3p-iIk"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umc-yY-VAU">
                                         <rect key="frame" x="141" y="580" width="137" height="34"/>
@@ -987,6 +990,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="02f-a7-MB1"/>
                     <connections>
+                        <outlet property="bassSwitch" destination="7wp-bN-Vml" id="Heh-rY-GOn"/>
                         <outlet property="pitchLabel" destination="l5A-hS-z1H" id="n48-05-VIj"/>
                         <outlet property="pitchSlider" destination="prC-xs-d5F" id="6er-E0-EaH"/>
                         <outlet property="reverbLabel" destination="NEc-Jh-q61" id="Qiz-IJ-xr8"/>
