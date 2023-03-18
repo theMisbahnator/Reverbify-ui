@@ -83,6 +83,7 @@
 		D23E58FC29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58FB29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift */; };
 		D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */; };
 		D2EA8E3C29C514D60016E895 /* ReverbifyAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */; };
+		D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,7 @@
 		D23E58FB29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongController.swift; sourceTree = "<group>"; };
 		D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyAPIHandler.swift; sourceTree = "<group>"; };
+		D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSongsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 				1944893529B6C7B300F9D215 /* SongPageViewController.swift */,
 				D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */,
 				D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */,
+				D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
 				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
+				D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,

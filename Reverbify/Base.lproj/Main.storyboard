@@ -257,10 +257,10 @@
             </objects>
             <point key="canvasLocation" x="1554.4186046511627" y="3204.7210300429188"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--TabBar-->
         <scene sceneID="TA5-3R-jOf">
             <objects>
-                <tabBarController id="zwL-87-LA7" sceneMemberID="viewController">
+                <tabBarController title="TabBar" id="zwL-87-LA7" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="centered" itemSpacing="30" itemWidth="40" id="det-lr-d1I">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -716,18 +716,43 @@
         <!--Songs-->
         <scene sceneID="8a0-qb-DMU">
             <objects>
-                <viewController id="IMU-NP-sVV" sceneMemberID="viewController">
+                <viewController id="IMU-NP-sVV" customClass="AllSongsController" customModule="Reverbify" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uE1-7p-s74">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="863"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AJT-sP-LnQ">
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="863"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SongCell" id="cR5-yq-GdL">
+                                        <rect key="frame" x="0.0" y="50" width="430" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cR5-yq-GdL" id="FxN-nj-hUx">
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="082-Nm-O1j"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="AJT-sP-LnQ" firstAttribute="trailing" secondItem="082-Nm-O1j" secondAttribute="trailing" id="Fw7-mM-TjA"/>
+                            <constraint firstItem="AJT-sP-LnQ" firstAttribute="top" secondItem="uE1-7p-s74" secondAttribute="top" id="MdR-93-aAX"/>
+                            <constraint firstAttribute="bottom" secondItem="AJT-sP-LnQ" secondAttribute="bottom" id="OG6-8C-P2I"/>
+                            <constraint firstItem="AJT-sP-LnQ" firstAttribute="leading" secondItem="082-Nm-O1j" secondAttribute="leading" id="rPc-WX-2Ee"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Songs" id="uvk-40-xce"/>
+                    <connections>
+                        <outlet property="tableView" destination="AJT-sP-LnQ" id="sUi-WA-qbi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phi-mU-GiI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2323" y="3205"/>
+            <point key="canvasLocation" x="2321.8604651162791" y="3204.7210300429188"/>
         </scene>
         <!--Song Page View Controller-->
         <scene sceneID="Jru-8C-Ese">

@@ -7,6 +7,29 @@
 
 import UIKit
 
+//class Song {
+//    var title : String
+//    var author : String
+//    var duration : String
+//    var signedUrl : String
+//    var fileName : String
+//    var timeStamp : String
+//    var thumbnail: String
+//    init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
+//        self.title = title
+//        self.author = author
+//        self.duration = duration
+//        self.signedUrl = signedUrl
+//        self.fileName = fileName
+//        self.timeStamp = timeStamp
+//        self.thumbnail = thumbnail
+//    }
+//
+//    func toString() -> String {
+//        return "\n\(title)\n\(author)\n\(duration)\n\(signedUrl)\n\(fileName)\n\(timeStamp)\n\(thumbnail)"
+//    }
+//}
+
 class AddSongController: UIViewController {
     
     let reverbDict = ["Light": "7", "Medium": "8", "Heavy": "9"]
@@ -65,14 +88,25 @@ class AddSongController: UIViewController {
     }
     
     @IBAction func onSubmit(_ sender: Any) {
-        let postController = ReverbifyAPIHandler(userName: "misbah", view: self)
+        let postController = ReverbifyAPIHandler(userName: "misbah", view: self, controller: self)
         
         if youtubeLinkField.text == "" {
             postController.createErrorPopup(msg: "Please enter a Youtube link.")
             return
         }
         
-        postController.postReverbRequest(youtubeLink: youtubeLinkField.text!, pitch: pitchLabel.text!, bass: bassSwitch.isOn, reverb: reverbDict[reverbLabel.text!] ?? "0")
+        postController.postReverbRequest(youtubeLink: youtubeLinkField.text!, pitch: pitchLabel.text!, bass: bassSwitch.isOn, reverb: reverbDict[reverbLabel.text!] ?? "0", optionalName: optionalName.text!, optionalAuthor: optionalArtist.text!)
+        // clearFields()
+    }
+    
+    func clearFields() {
+        youtubeLinkField.text = ""
+        pitchLabel.text = "1.00"
+        bassSwitch.isOn = false
+        self.reverbLabel.text = "None"
+        pitchSlider.value = 1.00
+        optionalName.text = ""
+        optionalArtist.text = ""
     }
     
 }

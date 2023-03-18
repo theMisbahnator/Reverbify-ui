@@ -7,20 +7,47 @@
 
 import UIKit
 
+
+class Song {
+    var title : String
+    var author : String
+    var duration : String
+    var signedUrl : String
+    var fileName : String
+    var timeStamp : String
+    var thumbnail: String
+    init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
+        self.title = title
+        self.author = author
+        self.duration = duration
+        self.signedUrl = signedUrl
+        self.fileName = fileName
+        self.timeStamp = timeStamp
+        self.thumbnail = thumbnail
+    }
+
+    func toString() -> String {
+        return "\n\(title)\n\(author)\n\(duration)\n\(fileName)\n\(timeStamp)\n\(thumbnail)\n\(signedUrl)"
+    }
+}
+
 class ReverbifyAPIHandler {
     var userName: String
     var view : UIViewController
+    var controller : AddSongController
+    
     let reverbEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/reverb-song"
     let testEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/health-check"
     let deleteSongReverb = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/delete-song"
     let getSignedUrl = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/signed-url"
     
-    init(userName: String, view: UIViewController) {
+    init(userName: String, view: UIViewController, controller: AddSongController) {
         self.userName = userName
         self.view = view
+        self.controller = controller
     }
     
-    func postReverbRequest(youtubeLink: String, pitch: String, bass: Bool, reverb: String) {
+    func postReverbRequest(youtubeLink: String, pitch: String, bass: Bool, reverb: String, optionalName: String, optionalAuthor: String) {
         // post endpoint for song creation
         guard let url = URL(string: reverbEndpoint) else {
             return
@@ -74,9 +101,14 @@ class ReverbifyAPIHandler {
                 // handle response
                 body = self.handleReverbResponse(httpResponse:httpResponse, alertController:alertController, data:data)
                 print(body)
+                if optionalName != "" {
+                    body["title"] = optionalName
+                }
+                if optionalAuthor != "" {
+                    body["author"] = optionalAuthor
+                }
                 
-                // create segue
-                
+                transitionAllSongs(body: body, alertController: alertController)
             }
             
             task.resume()
@@ -93,7 +125,7 @@ class ReverbifyAPIHandler {
     func handleReverbResponse (httpResponse: HTTPURLResponse, alertController: UIAlertController, data: Data?) -> [String: Any] {
         print("Response status code: \(httpResponse.statusCode)")
         if httpResponse.statusCode != 200 {
-            var resp = "Internal Server Error. "
+            let resp = "Internal Server Error. "
             if httpResponse.statusCode == 500 {
                 // something went wrong with server, no message supplied
                 DispatchQueue.main.async {
@@ -106,7 +138,7 @@ class ReverbifyAPIHandler {
             }
             
             // user request data error, parse and print response
-            var body = createJSONResponse(data: data)
+            let body = createJSONResponse(data: data)
             let errorValue = body["Error"] as? String
             DispatchQueue.main.async {
                 alertController.dismiss(animated: true) {
@@ -118,7 +150,7 @@ class ReverbifyAPIHandler {
         }
         
         // Happy path, response returns song processing information
-        var body = createJSONResponse(data: data)
+        let body = createJSONResponse(data: data)
         return body
     }
     
@@ -143,6 +175,32 @@ class ReverbifyAPIHandler {
         } catch {
             print("Error parsing response data: \(error.localizedDescription)")
             return [:]
+        }
+    }
+    
+    func transitionAllSongs(body : [String: Any], alertController: UIAlertController) {
+        DispatchQueue.main.async {
+            let title = body["title"] as? String
+            let author = body["author"] as? String
+            let duration = body["duration"] as? String
+            let signedUrl = body["signedUrl"] as? String
+            let thumbnail = body["thumbnail"] as? String
+            let timestamp = body["timestamp"] as? String
+            let fileName = body["filename"] as? String
+            
+            // create segue
+            let tabBarVC = self.view.tabBarController
+            
+            let s = Song(title: title!, author: author!, duration: duration!, signedUrl: signedUrl!, fileName: fileName!, timeStamp: timestamp!, thumbnail: thumbnail!)
+            
+            allSongs.append(s)
+            
+            // close pop up and transition
+            alertController.dismiss(animated: true) {
+                self.controller.clearFields()
+                let allSongsPage = self.view.tabBarController?.viewControllers?[1]
+                tabBarVC?.selectedViewController = allSongsPage
+            }
         }
     }
     
