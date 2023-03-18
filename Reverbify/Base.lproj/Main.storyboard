@@ -410,6 +410,7 @@
                     <tabBarItem key="tabBarItem" title="" id="ToV-tJ-Spg">
                         <imageReference key="image" image="music.note" catalog="system" symbolScale="large"/>
                     </tabBarItem>
+                    <navigationItem key="navigationItem" id="Ww2-95-lLn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Syg-0c-sDw">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -907,6 +908,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Submit!" cornerStyle="capsule"/>
+                                        <connections>
+                                            <action selector="onSubmit:" destination="p4h-M1-pa0" eventType="touchUpInside" id="D0h-DE-3l9"/>
+                                        </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="prC-xs-d5F">
                                         <rect key="frame" x="56" y="474" width="306" height="31"/>
@@ -991,6 +995,8 @@
                     <navigationItem key="navigationItem" id="02f-a7-MB1"/>
                     <connections>
                         <outlet property="bassSwitch" destination="7wp-bN-Vml" id="Heh-rY-GOn"/>
+                        <outlet property="optionalArtist" destination="vir-wB-K0c" id="od5-Zb-SbR"/>
+                        <outlet property="optionalName" destination="m04-ZJ-TgR" id="nRC-f4-7bv"/>
                         <outlet property="pitchLabel" destination="l5A-hS-z1H" id="n48-05-VIj"/>
                         <outlet property="pitchSlider" destination="prC-xs-d5F" id="6er-E0-EaH"/>
                         <outlet property="reverbLabel" destination="NEc-Jh-q61" id="Qiz-IJ-xr8"/>

@@ -9,7 +9,10 @@ import UIKit
 
 class AddSongController: UIViewController {
     
+    let reverbDict = ["Light": "7", "Medium": "8", "Heavy": "9"]
     
+    @IBOutlet weak var optionalName: UITextField!
+    @IBOutlet weak var optionalArtist: UITextField!
     @IBOutlet weak var youtubeLinkField: UITextField!
     @IBOutlet weak var reverbLabel: UILabel!
     @IBOutlet weak var pitchLabel: UILabel!
@@ -36,8 +39,8 @@ class AddSongController: UIViewController {
     @IBAction func changeReverb(_ sender: Any) {
         let alertController = UIAlertController(title: "Select Reverb", message: "Choose a reverb level:", preferredStyle: .actionSheet)
 
-        let small = UIAlertAction(title: "Soft", style: .default) { _ in
-            self.reverbLabel.text = "Soft"
+        let small = UIAlertAction(title: "Light", style: .default) { _ in
+            self.reverbLabel.text = "Light"
             self.reverbLabel.textColor = UIColor.black
         }
         alertController.addAction(small)
@@ -59,6 +62,17 @@ class AddSongController: UIViewController {
         }
         alertController.addAction(none)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func onSubmit(_ sender: Any) {
+        let postController = ReverbifyAPIHandler(userName: "misbah", view: self)
+        
+        if youtubeLinkField.text == "" {
+            postController.createErrorPopup(msg: "Please enter a Youtube link.")
+            return
+        }
+        
+        postController.postReverbRequest(youtubeLink: youtubeLinkField.text!, pitch: pitchLabel.text!, bass: bassSwitch.isOn, reverb: reverbDict[reverbLabel.text!] ?? "0")
     }
     
 }
