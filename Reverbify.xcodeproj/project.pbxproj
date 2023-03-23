@@ -84,6 +84,8 @@
 		D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */; };
 		D2EA8E3C29C514D60016E895 /* ReverbifyAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */; };
 		D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */; };
+		D2EA8E4529C6F2120016E895 /* SongTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E4329C6F2120016E895 /* SongTableCell.swift */; };
+		D2EA8E4629C6F2120016E895 /* SongTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2EA8E4429C6F2120016E895 /* SongTableCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +142,8 @@
 		D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongController.swift; sourceTree = "<group>"; };
 		D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyAPIHandler.swift; sourceTree = "<group>"; };
 		D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSongsController.swift; sourceTree = "<group>"; };
+		D2EA8E4329C6F2120016E895 /* SongTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableCell.swift; sourceTree = "<group>"; };
+		D2EA8E4429C6F2120016E895 /* SongTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongTableCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,8 @@
 				D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */,
 				D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */,
 				D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */,
+				D2EA8E4329C6F2120016E895 /* SongTableCell.swift */,
+				D2EA8E4429C6F2120016E895 /* SongTableCell.xib */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -416,6 +422,7 @@
 				D23E58E529ADC08F00D17EA7 /* LaunchScreen.storyboard in Resources */,
 				C92E55F229B137230032428B /* GothicA1-Thin.ttf in Resources */,
 				C92E55E329B107E10032428B /* GoogleService-Info.plist in Resources */,
+				D2EA8E4629C6F2120016E895 /* SongTableCell.xib in Resources */,
 				1914B58729B82446002D08B4 /* ItemCell.xib in Resources */,
 				C92E55F829B137230032428B /* GothicA1-ExtraBold.ttf in Resources */,
 				D23E58E229ADC08F00D17EA7 /* Assets.xcassets in Resources */,
@@ -479,6 +486,7 @@
 				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
 				D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
+				D2EA8E4529C6F2120016E895 /* SongTableCell.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
 				D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */,

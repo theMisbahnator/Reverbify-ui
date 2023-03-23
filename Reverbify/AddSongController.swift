@@ -7,29 +7,6 @@
 
 import UIKit
 
-//class Song {
-//    var title : String
-//    var author : String
-//    var duration : String
-//    var signedUrl : String
-//    var fileName : String
-//    var timeStamp : String
-//    var thumbnail: String
-//    init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
-//        self.title = title
-//        self.author = author
-//        self.duration = duration
-//        self.signedUrl = signedUrl
-//        self.fileName = fileName
-//        self.timeStamp = timeStamp
-//        self.thumbnail = thumbnail
-//    }
-//
-//    func toString() -> String {
-//        return "\n\(title)\n\(author)\n\(duration)\n\(signedUrl)\n\(fileName)\n\(timeStamp)\n\(thumbnail)"
-//    }
-//}
-
 class AddSongController: UIViewController {
     
     let reverbDict = ["Light": "7", "Medium": "8", "Heavy": "9"]
