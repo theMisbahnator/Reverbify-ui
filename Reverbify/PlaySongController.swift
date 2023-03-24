@@ -20,6 +20,9 @@ class PlaySongController: UIViewController {
     @IBOutlet weak var songTimeStamp: UILabel!
     @IBOutlet weak var playSong: UIButton!
     
+    var localPlayer: AVPlayer?
+    var localPlayerItem: AVPlayerItem?
+    
     var playing = false
     var loaded = false
     
@@ -51,6 +54,9 @@ class PlaySongController: UIViewController {
             task.resume()
         }
         
+        let url  = NSURL(string: song!.signedUrl)
+        localPlayerItem = AVPlayerItem(url: url! as URL)
+        localPlayer = AVPlayer(playerItem: localPlayerItem!)
     }
     
     
@@ -72,14 +78,7 @@ class PlaySongController: UIViewController {
     }
     
     func playSound() {
-        if loaded {
-            player?.play()
-            return
-        }
-        let url  = NSURL(string: song!.signedUrl)
-        playerItem = AVPlayerItem(url: url! as URL)
-        player = AVPlayer(playerItem: playerItem!)
-        loaded = true
+        player = localPlayer
         player?.play()
     }
     
