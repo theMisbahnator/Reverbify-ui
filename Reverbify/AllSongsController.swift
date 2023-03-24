@@ -11,6 +11,7 @@ var allSongs : [Song] = []
 class AllSongsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    var loadCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,8 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         allSongs.append(Song(title: "Juice WRLD - Lucid Dreams (Directed by Cole Bennett)", author: "Lyrical Lemonade", duration: "4:30", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/rev_6_misbah_2023-03-23_23%3A30%3A15.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T233042Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=1b91ed02a80ed7ba36561885531ad0498f308153f77b33c20a5fb96ffcd39a61", fileName: "rev_6_misbah_2023-03-23_23:30:15.mp3", timeStamp: "2023-03-23_23:30:42", thumbnail: "https://img.youtube.com/vi/mzB1VGEGcSU/sddefault.jpg"))
         
         allSongs.append(Song(title: "Bane", author: "Destroy Lonely - Topic", duration: "2:02", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/rev_3_misbah_2023-03-23_23%3A32%3A09.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T233224Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=1002d551e5770b3ddf8fc3a150c09966b5d2be4878729da82225e20d754f9fad", fileName: "rev_3_misbah_2023-03-23_23:32:09.mp3", timeStamp: "2023-03-23_23:32:24", thumbnail: "https://img.youtube.com/vi/fe-CdBzr9Kg/sddefault.jpg"))
+        
+        loadCount = allSongs.count
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -86,7 +89,10 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidLoad()
-        // tableView.reloadData()
+        if loadCount != allSongs.count {
+            loadCount = allSongs.count
+            tableView.reloadData()
+        }
     }
     
 }
