@@ -11,6 +11,10 @@
 		1914B58729B82446002D08B4 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1914B58529B82446002D08B4 /* ItemCell.xib */; };
 		1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893329B6BC2700F9D215 /* HomePageViewController.swift */; };
 		1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893529B6C7B300F9D215 /* SongPageViewController.swift */; };
+		35EFDCC429CF9CBB00D41C22 /* AllPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFDCC329CF9CBB00D41C22 /* AllPlaylistsViewController.swift */; };
+		35EFDCC729CFA19300D41C22 /* PlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFDCC529CFA19200D41C22 /* PlaylistTableViewCell.swift */; };
+		35EFDCC829CFA19300D41C22 /* PlaylistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35EFDCC629CFA19300D41C22 /* PlaylistTableViewCell.xib */; };
+		35EFDCCA29CFA50E00D41C22 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFDCC929CFA50E00D41C22 /* PlaylistViewController.swift */; };
 		C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AC29B105290032428B /* FirebaseAnalytics */; };
 		C92E55AF29B105290032428B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AE29B105290032428B /* FirebaseAnalyticsOnDeviceConversion */; };
 		C92E55B129B105290032428B /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55B029B105290032428B /* FirebaseAnalyticsSwift */; };
@@ -112,6 +116,10 @@
 		1914B58529B82446002D08B4 /* ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		1944893329B6BC2700F9D215 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1944893529B6C7B300F9D215 /* SongPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPageViewController.swift; sourceTree = "<group>"; };
+		35EFDCC329CF9CBB00D41C22 /* AllPlaylistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPlaylistsViewController.swift; sourceTree = "<group>"; };
+		35EFDCC529CFA19200D41C22 /* PlaylistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewCell.swift; sourceTree = "<group>"; };
+		35EFDCC629CFA19300D41C22 /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
+		35EFDCC929CFA50E00D41C22 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		C92E55E229B107E10032428B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C92E55E629B137220032428B /* GothicA1-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-SemiBold.ttf"; sourceTree = "<group>"; };
 		C92E55E729B137230032428B /* GothicA1-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Thin.ttf"; sourceTree = "<group>"; };
@@ -276,6 +284,10 @@
 				D2EA8E4329C6F2120016E895 /* SongTableCell.swift */,
 				D2EA8E4429C6F2120016E895 /* SongTableCell.xib */,
 				D2EA8E5A29CD0F240016E895 /* PlaySongController.swift */,
+				35EFDCC329CF9CBB00D41C22 /* AllPlaylistsViewController.swift */,
+				35EFDCC529CFA19200D41C22 /* PlaylistTableViewCell.swift */,
+				35EFDCC629CFA19300D41C22 /* PlaylistTableViewCell.xib */,
+				35EFDCC929CFA50E00D41C22 /* PlaylistViewController.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -448,6 +460,7 @@
 				C92E560129B137230032428B /* GothicA1-Light.ttf in Resources */,
 				C92E55FE29B137230032428B /* GothicA1-Bold.ttf in Resources */,
 				C92E560729B137230032428B /* GothicA1-Regular.ttf in Resources */,
+				35EFDCC829CFA19300D41C22 /* PlaylistTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,18 +505,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35EFDCC429CF9CBB00D41C22 /* AllPlaylistsViewController.swift in Sources */,
 				C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */,
 				1914B58629B82446002D08B4 /* ItemCell.swift in Sources */,
 				D2EA8E3C29C514D60016E895 /* ReverbifyAPIHandler.swift in Sources */,
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
+				35EFDCC729CFA19300D41C22 /* PlaylistTableViewCell.swift in Sources */,
 				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
 				D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
 				D2EA8E4529C6F2120016E895 /* SongTableCell.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
+				35EFDCCA29CFA50E00D41C22 /* PlaylistViewController.swift in Sources */,
 				D2EA8E5B29CD0F240016E895 /* PlaySongController.swift in Sources */,
 				D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */,
 				1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */,
