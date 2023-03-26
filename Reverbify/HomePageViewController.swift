@@ -8,77 +8,42 @@
 
 import UIKit
 
-class HomeController: UIViewController {
-    
-    let songsArray = [
-        "All of The Lights", "Flowers", "Die For You",
-        "Kill Bill", "Calm Down", "As It Was",
-        "Just Wanna Rock", "Love Again", "Here With Me"]
-    
-    let artistsArray = [
-        "Kayne West", "Miley Cyrus", "The Weeknd",
-        "SZA", "Rema", "Harry Styles",
-        "Lil Uzi Vert", "The Kid LAROI", "d4vd"]
-    
-    var estimatedWidth = 160.0
-    var cellMarginSize = 16.0
-    
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // set delegates
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        // register cells
-        self.collectionView.register(UINib(nibName: "ItemCell", bundle: nil), forCellWithReuseIdentifier: "ItemCell")
-        
-        // setup Grid View
-        self.setupGridView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.setupGridView()
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    
-    func setupGridView() {
-        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
-        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
-    }
-    
-}
+let songLists = [
+                  SongData(sectionType: "New Releases",
+                         songImage: ["pic1"],
+                         songName: ["Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", "The Wishing Tree"]),
+                  SongData(sectionType: "Top Hits",
+                          songImage: ["pic1", "pic3", "pic4"],
+                          songName: ["Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", "Juice WRLD - Lucid Dreams (Directed by Cole Bennett)", "Bane"]),
+                  SongData(sectionType: "Recently Downloaded",
+                           songImage: ["pic1", "pic4"],
+                           songName: ["Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", "Bane"])]
 
-extension HomeController:UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.songsArray.count
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var myTable: UITableView!
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath) as! ItemCell
-        cell.setData(text: self.songsArray[indexPath.row])
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = myTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyTableViewCell
+        cell.myCollectionView.tag = indexPath.section
+        cell.myCollectionView.reloadData()
         return cell
     }
-}
-
-extension HomeController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView:UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.calculateWith()
-        return CGSize(width: width, height: width)
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return songLists.count
     }
     
-    func calculateWith() -> CGFloat {
-        let estimatedWidth = CGFloat(estimatedWidth)
-        let cellCount = floor(CGFloat(self.view.frame.size.width / estimatedWidth))
-        let margin = CGFloat(cellMarginSize * 2)
-        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
-        return width
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return songLists[section].sectionType
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .white
     }
 }
+

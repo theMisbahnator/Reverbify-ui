@@ -11,6 +11,9 @@
 		1914B58729B82446002D08B4 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1914B58529B82446002D08B4 /* ItemCell.xib */; };
 		1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893329B6BC2700F9D215 /* HomePageViewController.swift */; };
 		1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1944893529B6C7B300F9D215 /* SongPageViewController.swift */; };
+		19AAF87B29D0D49200BDAB02 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */; };
+		19AAF87D29D0D55200BDAB02 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */; };
+		19AAF87F29D0D5F000BDAB02 /* SongData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87E29D0D5F000BDAB02 /* SongData.swift */; };
 		C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AC29B105290032428B /* FirebaseAnalytics */; };
 		C92E55AF29B105290032428B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AE29B105290032428B /* FirebaseAnalyticsOnDeviceConversion */; };
 		C92E55B129B105290032428B /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55B029B105290032428B /* FirebaseAnalyticsSwift */; };
@@ -112,6 +115,9 @@
 		1914B58529B82446002D08B4 /* ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		1944893329B6BC2700F9D215 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1944893529B6C7B300F9D215 /* SongPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPageViewController.swift; sourceTree = "<group>"; };
+		19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
+		19AAF87E29D0D5F000BDAB02 /* SongData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongData.swift; sourceTree = "<group>"; };
 		C92E55E229B107E10032428B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C92E55E629B137220032428B /* GothicA1-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-SemiBold.ttf"; sourceTree = "<group>"; };
 		C92E55E729B137230032428B /* GothicA1-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Thin.ttf"; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 				D23E58D929ADC08D00D17EA7 /* ViewController.swift */,
 				C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */,
 				D23E58DB29ADC08D00D17EA7 /* Main.storyboard */,
+				19AAF87E29D0D5F000BDAB02 /* SongData.swift */,
 				D23E58E129ADC08F00D17EA7 /* Assets.xcassets */,
 				D23E58E329ADC08F00D17EA7 /* LaunchScreen.storyboard */,
 				D23E58E629ADC08F00D17EA7 /* Info.plist */,
@@ -276,6 +283,8 @@
 				D2EA8E4329C6F2120016E895 /* SongTableCell.swift */,
 				D2EA8E4429C6F2120016E895 /* SongTableCell.xib */,
 				D2EA8E5A29CD0F240016E895 /* PlaySongController.swift */,
+				19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */,
+				19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -494,16 +503,19 @@
 			files = (
 				C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */,
 				1914B58629B82446002D08B4 /* ItemCell.swift in Sources */,
+				19AAF87B29D0D49200BDAB02 /* MyCollectionViewCell.swift in Sources */,
 				D2EA8E3C29C514D60016E895 /* ReverbifyAPIHandler.swift in Sources */,
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
+				19AAF87D29D0D55200BDAB02 /* MyTableViewCell.swift in Sources */,
 				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
 				D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */,
 				C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */,
 				D2EA8E4529C6F2120016E895 /* SongTableCell.swift in Sources */,
 				D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */,
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
+				19AAF87F29D0D5F000BDAB02 /* SongData.swift in Sources */,
 				D2EA8E5B29CD0F240016E895 /* PlaySongController.swift in Sources */,
 				D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */,
 				1944893629B6C7B300F9D215 /* SongPageViewController.swift in Sources */,
