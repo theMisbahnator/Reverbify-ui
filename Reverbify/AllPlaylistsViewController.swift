@@ -15,8 +15,8 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nib = UINib(nibName: "PlaylistTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "PlaylistTableViewCell")
+        let nib = UINib(nibName: "SongTableCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "SongTableCell")
         
         // create dummy data
         allPlaylists.append(Playlist(title: "Playlist #1", thumbnail: "https://img.youtube.com/vi/V7UgPHjN9qE/sddefault.jpg", songs: []))
@@ -48,7 +48,7 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistTableViewCell", for: indexPath as IndexPath) as! PlaylistTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SongTableCell", for: indexPath as IndexPath) as! SongTableCell
         let row = indexPath.row
         
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -75,8 +75,8 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         
-        cell.numberSongs.text = "\(allPlaylists[row].songs.count) songs"
-        cell.numberSongs.numberOfLines = 3
+        cell.author.text = "\(allPlaylists[row].songs.count) songs"
+        cell.author.numberOfLines = 3
 //        cell.timestamp.text = allSongs[row].timeStamp
 //        cell.timestamp.numberOfLines = 3
 //        cell.duration.text = allSongs[row].duration
