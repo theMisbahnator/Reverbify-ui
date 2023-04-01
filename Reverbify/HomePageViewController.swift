@@ -9,10 +9,10 @@
 import UIKit
 
 let songLists = [
-                  SongData(sectionType: "New Releases",
+                  SongData(sectionType: "Recently Played Playlist",
                          songImage: ["pic1"],
                          songName: ["Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", "The Wishing Tree"]),
-                  SongData(sectionType: "Top Hits",
+                  SongData(sectionType: "Recently Played Songs",
                           songImage: ["pic1", "pic3", "pic4"],
                           songName: ["Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", "Juice WRLD - Lucid Dreams (Directed by Cole Bennett)", "Bane"]),
                   SongData(sectionType: "Recently Downloaded",
