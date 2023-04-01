@@ -32,12 +32,17 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "collectioncell", for: indexPath) as! MyCollectionViewCell
         cell.myImage.image = UIImage(named: songLists[myCollectionView.tag].songImage[indexPath.row])
         cell.myLabel.text = songLists[myCollectionView.tag].songName[indexPath.row]
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderColor = UIColor.white.cgColor
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("You have clicked on song \(songLists[myCollectionView.tag].songName[indexPath.row])")
+//        let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
+//
+//        playSongVC.song = allSongs[indexPath.row]
+//
+//        navigationController?.pushViewController(playSongVC, animated: true)
     }
+    
 }
