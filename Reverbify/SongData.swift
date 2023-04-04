@@ -9,6 +9,11 @@ import Foundation
 
 struct SongData {
     let sectionType:String
-    let songImage: [String]
-    let songName: [String]
+    var songlst:[Song]
 }
+
+struct PlaylistData {
+    let sectionType:String
+    var playlistLst:[Playlist]
+}
+

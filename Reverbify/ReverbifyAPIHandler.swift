@@ -225,8 +225,8 @@ class ReverbifyAPIHandler {
             // create segue
             let tabBarVC = self.view.tabBarController
             
-            let s = Song(title: title!, author: author!, duration: duration!, signedUrl: signedUrl!, fileName: fileName!, timeStamp: timestamp!, thumbnail: thumbnail!)
-            
+//            let s = Song(title: title!, author: author!, duration: duration!, signedUrl: signedUrl!, fileName: fileName!, timeStamp: timestamp!, thumbnail: thumbnail!)
+//            
 //            allSongs.append(s)
             
             // DO DATABASE

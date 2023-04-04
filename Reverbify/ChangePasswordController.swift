@@ -29,6 +29,8 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
         newPasswordField.isSecureTextEntry = true
         
         statusMessage.text = ""
+        statusMessage.numberOfLines = 0
+        
         saveButton.layer.cornerRadius = 20
         saveButton.layer.masksToBounds = true
         
@@ -96,12 +98,12 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
         }
             
         guard let confirmPassword = confirmPasswordField.text else {
-            self.statusMessage.text = "Please confirm your new password"
+            statusMessage.text = "Please confirm your new password"
             return
         }
         
         if newPassword != confirmPassword {
-            self.statusMessage.text = "New passwords do not match"
+            statusMessage.text = "New passwords do not match"
             return
         }
         Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
@@ -112,7 +114,6 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
                 self.statusMessage.text = "Password updated successfully!"
             }
         }
-        // change password and
        
         
         
