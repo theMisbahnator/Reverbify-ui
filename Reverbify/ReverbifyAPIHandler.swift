@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
+import FirebaseAuth
 
 class Song {
     var title : String
@@ -25,9 +26,24 @@ class Song {
         self.timeStamp = timeStamp
         self.thumbnail = thumbnail
     }
+    
+    init(body: [String: Any]) {
+        
+        self.title = body["title"] as! String
+        self.author = body["author"] as! String
+        self.duration = body["duration"] as! String
+        self.signedUrl = body["signedUrl"] as! String
+        self.thumbnail = body["thumbnail"] as! String
+        self.timeStamp = body["timestamp"] as! String
+        self.fileName = body["filename"] as! String
+        
+    }
 
     func toString() -> String {
         return "\n\(title)\n\(author)\n\(duration)\n\(fileName)\n\(timeStamp)\n\(thumbnail)\n\(signedUrl)"
+    }
+    func convertJSONtoSong() {
+        
     }
 }
 
@@ -51,7 +67,7 @@ class ReverbifyAPIHandler {
     var userName: String
     var view : UIViewController
     var controller : AddSongController
-    
+    var database: DatabaseReference!
     let reverbEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/reverb-song"
     let testEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/health-check"
     let deleteSongReverb = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/delete-song"
@@ -61,6 +77,7 @@ class ReverbifyAPIHandler {
         self.userName = userName
         self.view = view
         self.controller = controller
+        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     }
     
     func postReverbRequest(youtubeLink: String, pitch: String, bass: Bool, reverb: String, optionalName: String, optionalAuthor: String) {
@@ -196,6 +213,7 @@ class ReverbifyAPIHandler {
     
     func transitionAllSongs(body : [String: Any], alertController: UIAlertController) {
         DispatchQueue.main.async {
+            print(body)
             let title = body["title"] as? String
             let author = body["author"] as? String
             let duration = body["duration"] as? String
@@ -209,8 +227,31 @@ class ReverbifyAPIHandler {
             
             let s = Song(title: title!, author: author!, duration: duration!, signedUrl: signedUrl!, fileName: fileName!, timeStamp: timestamp!, thumbnail: thumbnail!)
             
-            allSongs.append(s)
+//            allSongs.append(s)
             
+            // DO DATABASE
+            // Then, you'll want to get a reference to the user's songs list
+            guard let currentUserID = Auth.auth().currentUser?.uid else {
+                // If the user isn't logged in, you can handle that error here
+                return
+            }
+            let songsRef = self.database.child("users").child(currentUserID).child("songs")
+
+            // Now, you can read in the user's songs list
+            songsRef.observeSingleEvent(of: .value, with: { snapshot in
+                var songsList: [[String: Any]] = []
+                if let existingSongs = snapshot.value as? [[String: Any]] {
+                    // If the user's songs list already exists, append the new song to it
+                    songsList = existingSongs
+                }
+                songsList.append(body)
+
+                // Finally, update the user's songs list in Firebase
+                songsRef.setValue(songsList)
+            }) { error in
+                print(error.localizedDescription)
+            }
+
             // close pop up and transition
             alertController.dismiss(animated: true) {
                 self.controller.clearFields()

@@ -164,7 +164,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWx-Bw-roQ">
-                                <rect key="frame" x="108.33333333333333" y="656" width="213.33333333333337" height="20"/>
+                                <rect key="frame" x="109" y="656" width="212" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="73m-dv-jE5"/>
                                 </constraints>
@@ -767,7 +767,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKd-sI-9oK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4447" y="3205"/>
+            <point key="canvasLocation" x="4447" y="3223"/>
         </scene>
         <!--Change Password Controller-->
         <scene sceneID="OgI-AO-S7N">
@@ -787,7 +787,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rp-bb-MuL">
-                                <rect key="frame" x="40" y="150" width="161" height="33"/>
+                                <rect key="frame" x="40" y="150" width="160" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="TtW-bs-GeD"/>
                                 </constraints>
@@ -805,7 +805,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33e-Zj-mcy">
-                                <rect key="frame" x="40" y="296" width="161" height="33"/>
+                                <rect key="frame" x="40" y="296" width="160" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="srI-R7-WKx"/>
                                 </constraints>
@@ -919,7 +919,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bY1-jB-LAi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4447" y="3912"/>
+            <point key="canvasLocation" x="4397" y="3912"/>
         </scene>
         <!--Playlists-->
         <scene sceneID="g0u-R9-Xwr">

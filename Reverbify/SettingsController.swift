@@ -48,7 +48,7 @@ class SettingsController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Get the selected cell
         if tableView == accountSettings {
-            let selectedCell = tableView.cellForRow(at: indexPath)
+//            let selectedCell = tableView.cellForRow(at: indexPath)
             let id = accountList[indexPath.row].nextIdentifier
             if id != "" {
                 self.performSegue(withIdentifier: id, sender: self)
