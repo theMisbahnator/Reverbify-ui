@@ -9,59 +9,6 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
-class Song {
-    var title : String
-    var author : String
-    var duration : String
-    var signedUrl : String
-    var fileName : String
-    var timeStamp : String
-    var thumbnail: String
-    init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
-        self.title = title
-        self.author = author
-        self.duration = duration
-        self.signedUrl = signedUrl
-        self.fileName = fileName
-        self.timeStamp = timeStamp
-        self.thumbnail = thumbnail
-    }
-    
-    init(body: [String: Any]) {
-        
-        self.title = body["title"] as! String
-        self.author = body["author"] as! String
-        self.duration = body["duration"] as! String
-        self.signedUrl = body["signedUrl"] as! String
-        self.thumbnail = body["thumbnail"] as! String
-        self.timeStamp = body["timestamp"] as! String
-        self.fileName = body["filename"] as! String
-        
-    }
-
-    func toString() -> String {
-        return "\n\(title)\n\(author)\n\(duration)\n\(fileName)\n\(timeStamp)\n\(thumbnail)\n\(signedUrl)"
-    }
-    func convertJSONtoSong() {
-        
-    }
-}
-
-class Playlist {
-    var title : String
-    var thumbnail: String
-    var songs: Array<Song>
-    
-    init(title: String, thumbnail: String, songs: Array<Song>) {
-        self.title = title
-        self.thumbnail = thumbnail
-        self.songs = songs
-    }
-
-    func toString() -> String {
-        return "\n\(title)\n\(thumbnail)\n\(songs)"
-    }
-}
 
 class ReverbifyAPIHandler {
     var userName: String
@@ -134,14 +81,18 @@ class ReverbifyAPIHandler {
                 // handle response
                 body = self.handleReverbResponse(httpResponse:httpResponse, alertController:alertController, data:data)
                 print(body)
+                if body.count == 0 {
+                    return
+                }
                 if optionalName != "" {
                     body["title"] = optionalName
                 }
                 if optionalAuthor != "" {
                     body["author"] = optionalAuthor
                 }
-                
                 transitionAllSongs(body: body, alertController: alertController)
+                
+                
             }
             
             task.resume()

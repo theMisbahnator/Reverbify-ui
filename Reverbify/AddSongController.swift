@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddSongController: UIViewController {
+class AddSongController: UIViewController, UITextFieldDelegate {
     
     let reverbDict = ["Light": "7", "Medium": "8", "Heavy": "9"]
     
@@ -24,6 +24,9 @@ class AddSongController: UIViewController {
         pitchSlider.minimumValue = 0.5
         pitchSlider.maximumValue = 1.5
         pitchSlider.value = 1.00
+        youtubeLinkField.delegate = self
+        optionalName.delegate = self
+        optionalArtist.delegate = self
     }
     
     
@@ -73,7 +76,6 @@ class AddSongController: UIViewController {
         }
         
         postController.postReverbRequest(youtubeLink: youtubeLinkField.text!, pitch: pitchLabel.text!, bass: bassSwitch.isOn, reverb: reverbDict[reverbLabel.text!] ?? "0", optionalName: optionalName.text!, optionalAuthor: optionalArtist.text!)
-        // clearFields()
     }
     
     func clearFields() {
@@ -84,6 +86,16 @@ class AddSongController: UIViewController {
         pitchSlider.value = 1.00
         optionalName.text = ""
         optionalArtist.text = ""
+    }
+    
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
 }

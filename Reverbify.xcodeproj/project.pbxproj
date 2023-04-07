@@ -89,6 +89,8 @@
 		D23E58F029ADC08F00D17EA7 /* ReverbifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58EF29ADC08F00D17EA7 /* ReverbifyTests.swift */; };
 		D23E58FA29ADC08F00D17EA7 /* ReverbifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58F929ADC08F00D17EA7 /* ReverbifyUITests.swift */; };
 		D23E58FC29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58FB29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift */; };
+		D2DD3F2F29DF97B50025FA3F /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD3F2E29DF97B50025FA3F /* Song.swift */; };
+		D2DD3F3129DF98210025FA3F /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD3F3029DF98210025FA3F /* Playlist.swift */; };
 		D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */; };
 		D2EA8E3C29C514D60016E895 /* ReverbifyAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */; };
 		D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */; };
@@ -155,6 +157,8 @@
 		D23E58F529ADC08F00D17EA7 /* ReverbifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReverbifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D23E58F929ADC08F00D17EA7 /* ReverbifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyUITests.swift; sourceTree = "<group>"; };
 		D23E58FB29ADC08F00D17EA7 /* ReverbifyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D2DD3F2E29DF97B50025FA3F /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D2DD3F3029DF98210025FA3F /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		D2EA8E1229B9C3DE0016E895 /* AddSongController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongController.swift; sourceTree = "<group>"; };
 		D2EA8E3B29C514D60016E895 /* ReverbifyAPIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverbifyAPIHandler.swift; sourceTree = "<group>"; };
 		D2EA8E3D29C5A9C70016E895 /* AllSongsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSongsController.swift; sourceTree = "<group>"; };
@@ -303,6 +307,8 @@
 				19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */,
 				19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */,
 				35BC817329D15E150046C0EC /* PlaylistViewController.swift */,
+				D2DD3F2E29DF97B50025FA3F /* Song.swift */,
+				D2DD3F3029DF98210025FA3F /* Playlist.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -529,6 +535,8 @@
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
+				D2DD3F2F29DF97B50025FA3F /* Song.swift in Sources */,
+				D2DD3F3129DF98210025FA3F /* Playlist.swift in Sources */,
 				19AAF87D29D0D55200BDAB02 /* MyTableViewCell.swift in Sources */,
 				C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */,
 				D2EA8E3E29C5A9C70016E895 /* AllSongsController.swift in Sources */,

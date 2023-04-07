@@ -10,21 +10,26 @@ import AVFoundation
 
 var player: AVPlayer?
 var playerItem: AVPlayerItem?
-class PlaySongController: UIViewController {
+var isPlaying: Bool = false
+var currentSong: String = ""
+var currentTime: Double = 0.0
+var maxTime: Double = 0.0
+var queue: DispatchQueue!
 
+class PlaySongController: UIViewController {
     
     @IBOutlet weak var author: UIImageView!
     @IBOutlet weak var songTitle: UILabel!
     @IBOutlet weak var songAuthor: UILabel!
-    @IBOutlet weak var songDuration: UILabel!
     @IBOutlet weak var songTimeStamp: UILabel!
     @IBOutlet weak var playSong: UIButton!
+    @IBOutlet weak var songTime: UILabel!
+    @IBOutlet weak var songSlider: UISlider!
     
     var localPlayer: AVPlayer?
     var localPlayerItem: AVPlayerItem?
     
     var playing = false
-    var loaded = false
     
     var song : Song? = nil
     
@@ -32,8 +37,17 @@ class PlaySongController: UIViewController {
         super.viewDidLoad()
         songTitle.text = song?.title
         songAuthor.text = song?.author
-        songDuration.text = song?.duration
         songTimeStamp.text = song?.timeStamp
+        songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
+        songSlider.minimumValue = 0
+        songSlider.maximumValue = song?.seconds ?? 0
+        songSlider.value = Float(currentTime)
+        
+        var title = "play"
+        if isPlaying && currentSong == song?.title {
+            title = "pausesvg"
+        }
+        playSong.setImage(UIImage(named: title), for: .normal)
         
         if let url = URL(string: song!.thumbnail) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -60,14 +74,37 @@ class PlaySongController: UIViewController {
     }
     
     
-    @IBAction func onPlay(_ sender: Any) {
-        var title = "Pause"
-        if playing {
-            title = "Play"
+    @IBAction func onSliderChange(_ sender: Any) {
+        print(songSlider.value)
+        currentTime = Double(songSlider.value)
+        let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
+        player?.seek(to: targetTime)
+        makeTimeLabel()
+    }
+    
+    func makeTimeLabel() {
+        self.songTime.text = transformTime(time: currentTime) + " / " + transformTime(time: maxTime)
+    }
+    
+    func transformTime(time: Double) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .dropLeading
+        
+        if let currentString = formatter.string(from: time) {
+            return currentString
         }
-        
-        playSong.setTitle(title, for: .normal)
-        
+        return ""
+    }
+    
+    
+    @IBAction func onPlay(_ sender: Any) {
+        var title = "pausesvg"
+        if isPlaying {
+            title = "play"
+        }
+        playSong.setImage(UIImage(named: title), for: .normal)
         if playing {
             pauseSound()
         } else {
@@ -79,10 +116,31 @@ class PlaySongController: UIViewController {
     
     func playSound() {
         player = localPlayer
+        isPlaying = true
+        maxTime = Double(song?.seconds ?? 0.0)
+        currentSong = songTitle.text ?? ""
         player?.play()
+        queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
+        queue.async {
+            self.countUp()
+        }
+        
     }
     
     func pauseSound() {
         player?.pause()
+        isPlaying = false
+    }
+    
+    func countUp() {
+        while isPlaying && currentTime < maxTime {
+            usleep(1000000)
+            DispatchQueue.main.async {
+                currentTime += 1
+                self.songSlider.value += 1
+                self.makeTimeLabel()
+            }
+        }
+        isPlaying = false
     }
 }
