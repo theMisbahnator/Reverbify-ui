@@ -60,7 +60,6 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         currentPasswordField.delegate = self
         newPasswordField.delegate = self
         confirmPasswordField.delegate = self
