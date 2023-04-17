@@ -30,6 +30,7 @@ class PlaySongController: UIViewController {
     var localPlayerItem: AVPlayerItem?
     
     var playing = false
+    var inView = true
     
     var song : Song? = nil
     
@@ -38,15 +39,30 @@ class PlaySongController: UIViewController {
         songTitle.text = song?.title
         songAuthor.text = song?.author
         songTimeStamp.text = song?.timeStamp
+        
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
         songSlider.minimumValue = 0
         songSlider.maximumValue = song?.seconds ?? 0
-        songSlider.value = Float(currentTime)
+        var time = player?.currentTime()
+        print("this is the time \(time?.seconds ?? 0)")
+        
+        songSlider.value = 0
+        queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
         
         var title = "play"
         if isPlaying && currentSong == song?.title {
+            songSlider.value = Float(player?.currentTime().seconds ?? 0)
+            makeTimeLabel()
+            queue.async {
+                self.countUp()
+            }
             title = "pausesvg"
+
+        } else if currentSong == song?.title {
+            songSlider.value = Float(player?.currentTime().seconds ?? 0)
+            makeTimeLabel()
         }
+        
         playSong.setImage(UIImage(named: title), for: .normal)
         
         if let url = URL(string: song!.thumbnail) {
@@ -80,10 +96,14 @@ class PlaySongController: UIViewController {
         let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
         player?.seek(to: targetTime)
         makeTimeLabel()
+//        queue.async {
+//            self.countUp()
+//        }
     }
     
     func makeTimeLabel() {
-        self.songTime.text = transformTime(time: currentTime) + " / " + transformTime(time: maxTime)
+        var time = player?.currentTime().seconds ?? 0
+        self.songTime.text = transformTime(time: time) + " / " + transformTime(time: maxTime)
     }
     
     func transformTime(time: Double) -> String {
@@ -105,22 +125,22 @@ class PlaySongController: UIViewController {
             title = "play"
         }
         playSong.setImage(UIImage(named: title), for: .normal)
-        if playing {
+        if isPlaying {
             pauseSound()
         } else {
             playSound()
         }
-        
-        playing  = !playing
     }
     
     func playSound() {
-        player = localPlayer
+        if currentSong != songTitle.text {
+            player = localPlayer
+        }
         isPlaying = true
         maxTime = Double(song?.seconds ?? 0.0)
         currentSong = songTitle.text ?? ""
         player?.play()
-        queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
+        
         queue.async {
             self.countUp()
         }
@@ -132,11 +152,15 @@ class PlaySongController: UIViewController {
         isPlaying = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        inView = false
+    }
+    
     func countUp() {
-        while isPlaying && currentTime < maxTime {
+        while isPlaying && currentTime < maxTime && inView {
             usleep(1000000)
             DispatchQueue.main.async {
-                currentTime += 1
                 self.songSlider.value += 1
                 self.makeTimeLabel()
             }
