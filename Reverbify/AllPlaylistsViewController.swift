@@ -5,16 +5,19 @@
 //  Created by Pawan K Somavarpu on 3/25/23.
 //
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
-var allPlaylists : [Playlist] = []
+
 class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-   
+
     var loadCount = 0
+    var database: DatabaseReference!
     @IBOutlet var tableView: UITableView!
-    
+    var allPlaylists : [Playlist] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
         let nib = UINib(nibName: "SongTableCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SongTableCell")
         
@@ -38,7 +41,6 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         
         tableView.delegate = self
         tableView.dataSource = self
-        loadCount = allPlaylists.count
         // Do any additional setup after loading the view.
     }
     
@@ -54,26 +56,30 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         cell.title.text = allPlaylists[row].title
-        
-        if let url = URL(string: allPlaylists[row].thumbnail) {
+        if let url = URL(string: allPlaylists[row].thumbnailString) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error downloading image: \(error.localizedDescription)")
+                    cell.thumbnail.image = UIImage(named:"music-solid")
                     return
                 }
                 
                 guard let data = data, let image = UIImage(data: data) else {
                     print("Error creating image from downloaded data")
+                    cell.thumbnail.image = UIImage(named:"music-solid")
                     return
                 }
                 
                 DispatchQueue.main.async {
+                    //print("GOT TO CORRECT COMPLETION")
                     cell.thumbnail.image = image
                 }
             }
             task.resume()
         }
-        
+        else {
+            cell.thumbnail.image = UIImage(named:"music-solid")
+        }
         
         cell.author.text = "\(allPlaylists[row].songs.count) songs"
         cell.author.numberOfLines = 3
@@ -102,12 +108,39 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidLoad()
+//        
+//    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidLoad()
-        if loadCount != allPlaylists.count {
-            loadCount = allPlaylists.count
-            tableView.reloadData()
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            // If the user isn't logged in, you can handle that error here
+            return
         }
+        
+        let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
+        self.allPlaylists = []
+        // Now, you can read in the user's songs list
+        playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
+            var playlistList: [[String: Any]] = []
+            if let existingPlaylist = snapshot.value as? [[String: Any]] {
+                // If the user's songs list already exists, append the new song to it
+                playlistList = existingPlaylist
+                var i = 0
+                for playlist in playlistList {
+                    self.allPlaylists.append(Playlist(body: playlist, index: i))
+                    i = i + 1
+                }
+                self.tableView.reloadData()
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
+        super.viewDidAppear(true);
+        tableView.reloadData()
+        
+        
     }
     
 

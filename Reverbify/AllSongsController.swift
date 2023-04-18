@@ -28,7 +28,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
@@ -58,7 +58,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         }) { error in
             print(error.localizedDescription)
         }
-        super.viewWillAppear(true)
+        super.viewDidAppear(true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -125,14 +125,14 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidLoad()
-//        print(loadCount)
-//        print(self.allSongs.count)
-//        if loadCount != self.allSongs.count {
-//            loadCount = self.allSongs.count
-//            tableView.reloadData()
-//        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+////        super.viewDidLoad()
+////        print(loadCount)
+////        print(self.allSongs.count)
+////        if loadCount != self.allSongs.count {
+////            loadCount = self.allSongs.count
+////            tableView.reloadData()
+////        }
+//    }
     
 }

@@ -54,7 +54,17 @@ class Song: Equatable {
     func toString() -> String {
         return "\n\(title)\n\(author)\n\(duration)\n\(fileName)\n\(timeStamp)\n\(thumbnail)\n\(signedUrl)"
     }
-    func convertJSONtoSong() {
+    
+    func convertToJSON() -> [String: Any]{
+        return  [
+            "title" : self.title,
+            "author" : self.author,
+            "duration": self.duration,
+            "signedUrl": self.signedUrl,
+            "thumbnail": self.thumbnail ,
+            "timestamp": self.timeStamp,
+            "filename":  self.fileName,
+        ]
         
     }
 }

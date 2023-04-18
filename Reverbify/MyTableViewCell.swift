@@ -37,24 +37,31 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         if myCollectionView.tag >= songLists.count {
             let index = collectionView.tag - songLists.count
             let currentPlaylist = playlistLists[index].playlistLst[indexPath.row]
-            if let url = URL(string: currentPlaylist.thumbnail) {
+            if let url = URL(string: currentPlaylist.thumbnailString) {
                 let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                     if let error = error {
                         print("Error downloading image: \(error.localizedDescription)")
+                        cell.myImage.image = UIImage(named:"music-solid")
                         return
                     }
                     
                     guard let data = data, let image = UIImage(data: data) else {
                         print("Error creating image from downloaded data")
+                        cell.myImage.image = UIImage(named:"music-solid")
                         return
                     }
                     
                     DispatchQueue.main.async {
+                        //print("GOT TO CORRECT COMPLETION")
                         cell.myImage.image = image
                     }
                 }
                 task.resume()
             }
+            else {
+                cell.myImage.image = UIImage(named:"music-solid")
+            }
+           
             cell.myLabel.text = currentPlaylist.title
             cell.layer.borderColor = UIColor.white.cgColor
             

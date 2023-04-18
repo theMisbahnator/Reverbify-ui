@@ -20,8 +20,8 @@ class SettingsController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var accountList:[AccountSettings] = [AccountSettings(settingName: "Username", settingDescrip: "Actual Username", nextIdentifier: ""), AccountSettings(settingName: "Password", settingDescrip: "Change Password", nextIdentifier: "changePasswordIdentifier")]
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         
         logoutButton.layer.cornerRadius = 20
         logoutButton.layer.masksToBounds = true

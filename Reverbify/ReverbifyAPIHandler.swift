@@ -165,14 +165,14 @@ class ReverbifyAPIHandler {
     func transitionAllSongs(body : [String: Any], alertController: UIAlertController) {
         DispatchQueue.main.async {
             print(body)
-            let title = body["title"] as? String
-            let author = body["author"] as? String
-            let duration = body["duration"] as? String
-            let signedUrl = body["signedUrl"] as? String
-            let thumbnail = body["thumbnail"] as? String
-            let timestamp = body["timestamp"] as? String
-            let fileName = body["filename"] as? String
-            
+//            let title = body["title"] as? String
+//            let author = body["author"] as? String
+//            let duration = body["duration"] as? String
+//            let signedUrl = body["signedUrl"] as? String
+//            let thumbnail = body["thumbnail"] as? String
+//            let timestamp = body["timestamp"] as? String
+//            let fileName = body["filename"] as? String
+//
             // create segue
             let tabBarVC = self.view.tabBarController
             

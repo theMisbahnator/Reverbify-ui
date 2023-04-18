@@ -20,8 +20,8 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var signUpButton: UIButton!
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         errorMessage.text = ""
         let underlineAttribute = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,

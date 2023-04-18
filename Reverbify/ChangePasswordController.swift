@@ -19,7 +19,8 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         currentPasswordField.text = ""
         confirmPasswordField.text = ""
         newPasswordField.text = ""

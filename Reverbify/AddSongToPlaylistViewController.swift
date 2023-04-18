@@ -15,7 +15,6 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
     var database: DatabaseReference!
     var allSongs : [Song] = []
     var loadCount = 0
-    
     var selectedSongs : [Song] = []
     
     var playlist : Playlist!
@@ -31,7 +30,7 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         tableView.dataSource = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
@@ -61,12 +60,45 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         }) { error in
             print(error.localizedDescription)
         }
-        super.viewWillAppear(true)
+        super.viewDidAppear(true)
     }
     
     @IBAction func addSongsToPlaylist(_ sender: Any) {
         // Add Songs to Playlist in DB
         
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            // If the user isn't logged in, you can handle that error here
+            return
+        }
+        
+        playlist.songs.append(contentsOf: selectedSongs)
+        
+        let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
+        // Now, you can read in the user's songs list
+        playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
+            var playlistsList: [[String: Any]] = []
+            if let existingPlaylist = snapshot.value as? [[String: Any]] {
+                // If the user's songs list already exists, append the new song to it
+                playlistsList = existingPlaylist
+                let currPlaylist = playlistsList[self.playlist.indexInDB]
+                var currSongs = []
+                if let songs = currPlaylist["songs"] as? Array<[String: Any]> {
+                    currSongs = songs
+                }
+               
+                for song in self.selectedSongs {
+                    currSongs.append(song.convertToJSON())
+                }
+                
+                playlistsList[self.playlist.indexInDB]["songs"] = currSongs
+                
+            }
+            print(playlistsList)
+            playlistsRef.setValue(playlistsList)
+            
+        }) { error in
+            print(error.localizedDescription)
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
