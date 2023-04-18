@@ -139,6 +139,8 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
 
         playSongVC.song = playlist.songs[indexPath.row]
+        playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: playlist.songs)
+        playSongVC.localCurPlayList = playlist.title
         
         navigationController?.pushViewController(playSongVC, animated: true)
     }

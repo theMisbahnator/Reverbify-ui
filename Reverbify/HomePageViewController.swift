@@ -136,7 +136,11 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "playSong" {
             if let nextVC = segue.destination as? PlaySongController {
-                nextVC.song = sender as? Song
+                let song = sender as! Song
+                let singleSong : [Song] = [song]
+                nextVC.song = song
+                nextVC.localSongQueue = SongPlayer(index: 0, songQueue: singleSong)
+                nextVC.localCurPlayList = "home page"
             }
         }
         if segue.identifier == "playPlaylist" {
