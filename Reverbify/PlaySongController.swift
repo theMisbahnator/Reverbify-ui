@@ -43,8 +43,7 @@ class PlaySongController: UIViewController {
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
         songSlider.minimumValue = 0
         songSlider.maximumValue = song?.seconds ?? 0
-        var time = player?.currentTime()
-        print("this is the time \(time?.seconds ?? 0)")
+        let time = player?.currentTime()
         
         songSlider.value = 0
         queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
@@ -110,7 +109,7 @@ class PlaySongController: UIViewController {
     }
     
     func makeTimeLabel() {
-        var time = player?.currentTime().seconds ?? 0
+        let time = player?.currentTime().seconds ?? 0
         self.songTime.text = transformTime(time: time) + " / " + transformTime(time: maxTime)
     }
     
@@ -162,20 +161,35 @@ class PlaySongController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        inView = false
+        // inView = false
     }
     
     func countUp() {
-        while isPlaying && currentTime < maxTime && inView {
-            usleep(1000000)
-            DispatchQueue.main.async {
-                self.songSlider.value += 1
-                self.makeTimeLabel()
+        while isPlaying && (player?.currentTime().seconds ?? 0) < maxTime && inView {
+            if (player?.currentTime().seconds ?? 0) != 0 {
+                usleep(1000000)
+                DispatchQueue.main.async {
+                    self.songSlider.value += 1
+                    self.makeTimeLabel()
+                }
+            }
+            if let player = player {
+                switch player.timeControlStatus {
+                case .paused:
+                    print("Player is paused")
+                    isPlaying = false
+                case .playing:
+                    print("Player is playing")
+                case .waitingToPlayAtSpecifiedRate:
+                    print("Player is waiting to begin playback")
+                @unknown default:
+                    fatalError("Unexpected time control status")
+                }
             }
         }
         DispatchQueue.main.async {
+            self.pauseSound()
             self.playSong.setImage(UIImage(named: "play"), for: .normal)
         }
-        isPlaying = false
     }
 }
