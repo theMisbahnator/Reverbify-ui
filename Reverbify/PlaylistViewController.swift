@@ -12,6 +12,9 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var playlistName: UILabel!
+    @IBOutlet var numberSongs: UILabel!
+    
     
     var playlist: Playlist!
     
@@ -20,6 +23,16 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "SongTableCell", bundle: nil), forCellReuseIdentifier: "SongTableCell")
+        
+        playlistName.text = playlist.title
+        numberSongs.text = playlist.songs.count == 1 ? "\(playlist.songs.count) song" : "\(playlist.songs.count) songs"
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let vc = segue.destination as? AddSongToPlaylistViewController {
+            vc.playlist = self.playlist
+        }
     }
     
     
@@ -69,6 +82,16 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         playSongVC.song = playlist.songs[indexPath.row]
         
         navigationController?.pushViewController(playSongVC, animated: true)
+    }
+    
+    // Deleting Song from Playlist, Does not Delete the Song from downloaded
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            playlist.songs.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
     }
     
 }

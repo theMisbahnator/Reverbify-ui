@@ -13,6 +13,8 @@
 		19AAF87B29D0D49200BDAB02 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */; };
 		19AAF87D29D0D55200BDAB02 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */; };
 		19AAF87F29D0D5F000BDAB02 /* SongData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AAF87E29D0D5F000BDAB02 /* SongData.swift */; };
+		3516876D29EDC61700245400 /* AddPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3516876C29EDC61700245400 /* AddPlaylistViewController.swift */; };
+		3586787029EDF1AC00F74610 /* AddSongToPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3586786F29EDF1AC00F74610 /* AddSongToPlaylistViewController.swift */; };
 		35BC817429D15E150046C0EC /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BC817329D15E150046C0EC /* PlaylistViewController.swift */; };
 		C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AC29B105290032428B /* FirebaseAnalytics */; };
 		C92E55AF29B105290032428B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C92E55AE29B105290032428B /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -123,6 +125,8 @@
 		19AAF87A29D0D49200BDAB02 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		19AAF87C29D0D55200BDAB02 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		19AAF87E29D0D5F000BDAB02 /* SongData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongData.swift; sourceTree = "<group>"; };
+		3516876C29EDC61700245400 /* AddPlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistViewController.swift; sourceTree = "<group>"; };
+		3586786F29EDF1AC00F74610 /* AddSongToPlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongToPlaylistViewController.swift; sourceTree = "<group>"; };
 		35BC817329D15E150046C0EC /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		C92E55E229B107E10032428B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C92E55E629B137220032428B /* GothicA1-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -309,6 +313,8 @@
 				35BC817329D15E150046C0EC /* PlaylistViewController.swift */,
 				D2DD3F2E29DF97B50025FA3F /* Song.swift */,
 				D2DD3F3029DF98210025FA3F /* Playlist.swift */,
+				3516876C29EDC61700245400 /* AddPlaylistViewController.swift */,
+				3586786F29EDF1AC00F74610 /* AddSongToPlaylistViewController.swift */,
 			);
 			path = Reverbify;
 			sourceTree = "<group>";
@@ -535,6 +541,8 @@
 				D23E58E029ADC08D00D17EA7 /* Reverbify.xcdatamodeld in Sources */,
 				D23E58DA29ADC08D00D17EA7 /* ViewController.swift in Sources */,
 				D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */,
+				3586787029EDF1AC00F74610 /* AddSongToPlaylistViewController.swift in Sources */,
+				3516876D29EDC61700245400 /* AddPlaylistViewController.swift in Sources */,
 				D2DD3F2F29DF97B50025FA3F /* Song.swift in Sources */,
 				D2DD3F3129DF98210025FA3F /* Playlist.swift in Sources */,
 				19AAF87D29D0D55200BDAB02 /* MyTableViewCell.swift in Sources */,

@@ -1,21 +1,24 @@
 //
-//  AllSongsController.swift
+//  AddSongToPlaylistViewController.swift
 //  Reverbify
 //
-//  Created by Misbah Imtiaz on 3/18/23.
+//  Created by Pawan K Somavarpu on 4/17/23.
 //
 
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
+class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-class AllSongsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var tableView: UITableView!
-    var loadCount = 0
+    @IBOutlet var tableView: UITableView!
     var database: DatabaseReference!
     var allSongs : [Song] = []
+    var loadCount = 0
+    
+    var selectedSongs : [Song] = []
+    
+    var playlist : Playlist!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +64,12 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(true)
     }
     
+    @IBAction func addSongsToPlaylist(_ sender: Any) {
+        // Add Songs to Playlist in DB
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.allSongs.count
     }
@@ -96,43 +105,41 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.author.text = self.allSongs[row].author
         cell.author.numberOfLines = 3
-//        cell.timestamp.text = allSongs[row].timeStamp
-//        cell.timestamp.numberOfLines = 3
-//        cell.duration.text = allSongs[row].duration
-//        cell.duration.numberOfLines = 3
-        
-        print(self.allSongs[row].toString())
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Present the next view controller
-        let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
-
-        playSongVC.song = self.allSongs[indexPath.row]
         
-        navigationController?.pushViewController(playSongVC, animated: true)
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .default
+        selectedSongs.append(allSongs[indexPath.row])
+        
+        print("SELECTING")
+        print(allSongs[indexPath.row].title)
     }
     
-    // Deleting Song from downloaded
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            allSongs.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        let index = selectedSongs.firstIndex(of: allSongs[indexPath.row])
+        
+        print("DESELECTING")
+        print(selectedSongs[index!].title)
+        
+        selectedSongs.remove(at: index!)
+        
+        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidLoad()
-//        print(loadCount)
-//        print(self.allSongs.count)
-//        if loadCount != self.allSongs.count {
-//            loadCount = self.allSongs.count
-//            tableView.reloadData()
-//        }
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
-    
+    */
+
 }

@@ -1,4 +1,8 @@
-class Song {
+class Song: Equatable {
+    static func == (lhs: Song, rhs: Song) -> Bool {
+        return lhs.title == rhs.title && lhs.author == rhs.author && lhs.duration == rhs.duration && lhs.signedUrl == rhs.signedUrl && lhs.fileName == rhs.fileName
+    }
+    
     var title : String
     var author : String
     var duration : String

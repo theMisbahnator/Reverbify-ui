@@ -77,10 +77,6 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         
         cell.author.text = "\(allPlaylists[row].songs.count) songs"
         cell.author.numberOfLines = 3
-//        cell.timestamp.text = allSongs[row].timeStamp
-//        cell.timestamp.numberOfLines = 3
-//        cell.duration.text = allSongs[row].duration
-//        cell.duration.numberOfLines = 3
         
         print(allPlaylists[row].toString())
         
@@ -94,6 +90,16 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         playlistVC.playlist = allPlaylists[indexPath.row]
         
         navigationController?.pushViewController(playlistVC, animated: true)
+    }
+    
+    // Deleting Playlist from AllPlaylists
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            allPlaylists.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
