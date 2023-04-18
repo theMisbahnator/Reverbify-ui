@@ -1380,6 +1380,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="right"/>
+                                <connections>
+                                    <action selector="nextHit:" destination="HLq-t7-rs8" eventType="touchUpInside" id="Jry-TY-Ak5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="awm-KY-7Te">
                                 <rect key="frame" x="97" y="535.33333333333337" width="69" height="59"/>
@@ -1389,6 +1392,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="left"/>
+                                <connections>
+                                    <action selector="prevHit:" destination="HLq-t7-rs8" eventType="touchUpInside" id="qFS-sS-ctn"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIi-2q-0JJ">
                                 <rect key="frame" x="20" y="535.33333333333337" width="69" height="59"/>
@@ -1398,6 +1404,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="random"/>
+                                <connections>
+                                    <action selector="toggleShuffle:" destination="HLq-t7-rs8" eventType="touchUpInside" id="tNP-0y-m5M"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DU6-Ft-Bfw">
                                 <rect key="frame" x="18" y="490" width="386" height="30"/>
@@ -1415,6 +1424,9 @@
                                 <rect key="frame" x="341" y="560" width="69" height="59"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="loop"/>
+                                <connections>
+                                    <action selector="toggleRepeat:" destination="HLq-t7-rs8" eventType="touchUpInside" id="z4D-nR-MM0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CaG-AW-7ZA"/>

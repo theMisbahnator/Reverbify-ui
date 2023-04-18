@@ -10,8 +10,10 @@ import AVFoundation
 
 var player: AVPlayer?
 var playerItem: AVPlayerItem?
+var songQueue = SongPlayer(index: 0, songQueue: [])
 var isPlaying: Bool = false
 var currentSong: String = ""
+var currentPlayList: String = ""
 var currentTime: Double = 0.0
 var maxTime: Double = 0.0
 var queue: DispatchQueue!
@@ -28,6 +30,8 @@ class PlaySongController: UIViewController {
     
     var localPlayer: AVPlayer?
     var localPlayerItem: AVPlayerItem?
+    var localCurPlayList: String?
+    var localSongQueue: SongPlayer?
     
     var playing = false
     var inView = true
@@ -36,6 +40,7 @@ class PlaySongController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        song = localSongQueue?.nextSong()
         songTitle.text = song?.title
         songAuthor.text = song?.author
         songTimeStamp.text = song?.timeStamp
@@ -103,9 +108,6 @@ class PlaySongController: UIViewController {
         let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
         player?.seek(to: targetTime)
         makeTimeLabel()
-//        queue.async {
-//            self.countUp()
-//        }
     }
     
     func makeTimeLabel() {
@@ -139,6 +141,90 @@ class PlaySongController: UIViewController {
         }
     }
     
+    
+    @IBAction func nextHit(_ sender: Any) {
+        pauseSound()
+        nextSong()
+        // load graphical details
+        loadDetails()
+        playSound()
+    }
+    
+    
+    @IBAction func prevHit(_ sender: Any) {
+        pauseSound()
+        prevSong()
+        // load graphical details
+        loadDetails()
+        playSound()
+    }
+    
+    func loadDetails() {
+        songTitle.text = song?.title
+        songAuthor.text = song?.author
+        songTimeStamp.text = song?.timeStamp
+        songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
+        songSlider.minimumValue = 0
+        songSlider.maximumValue = song?.seconds ?? 0
+        let time = player?.currentTime()
+        
+        songSlider.value = 0
+        queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
+        songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
+        queue.async {
+            self.countUp()
+        }
+        
+        playSong.setImage(UIImage(named: "pausesvg"), for: .normal)
+        
+        if let url = URL(string: song!.thumbnail) {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Error downloading image: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let data = data, let image = UIImage(data: data) else {
+                    print("Error creating image from downloaded data")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.author.image = image
+                }
+            }
+            task.resume()
+        }
+        
+        // update signed url here
+        let api = ReverbifyAPIHandler(userName: "", view: self)
+        api.getSongRequest(fileName: song!.fileName, song: song!)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if let signedUrl = self.song?.signedUrl {
+                let url = NSURL(string: signedUrl)
+                playerItem = AVPlayerItem(url: url! as URL)
+                player = AVPlayer(playerItem: playerItem!)
+            }
+        }
+    }
+    
+    
+    func nextSong() {
+        if localCurPlayList! != currentPlayList {
+            songQueue = localSongQueue!
+        }
+        song = songQueue.nextSong()
+        currentSong = song!.title
+    }
+    
+    func prevSong() {
+        if localCurPlayList! != currentPlayList {
+            songQueue = localSongQueue!
+        }
+        song = songQueue.prevSong()
+    }
+    
     func playSound() {
         if currentSong != songTitle.text {
             player = localPlayer
@@ -165,6 +251,7 @@ class PlaySongController: UIViewController {
     }
     
     func countUp() {
+        var switchSongs = false
         while isPlaying && (player?.currentTime().seconds ?? 0) < maxTime && inView {
             if (player?.currentTime().seconds ?? 0) != 0 {
                 usleep(1000000)
@@ -192,4 +279,14 @@ class PlaySongController: UIViewController {
             self.playSong.setImage(UIImage(named: "play"), for: .normal)
         }
     }
+    
+    @IBAction func toggleRepeat(_ sender: Any) {
+        songQueue.toggleRepeat()
+    }
+    
+    @IBAction func toggleShuffle(_ sender: Any) {
+        songQueue.toggleRandom()
+    }
+    
+    
 }

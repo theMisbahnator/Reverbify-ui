@@ -112,6 +112,8 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
 
         playSongVC.song = self.allSongs[indexPath.row]
+        playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: allSongs)
+        playSongVC.localCurPlayList = "allSongs"
         
         navigationController?.pushViewController(playSongVC, animated: true)
     }
@@ -125,15 +127,4 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-////        super.viewDidLoad()
-////        print(loadCount)
-////        print(self.allSongs.count)
-////        if loadCount != self.allSongs.count {
-////            loadCount = self.allSongs.count
-////            tableView.reloadData()
-////        }
-//    }
-    
 }
