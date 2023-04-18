@@ -27,6 +27,89 @@ class ReverbifyAPIHandler {
         self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     }
     
+    init(userName: String, view: UIViewController) {
+        self.userName = userName
+        self.view = view
+        self.controller = AddSongController()
+        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
+    }
+    
+    func getSongRequest(fileName: String, song: Song) {
+        guard let url = URL(string: getSignedUrl) else {
+            return
+        }
+        // Define the request body data
+        let jsonObject: [String: Any] = [
+            "filename": fileName,
+        ]
+        
+        do {
+            // serialize object into JSON
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+            
+            // Create the request
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            print("Creating request...")
+            
+            // Create the session
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [self] data, response, error in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Invalid response")
+                    return
+                }
+                var body : [String: Any]
+                // handle response
+                body = self.handleGetSongResponse(httpResponse: httpResponse, data: data)
+                song.signedUrl = body["signedUrl"] as! String
+                print("this is the new signed url**")
+                print(song.signedUrl)
+            }
+            
+            task.resume()
+        } catch {
+            print("lol error")
+        }
+    }
+    
+    func handleGetSongResponse(httpResponse: HTTPURLResponse, data: Data?) -> [String: Any]  {
+        print("Response status code: \(httpResponse.statusCode)")
+        if httpResponse.statusCode != 200 {
+            let resp = "Internal Server Error. "
+            if httpResponse.statusCode == 500 {
+                // something went wrong with server, no message supplied
+                DispatchQueue.main.async {
+                    // hide alert here
+                    self.createErrorPopup(msg: resp)
+                }
+                return [:]
+            }
+            
+            // user request data error, parse and print response
+            let body = createJSONResponse(data: data)
+            let errorValue = body["Error"] as? String
+            DispatchQueue.main.async {
+                self.createErrorPopup(msg: resp)
+            }
+            
+            return [:]
+        }
+        
+        // Happy path, response returns song processing information
+        let body = createJSONResponse(data: data)
+        return body
+    }
+    
     func postReverbRequest(youtubeLink: String, pitch: String, bass: Bool, reverb: String, optionalName: String, optionalAuthor: String) {
         // post endpoint for song creation
         guard let url = URL(string: reverbEndpoint) else {

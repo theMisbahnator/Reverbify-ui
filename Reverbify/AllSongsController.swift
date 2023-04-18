@@ -45,7 +45,8 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
                 songsList = existingSongs
                 print(songsList)
                 for song in songsList {
-                    self.allSongs.append(Song(body: song))
+                    let thisSong = Song(body: song)
+                    self.allSongs.append(thisSong)
                 }
                 if self.loadCount != self.allSongs.count {
                     self.loadCount = self.allSongs.count

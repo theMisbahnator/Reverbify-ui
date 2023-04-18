@@ -84,9 +84,17 @@ class PlaySongController: UIViewController {
             task.resume()
         }
         
-        let url  = NSURL(string: song!.signedUrl)
-        localPlayerItem = AVPlayerItem(url: url! as URL)
-        localPlayer = AVPlayer(playerItem: localPlayerItem!)
+        // update signed url here
+        let api = ReverbifyAPIHandler(userName: "", view: self)
+        api.getSongRequest(fileName: song!.fileName, song: song!)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if let signedUrl = self.song?.signedUrl {
+                let url = NSURL(string: signedUrl)
+                self.localPlayerItem = AVPlayerItem(url: url! as URL)
+                self.localPlayer = AVPlayer(playerItem: self.localPlayerItem!)
+            }
+        }
     }
     
     
@@ -164,6 +172,9 @@ class PlaySongController: UIViewController {
                 self.songSlider.value += 1
                 self.makeTimeLabel()
             }
+        }
+        DispatchQueue.main.async {
+            self.playSong.setImage(UIImage(named: "play"), for: .normal)
         }
         isPlaying = false
     }
