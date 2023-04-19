@@ -6,15 +6,11 @@
 //
 
 import UIKit
-import FirebaseDatabase
-import FirebaseAuth
-
 
 class ReverbifyAPIHandler {
     var userName: String
     var view : UIViewController
     var controller : AddSongController
-    var database: DatabaseReference!
     let reverbEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/reverb-song"
     let testEndpoint = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/health-check"
     let deleteSongReverb = "https://reverbify-api-service-klfqvexjrq-vp.a.run.app/delete-song"
@@ -24,14 +20,12 @@ class ReverbifyAPIHandler {
         self.userName = userName
         self.view = view
         self.controller = controller
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     }
     
     init(userName: String, view: UIViewController) {
         self.userName = userName
         self.view = view
         self.controller = AddSongController()
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     }
     
     func getSongRequest(fileName: String, song: Song) {
@@ -264,34 +258,15 @@ class ReverbifyAPIHandler {
 //            allSongs.append(s)
             
             // DO DATABASE
-            // Then, you'll want to get a reference to the user's songs list
-            guard let currentUserID = Auth.auth().currentUser?.uid else {
-                // If the user isn't logged in, you can handle that error here
-                return
-            }
-            let songsRef = self.database.child("users").child(currentUserID).child("songs")
-
-            // Now, you can read in the user's songs list
-            songsRef.observeSingleEvent(of: .value, with: { snapshot in
-                var songsList: [[String: Any]] = []
-                if let existingSongs = snapshot.value as? [[String: Any]] {
-                    // If the user's songs list already exists, append the new song to it
-                    songsList = existingSongs
+            DatabaseClass.saveNewSong(body:body) {
+                // close pop up and transition
+                alertController.dismiss(animated: true) {
+                    self.controller.clearFields()
+                    let allSongsPage = self.view.tabBarController?.viewControllers?[1]
+                    tabBarVC?.selectedViewController = allSongsPage
                 }
-                songsList.append(body)
-
-                // Finally, update the user's songs list in Firebase
-                songsRef.setValue(songsList)
-            }) { error in
-                print(error.localizedDescription)
             }
-
-            // close pop up and transition
-            alertController.dismiss(animated: true) {
-                self.controller.clearFields()
-                let allSongsPage = self.view.tabBarController?.viewControllers?[1]
-                tabBarVC?.selectedViewController = allSongsPage
-            }
+           
         }
     }
     

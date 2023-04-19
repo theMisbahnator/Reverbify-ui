@@ -80,6 +80,7 @@
 		C99B6D7729B7EFA9004864B5 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6D7629B7EFA9004864B5 /* SettingsController.swift */; };
 		C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */; };
 		C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D3A9C229B84A2F00817F16 /* RegisterController.swift */; };
+		C9F8935329F0741E0045E5AF /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8935229F0741E0045E5AF /* Database.swift */; };
 		D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200038C29ADF4B0001F8105 /* LoginViewController.swift */; };
 		D2162D6029CD167B006D4527 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2162D5F29CD167B006D4527 /* AVFoundation.framework */; };
 		D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */; };
@@ -147,6 +148,7 @@
 		C99B6D7629B7EFA9004864B5 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9D3A9C229B84A2F00817F16 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		C9F8935229F0741E0045E5AF /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		D200038C29ADF4B0001F8105 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2162D5F29CD167B006D4527 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D23E58D229ADC08D00D17EA7 /* Reverbify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reverbify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -292,6 +294,7 @@
 				D23E58DE29ADC08D00D17EA7 /* Reverbify.xcdatamodeld */,
 				D200038C29ADF4B0001F8105 /* LoginViewController.swift */,
 				C99B6D7629B7EFA9004864B5 /* SettingsController.swift */,
+				C9F8935229F0741E0045E5AF /* Database.swift */,
 				C98B30F929DA029700EEF45C /* ChangePasswordController.swift */,
 				C92E55ED29B137230032428B /* GothicA1-Black.ttf */,
 				C92E55EB29B137230032428B /* GothicA1-Bold.ttf */,
@@ -560,6 +563,7 @@
 				1944893429B6BC2700F9D215 /* HomePageViewController.swift in Sources */,
 				19AAF87F29D0D5F000BDAB02 /* SongData.swift in Sources */,
 				D2EA8E5B29CD0F240016E895 /* PlaySongController.swift in Sources */,
+				C9F8935329F0741E0045E5AF /* Database.swift in Sources */,
 				D2EA8E1329B9C3DE0016E895 /* AddSongController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
