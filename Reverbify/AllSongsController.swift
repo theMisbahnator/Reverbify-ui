@@ -10,12 +10,15 @@ import FirebaseDatabase
 import FirebaseAuth
 
 
-class AllSongsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AllSongsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var loadCount = 0
     var database: DatabaseReference!
     var allSongs : [Song] = []
+    var filteredSongs = [Song]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,6 +51,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
                 for song in songsList {
                     let thisSong = Song(body: song)
                     self.allSongs.append(thisSong)
+                    self.filteredSongs.append(thisSong)
                 }
                 if self.loadCount != self.allSongs.count {
                     self.loadCount = self.allSongs.count
@@ -84,7 +89,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allSongs.count
+        return self.filteredSongs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,10 +98,10 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        cell.title.text = self.allSongs[row].title
+        cell.title.text = self.filteredSongs[row].title
         cell.title.numberOfLines = 2
         
-        if let url = URL(string: self.allSongs[row].thumbnail) {
+        if let url = URL(string: self.filteredSongs[row].thumbnail) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error downloading image: \(error.localizedDescription)")
@@ -116,15 +121,9 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        cell.author.text = self.allSongs[row].author
+        cell.author.text = self.filteredSongs[row].author
         cell.author.numberOfLines = 3
-//        cell.timestamp.text = allSongs[row].timeStamp
-//        cell.timestamp.numberOfLines = 3
-//        cell.duration.text = allSongs[row].duration
-//        cell.duration.numberOfLines = 3
-        
-        print(self.allSongs[row].toString())
-        
+
         return cell
     }
     
@@ -132,8 +131,16 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         // Present the next view controller
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
 
-        playSongVC.song = self.allSongs[indexPath.row]
-        playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: allSongs)
+        let thisSong = self.filteredSongs[indexPath.row]
+        playSongVC.song = thisSong
+        var index = 0
+        for song in allSongs {
+            if song.title == thisSong.title && song.author == thisSong.author {
+                break
+            }
+            index += 1
+        }
+        playSongVC.localSongQueue = SongPlayer(index: index, songQueue: allSongs)
         playSongVC.localCurPlayList = "allSongs"
         playSongVC.song?.lastPlayed = Date().timeIntervalSinceReferenceDate
         navigationController?.pushViewController(playSongVC, animated: true)
@@ -142,13 +149,21 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     // Deleting Song from downloaded
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            allSongs.remove(at: indexPath.row)
+            filteredSongs.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
     
-   
-
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredSongs = allSongs.filter({ song in
+            let titleMatch = song.title.lowercased().contains(searchText.lowercased())
+            let authorMatch = song.author.lowercased().contains(searchText.lowercased())
+            return titleMatch || authorMatch || searchText == ""
+        })
+        
+        tableView.reloadData()
+    }
+    
 }
