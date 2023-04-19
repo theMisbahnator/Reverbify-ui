@@ -12,7 +12,6 @@ import FirebaseAuth
 
 var songLists:[SongData] = []
 var playlistLists:[PlaylistData] = []
-
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var myTable: UITableView!
@@ -22,21 +21,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
-//        playlistLists[0].playlistLst[0].songs.append(Song(title: "Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", author: "DrakeVEVO", duration: "3:38", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/bass_rev_6_misbah_2023-03-23_23%3A27%3A34.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T232805Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=36687a26d261dd1bc652a93bf9ac14dd869b951f71b2baba29c29add0d65a63a", fileName: "bass_rev_6_misbah_2023-03-23_23:27:34.mp3", timeStamp: "2023-03-23_23:28:05", thumbnail: "https://img.youtube.com/vi/V7UgPHjN9qE/sddefault.jpg"))
-//        playlistLists[0].playlistLst[0].songs.append(Song(title: "Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", author: "DrakeVEVO", duration: "3:38", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/bass_rev_6_misbah_2023-03-23_23%3A27%3A34.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T232805Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=36687a26d261dd1bc652a93bf9ac14dd869b951f71b2baba29c29add0d65a63a", fileName: "bass_rev_6_misbah_2023-03-23_23:27:34.mp3", timeStamp: "2023-03-23_23:28:05", thumbnail: "https://img.youtube.com/vi/V7UgPHjN9qE/sddefault.jpg"))
-//        playlistLists[0].playlistLst[0].songs.append(Song(title: "Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", author: "DrakeVEVO", duration: "3:38", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/bass_rev_6_misbah_2023-03-23_23%3A27%3A34.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T232805Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=36687a26d261dd1bc652a93bf9ac14dd869b951f71b2baba29c29add0d65a63a", fileName: "bass_rev_6_misbah_2023-03-23_23:27:34.mp3", timeStamp: "2023-03-23_23:28:05", thumbnail: "https://img.youtube.com/vi/V7UgPHjN9qE/sddefault.jpg"))
-//
-//        playlistLists[0].playlistLst.append(Playlist(title: "Playlist #2", thumbnail: "https://img.youtube.com/vi/r9_qDBnOuas/sddefault.jpg", songs: []))
-//
-//        playlistLists[0].playlistLst[1].songs.append(Song(title: "Drake ft. 21 Savage - Jimmy Cooks (Official Audio)", author: "DrakeVEVO", duration: "3:38", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/bass_rev_6_misbah_2023-03-23_23%3A27%3A34.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T232805Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=36687a26d261dd1bc652a93bf9ac14dd869b951f71b2baba29c29add0d65a63a", fileName: "bass_rev_6_misbah_2023-03-23_23:27:34.mp3", timeStamp: "2023-03-23_23:28:05", thumbnail: "https://img.youtube.com/vi/V7UgPHjN9qE/sddefault.jpg"))
-//        playlistLists[0].playlistLst[1].songs.append(Song(title: "The Wishing Tree", author: "The Kings Singers this is a really long title let see if this is gonna wrap", duration: "4:19", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/rev_6_misbah_2023-03-23_23%3A25%3A46.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T232614Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=9e0e6cab6b7dd2e3cccb19433ed0c9c6db98193ec1fc1638ea45895d15c6aa26", fileName: "rev_6_misbah_2023-03-23_23:25:46.mp", timeStamp: "2023-03-23_23:26:14", thumbnail: "https://img.youtube.com/vi/r9_qDBnOuas/sddefault.jpg"))
-//        playlistLists[0].playlistLst[1].songs.append(Song(title: "Juice WRLD - Lucid Dreams (Directed by Cole Bennett)", author: "Lyrical Lemonade", duration: "4:30", signedUrl: "https://reverbify.s3.us-east-2.amazonaws.com/rev_6_misbah_2023-03-23_23%3A30%3A15.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYL6E4JFR23PADVVB%2F20230323%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230323T233042Z&X-Amz-Expires=594720&X-Amz-SignedHeaders=host&X-Amz-Signature=1b91ed02a80ed7ba36561885531ad0498f308153f77b33c20a5fb96ffcd39a61", fileName: "rev_6_misbah_2023-03-23_23:30:15.mp3", timeStamp: "2023-03-23_23:30:42", thumbnail: "https://img.youtube.com/vi/mzB1VGEGcSU/sddefault.jpg"))
-        
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = myTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyTableViewCell
         cell.myCollectionView.tag = indexPath.section
@@ -68,17 +58,18 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        dispatchGroup.enter()
         
         // pull data
-        let section_titles = ["Recently Played Songs", "Recently Downloaded", "Recently Viewed Playlist"]
+        let section_titles = ["Recently Played Songs", "Recently Downloaded", "Recently Played Playlist"]
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
             return
         }
         songLists = []
         for section_title in section_titles {
-            if section_title == "Recently Viewed Playlist" {
+            if section_title == "Recently Played Playlist" {
                 dispatchGroup.enter()
                 let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
+                
                playlistLists = []
                 // Now, you can read in the user's songs list
                 playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -91,6 +82,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             playListData.playlistLst.append(Playlist(body: playlist, index: i))
                             i = i + 1
                         }
+                        playListData.playlistLst.sort(by: {$0.lastPlayed > $1.lastPlayed })
                         playlistLists.append(playListData)
                         
                     }
@@ -114,6 +106,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if section_title == "Recently Downloaded" {
                             songlist.reverse()
                         }
+                        else if section_title == "Recently Played Songs"{
+                            songlist.sort(by: {$0.lastPlayed > $1.lastPlayed })
+                        }
                         songLists.append(SongData(sectionType: section_title, songlst: songlist))
                     }
                     dispatchGroup.leave() // leave the Dispatch Group
@@ -128,6 +123,23 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Wait for the Dispatch Group to finish
         dispatchGroup.notify(queue: DispatchQueue.main) {
             // All async tasks are done
+            if playlistLists.count == 0 && songLists.count == 0 {
+                let alertController = UIAlertController(title: "Welcome To Reverbify!", message: "Would you like to download your first song?", preferredStyle: .alert)
+                
+                let stayHereAction = UIAlertAction(title: "Nope, stay here", style: .default) { (action:UIAlertAction!) in
+                    // Handle "Stay Here" button tap
+                }
+                stayHereAction.setValue(UIColor.darkGray, forKey: "titleTextColor")
+                
+                let letsGoAction = UIAlertAction(title: "Yes let's go!", style: .destructive) { (action:UIAlertAction!) in
+                    self.performSegue(withIdentifier: "addSongId", sender: self)
+                }
+                
+                alertController.addAction(stayHereAction)
+                alertController.addAction(letsGoAction)
+
+                self.present(alertController, animated: true, completion:nil)
+            }
             self.myTable.reloadData()
         }
         

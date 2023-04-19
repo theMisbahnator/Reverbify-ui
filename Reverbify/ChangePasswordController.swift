@@ -15,12 +15,11 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var newPasswordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     
-    @IBOutlet weak var statusMessage: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         currentPasswordField.text = ""
         confirmPasswordField.text = ""
         newPasswordField.text = ""
@@ -28,9 +27,6 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
         currentPasswordField.isSecureTextEntry = true
         confirmPasswordField.isSecureTextEntry = true
         newPasswordField.isSecureTextEntry = true
-        
-        statusMessage.text = ""
-        statusMessage.numberOfLines = 0
         
         saveButton.layer.cornerRadius = 20
         saveButton.layer.masksToBounds = true
@@ -68,19 +64,31 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
         
         // Do any additional setup after loading the view.
     }
+    func createErrorAlert(message: String) {
+        var title = "Error"
+        if message == "Password updated successfully!" {
+            title = "Congrats"
+        }
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        okAction.setValue(UIColor.red, forKey: "titleTextColor") // Set the text color to red
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
     
     @IBAction func cancelButtonClicked(_ sender: Any) {
-       performSegue(withIdentifier: "settingsSegue", sender: self)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func saveButtonClicked(_ sender: Any) {
         // check if current password == actual current password
         guard let oldPassword = currentPasswordField.text else {
-            self.statusMessage.text = "Please enter your current password"
+            createErrorAlert(message: "Please enter your current password")
             return
         }
         guard let newPassword = newPasswordField.text else {
-            self.statusMessage.text = "Please enter a new password"
+            createErrorAlert(message: "Please enter a new password")
             return
         }
         
@@ -92,26 +100,26 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate{
         // Reauthenticate the user with their current password
         user.reauthenticate(with: credential) { result, error in
             if let error = error {
-                self.statusMessage.text = "\(error.localizedDescription)"
+                self.createErrorAlert(message: "\(error.localizedDescription)")
                 return
             }
         }
             
         guard let confirmPassword = confirmPasswordField.text else {
-            statusMessage.text = "Please confirm your new password"
+            createErrorAlert(message: "Please confirm your new password")
             return
         }
         
         if newPassword != confirmPassword {
-            statusMessage.text = "New passwords do not match"
+            createErrorAlert(message: "New passwords do not match")
             return
         }
         Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
             if let error = error as NSError?  {
-                self.statusMessage.text = "\(error.localizedDescription)"
+                self.createErrorAlert(message: "\(error.localizedDescription)")
             }
             else {
-                self.statusMessage.text = "Password updated successfully!"
+                self.createErrorAlert(message: "Password updated successfully!")
             }
         }
        

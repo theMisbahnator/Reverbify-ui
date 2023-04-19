@@ -11,6 +11,9 @@ class Song: Equatable {
     var timeStamp : String
     var thumbnail: String
     var seconds : Float
+    
+    var lastPlayed = 0.0
+    
     init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
         self.title = title
         self.author = author
@@ -32,7 +35,14 @@ class Song: Equatable {
         self.signedUrl = body["signedUrl"] as! String
         self.thumbnail = body["thumbnail"] as! String
         self.timeStamp = body["timestamp"] as! String
+        self.timeStamp = self.timeStamp.replacingOccurrences(of: "_", with: " ")
         self.fileName = body["filename"] as! String
+        if let lastPlayedDate = body["lastPlayed"] as? Double {
+            self.lastPlayed = lastPlayedDate
+        } else {
+            self.lastPlayed = 0.0
+        }
+        
         // calculate seconds
         self.seconds = 0
         self.seconds = getSeconds(duration: duration)
@@ -64,6 +74,7 @@ class Song: Equatable {
             "thumbnail": self.thumbnail ,
             "timestamp": self.timeStamp,
             "filename":  self.fileName,
+            "lastPlayed": self.lastPlayed
         ]
         
     }

@@ -13,18 +13,16 @@ class LoginController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
-    @IBOutlet weak var errorMessage: UILabel!
     
     @IBOutlet weak var signUpButton: UIButton!
     //inSecureTextEntrry = true
     @IBOutlet weak var loginButton: UIButton!
    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        errorMessage.text = ""
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         let underlineAttribute = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.foregroundColor: UIColor.blue
+            NSAttributedString.Key.foregroundColor: UIColor.red
         ] as [NSAttributedString.Key : Any] as [NSAttributedString.Key : Any]
         let underlineAttributedString = NSAttributedString(string: "Sign up here", attributes: underlineAttribute)
 
@@ -43,7 +41,6 @@ class LoginController : UIViewController, UITextFieldDelegate {
         ])
         loginButton.setAttributedTitle(attributedString, for: .normal)
         
-        errorMessage.numberOfLines = 0
         
         passwordField.isSecureTextEntry = true
     }
@@ -61,15 +58,20 @@ class LoginController : UIViewController, UITextFieldDelegate {
         emailField.delegate = self
         passwordField.delegate = self
     }
+    func createErrorAlert(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        okAction.setValue(UIColor.red, forKey: "titleTextColor") // Set the text color to red
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         Auth.auth().signIn(withEmail: emailField.text!, password: passwordField.text!) {
             authResult, error in
             if let error = error as NSError? {
-            self.errorMessage.text = "\(error.localizedDescription)"
-        }
-        else {
-            self.errorMessage.text = ""
+                self.createErrorAlert(message: "\(error.localizedDescription)")
         }
     }
 

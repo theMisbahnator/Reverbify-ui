@@ -9,7 +9,6 @@ import UIKit
 class SliderSettings {
     var sliderOn:Bool
     var settingName:String
-    
     init(sliderOn: Bool, settingName: String) {
         self.sliderOn = sliderOn
         self.settingName = settingName
@@ -17,7 +16,24 @@ class SliderSettings {
 }
 class SliderTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var slider: UISwitch!
     @IBOutlet weak var settingLabel: UILabel!
+    @IBOutlet weak var slider: UISwitch!
     
+    var delegate: SliderCellDelegate?
+    
+    @IBAction func sliderValueChanged(_ sender: UISwitch) {
+        print("GOT TO THIS:")
+        print("GOT TO THIS: \(sender.isOn)")
+
+        delegate?.sliderValueChanged(sender.isOn, forCell: self)
+    }
+    
+//    @IBAction func sliderChanged(_ sender: Any) {
+//
+//
+//    }
+}
+
+protocol SliderCellDelegate: AnyObject {
+    func sliderValueChanged(_ value: Bool, forCell cell: SliderTableViewCell)
 }

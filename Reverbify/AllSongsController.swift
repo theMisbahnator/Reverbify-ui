@@ -62,6 +62,27 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidAppear(true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            // If the user isn't logged in, you can handle that error here
+            return
+        }
+        
+        let songsRef = self.database.child("users").child(currentUserID).child("songs")
+        // Now, you can read in the user's songs list
+        songsRef.observeSingleEvent(of: .value, with: { snapshot in
+            var songsList: [[String: Any]] = []
+            for song in self.allSongs {
+                songsList.append(song.convertToJSON())
+            }
+            songsRef.setValue(songsList)
+        }) { error in
+            print(error.localizedDescription)
+        }
+   
+        super.viewWillDisappear(true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.allSongs.count
     }
@@ -114,7 +135,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         playSongVC.song = self.allSongs[indexPath.row]
         playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: allSongs)
         playSongVC.localCurPlayList = "allSongs"
-        
+        playSongVC.song?.lastPlayed = Date().timeIntervalSinceReferenceDate
         navigationController?.pushViewController(playSongVC, animated: true)
     }
     
@@ -127,4 +148,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
+    
+   
+
 }

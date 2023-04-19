@@ -6,6 +6,7 @@ class Playlist {
     var thumbnailString: String
     var songs: [Song]
     var indexInDB: Int = 0
+    var lastPlayed = 0.0
     init(title: String, thumbnail: String, songs: [Song]) {
         self.title = title
 //        self.thumbnail = UIImage(named: defaultPlaylistImage)!
@@ -20,6 +21,11 @@ class Playlist {
 //        self.thumbnail = UIImage(named: defaultPlaylistImage)!
         self.indexInDB = index
         self.thumbnailString = body["thumbnail"] as! String
+        if let lastPlayedDate = body["lastPlayed"] as? Double {
+            self.lastPlayed = lastPlayedDate
+        } else {
+            self.lastPlayed = 0.0
+        }
 //        print("GOT HERE 25")
         if let songDictionaries = body["songs"] as? [[String: Any]] {
             var songs: [Song] = []
@@ -76,7 +82,8 @@ class Playlist {
         return  [
             "title" : self.title,
             "thumbnail" : self.thumbnailString,
-            "songs" : songsBody
+            "songs" : songsBody,
+            "lastPlayed": self.lastPlayed
         ]
         
     }

@@ -15,6 +15,8 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var tableView: UITableView!
     @IBOutlet var playlistName: UILabel!
     @IBOutlet var numberSongs: UILabel!
+    @IBOutlet weak var playlistImageView: UIImageView!
+    
     var indexInDB: Int!
     var database: DatabaseReference!
     
@@ -33,6 +35,30 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     func everyLoad() {
         playlistName.text = playlist.title
         numberSongs.text = playlist.songs.count == 1 ? "\(playlist.songs.count) song" : "\(playlist.songs.count) songs"
+        if let url = URL(string: playlist.thumbnailString) {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Error downloading image: \(error.localizedDescription)")
+                    self.playlistImageView.image = UIImage(named:"music-solid")
+                    return
+                }
+                
+                guard let data = data, let image = UIImage(data: data) else {
+                    print("Error creating image from downloaded data")
+                    self.playlistImageView.image = UIImage(named:"music-solid")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    //print("GOT TO CORRECT COMPLETION")
+                    self.playlistImageView.image = image
+                }
+            }
+            task.resume()
+        }
+        else {
+            self.playlistImageView.image = UIImage(named:"music-solid")
+        }
         tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -141,6 +167,8 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         playSongVC.song = playlist.songs[indexPath.row]
         playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: playlist.songs)
         playSongVC.localCurPlayList = playlist.title
+        playlist.lastPlayed = Date().timeIntervalSinceReferenceDate
+        
         
         navigationController?.pushViewController(playSongVC, animated: true)
     }
@@ -155,7 +183,22 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
+    func createErrorAlert(message: String) {
+        let alertController = UIAlertController(title: "Whoops", message: message, preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        okAction.setValue(UIColor.red, forKey: "titleTextColor") // Set the text color to red
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
     
-   
+    @IBAction func playButtonClicked(_ sender: Any) {
+        if playlist.songs.count == 0 {
+            createErrorAlert(message: "Looks like you have no songs in your playlist")
+        }
+        else {
+            tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+        }
+    }
     
 }

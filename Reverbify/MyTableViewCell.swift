@@ -27,9 +27,19 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if myCollectionView.tag >= songLists.count {
-            return playlistLists[myCollectionView.tag - songLists.count].playlistLst.count
+            return min(5, playlistLists[myCollectionView.tag - songLists.count].playlistLst.count)
         }
-        return songLists[myCollectionView.tag].songlst.count
+        if myCollectionView.tag == 0 {
+            var count = 0
+            for song in songLists[myCollectionView.tag].songlst {
+                if song.lastPlayed != 0 {
+                    count += 1
+                }
+            }
+            return min(5, count)
+        }
+        return min(5, songLists[myCollectionView.tag].songlst.count)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

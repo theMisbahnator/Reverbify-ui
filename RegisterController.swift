@@ -14,18 +14,17 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     
-    @IBOutlet weak var errorMessage: UILabel!
-    
+
     @IBOutlet weak var loginButton: UIButton!
     
     @IBOutlet weak var signUpButton: UIButton!
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        errorMessage.text = ""
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+
         let underlineAttribute = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.foregroundColor: UIColor.blue
+            NSAttributedString.Key.foregroundColor: UIColor.red
         ] as [NSAttributedString.Key : Any] as [NSAttributedString.Key : Any]
         let underlineAttributedString = NSAttributedString(string: "Login here", attributes: underlineAttribute)
 
@@ -44,15 +43,12 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         ])
         signUpButton.setAttributedTitle(attributedString, for: .normal)
         
-        errorMessage.numberOfLines = 0
-        
         passwordField.isSecureTextEntry = true
         confirmPasswordField.isSecureTextEntry = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        errorMessage.text = ""
         let underlineAttribute = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
             NSAttributedString.Key.foregroundColor: UIColor.blue
@@ -84,38 +80,46 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    func createErrorAlert(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
 
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        okAction.setValue(UIColor.red, forKey: "titleTextColor") // Set the text color to red
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
     @IBAction func signUpButtonPressed(_ sender: Any) {
         guard let email = emailField.text else {
-            self.errorMessage.text = "Please enter an email"
+            createErrorAlert(message: "Please enter an email")
             return
         }
         guard let password = passwordField.text else {
-            self.errorMessage.text = "Please enter a password"
+            createErrorAlert(message: "Please enter a password")
             return
         }
         guard let confirmPassword = confirmPasswordField.text else {
-            self.errorMessage.text = "Please confirm your password"
+            createErrorAlert(message: "Please confirm your password")
             return
         }
         
         if(!isValidEmail(email)) {
-            self.errorMessage.text = "Please enter a valid email"
+            createErrorAlert(message: "Please enter a valid email")
+          
+//            self.errorMessage.text = "Please enter a valid email"
             return
         }
         
         if password != confirmPassword {
-            self.errorMessage.text = "Passwords do not match"
+            createErrorAlert(message: "Passwords do not match")
             return
         }
         
         Auth.auth().createUser(withEmail: email, password: password) {
             authResult, error in
             if let error = error as NSError? {
-                self.errorMessage.text = "\(error.localizedDescription)"
+                self.createErrorAlert(message: "\(error.localizedDescription)")
             }
             else {
-                self.errorMessage.text = ""
                 self.performSegue(withIdentifier: "signUpSegue", sender: nil)
                 self.emailField.text = nil
                 self.passwordField.text = nil

@@ -11,7 +11,7 @@ import AVFoundation
 var player: AVPlayer?
 var playerItem: AVPlayerItem?
 var songQueue = SongPlayer(index: 0, songQueue: [])
-var isPlaying: Bool = false
+var isPlaying: Bool = true
 var currentSong: String = ""
 var currentPlayList: String = ""
 var currentTime: Double = 0.0
@@ -28,18 +28,66 @@ class PlaySongController: UIViewController {
     @IBOutlet weak var songTime: UILabel!
     @IBOutlet weak var songSlider: UISlider!
     
+    @IBOutlet weak var shuffleSongs: UIButton!
+    @IBOutlet weak var repeatSong: UIButton!
+    
+    
     var localPlayer: AVPlayer?
     var localPlayerItem: AVPlayerItem?
     var localCurPlayList: String?
     var localSongQueue: SongPlayer?
     
-    var playing = false
     var inView = true
     
     var song : Song? = nil
     
+    func setRepeatImage() {
+        if songQueue.isRepeat {
+            // Get the current image for the button
+            guard let currentImage = repeatSong.image(for: .normal) else {
+                return
+            }
+            // Create a new image with the arrows in red
+            let redImage = currentImage.withTintColor(.red)
+            
+            // Set the new image as the button's image
+            repeatSong.setImage(redImage, for: .normal)
+            repeatSong.setImage(UIImage(named: "red-loop"), for: .normal)
+        }
+        else {
+            repeatSong.setImage(UIImage(named: "loop"), for: .normal)
+        }
+    }
+    
+    func setShuffleImage() {
+        if songQueue.isRandom {
+            // Get the current image for the button
+            guard let currentImage = shuffleSongs.image(for: .normal) else {
+                return
+            }
+            // Create a new image with the arrows in red
+            let redImage = currentImage.withTintColor(.red)
+            
+            // Set the new image as the button's image
+            shuffleSongs.setImage(redImage, for: .normal)
+            shuffleSongs.setImage(UIImage(named: "red-shuffle"), for: .normal)
+        }
+        else {
+            shuffleSongs.setImage(UIImage(named: "random"), for: .normal)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        setShuffleImage()
+        setRepeatImage()
+       
+        
+        super.viewWillAppear(animated)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         song = localSongQueue?.nextSong()
         songTitle.text = song?.title
         songAuthor.text = song?.author
@@ -279,13 +327,17 @@ class PlaySongController: UIViewController {
             self.playSong.setImage(UIImage(named: "play"), for: .normal)
         }
     }
+ 
     
     @IBAction func toggleRepeat(_ sender: Any) {
         songQueue.toggleRepeat()
+        setRepeatImage()
     }
     
     @IBAction func toggleShuffle(_ sender: Any) {
         songQueue.toggleRandom()
+        setShuffleImage()
+       
     }
     
     
