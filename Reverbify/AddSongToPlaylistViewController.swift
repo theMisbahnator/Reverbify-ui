@@ -6,13 +6,10 @@
 //
 
 import UIKit
-import FirebaseDatabase
-import FirebaseAuth
 
 class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableView: UITableView!
-    var database: DatabaseReference!
     var allSongs : [Song] = []
     var loadCount = 0
     var selectedSongs : [Song] = []
@@ -23,82 +20,23 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         super.viewDidLoad()
         let nib = UINib(nibName: "SongTableCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SongTableCell")
-        
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
-        
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
+    override func viewWillAppear(_ animated: Bool) {
+        DatabaseClass.getAllSongs { songs in
+            self.allSongs = songs
+            self.tableView.reloadData()
         }
         
-        let songsRef = self.database.child("users").child(currentUserID).child("songs")
-        self.allSongs = []
-        // Now, you can read in the user's songs list
-        songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            if let existingSongs = snapshot.value as? [[String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                songsList = existingSongs
-                print(songsList)
-                for song in songsList {
-                    self.allSongs.append(Song(body: song))
-                }
-                if self.loadCount != self.allSongs.count {
-                    self.loadCount = self.allSongs.count
-                    self.tableView.reloadData()
-                }
-                
-                        
-            }
-
-        }) { error in
-            print(error.localizedDescription)
-        }
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
     }
     
     @IBAction func addSongsToPlaylist(_ sender: Any) {
-        // Add Songs to Playlist in DB
-        
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
-        }
-        
-        playlist.songs.append(contentsOf: selectedSongs)
-        
-        let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
-        // Now, you can read in the user's songs list
-        playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var playlistsList: [[String: Any]] = []
-            if let existingPlaylist = snapshot.value as? [[String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                playlistsList = existingPlaylist
-                let currPlaylist = playlistsList[self.playlist.indexInDB]
-                var currSongs = []
-                if let songs = currPlaylist["songs"] as? Array<[String: Any]> {
-                    currSongs = songs
-                }
-               
-                for song in self.selectedSongs {
-                    currSongs.append(song.convertToJSON())
-                }
-                
-                playlistsList[self.playlist.indexInDB]["songs"] = currSongs
-                
-            }
-            print(playlistsList)
-            playlistsRef.setValue(playlistsList)
-            
-        }) { error in
-            print(error.localizedDescription)
-        }
+
+        DatabaseClass.addSongstoPlaylist(selectedSongs: selectedSongs, playlistIndex: self.playlist.indexInDB)
+
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -145,19 +83,12 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         
         tableView.cellForRow(at: indexPath)?.selectionStyle = .default
         selectedSongs.append(allSongs[indexPath.row])
-        
-        print("SELECTING")
-        print(allSongs[indexPath.row].title)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         let index = selectedSongs.firstIndex(of: allSongs[indexPath.row])
-        
-        print("DESELECTING")
-        print(selectedSongs[index!].title)
-        
         selectedSongs.remove(at: index!)
         
         

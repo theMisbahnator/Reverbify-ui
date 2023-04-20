@@ -19,11 +19,14 @@ class AddSongController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var pitchSlider: UISlider!
     @IBOutlet weak var bassSwitch: UISwitch!
     
+    var tapGesture: UITapGestureRecognizer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pitchSlider.minimumValue = 0.5
         pitchSlider.maximumValue = 1.5
         pitchSlider.value = 1.00
+        
         youtubeLinkField.delegate = self
         optionalName.delegate = self
         optionalArtist.delegate = self
@@ -88,15 +91,38 @@ class AddSongController: UIViewController, UITextFieldDelegate {
         optionalArtist.text = ""
     }
     
-    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+          addTapGesture()
+      }
     
     // Called when the user clicks on the view outside of the UITextField
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            youtubeLinkField.resignFirstResponder()
+            optionalName.resignFirstResponder()
+            optionalArtist.resignFirstResponder()
+           removeTapGesture()
+           return true
+       }
+       
+       @objc func dismissKeyboard() {
+           youtubeLinkField.resignFirstResponder()
+           optionalName.resignFirstResponder()
+           optionalArtist.resignFirstResponder()
+           removeTapGesture()
+       }
+       
+       func addTapGesture() {
+           if tapGesture == nil {
+               tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+               view.addGestureRecognizer(tapGesture!)
+           }
+       }
+       
+       func removeTapGesture() {
+           if let gesture = tapGesture {
+               view.removeGestureRecognizer(gesture)
+               tapGesture = nil
+           }
+       }
     
 }

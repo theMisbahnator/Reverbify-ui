@@ -16,82 +16,70 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var searchBar: UISearchBar!
     
     var loadCount = 0
-    var database: DatabaseReference!
     var allSongs : [Song] = []
-    var filteredSongs = [Song]()
+    var filteredSongs: [Song] = []
+    private var tapGesture: UITapGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let nib = UINib(nibName: "SongTableCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SongTableCell")
-        
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
-        
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        
+//        // Add a tap gesture recognizer to the view
+//       let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+//       view.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
 
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
+        DatabaseClass.getAllSongs { songs in
+            self.allSongs = songs
+        }
+        DatabaseClass.getAllSongs { songs in
+            self.filteredSongs = songs
+            self.tableView.reloadData()
         }
         
-        let songsRef = self.database.child("users").child(currentUserID).child("songs")
-        self.allSongs = []
-        // Now, you can read in the user's songs list
-        songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            if let existingSongs = snapshot.value as? [[String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                songsList = existingSongs
-                print(songsList)
-                for song in songsList {
-                    let thisSong = Song(body: song)
-                    self.allSongs.append(thisSong)
-                    self.filteredSongs.append(thisSong)
-                }
-                if self.loadCount != self.allSongs.count {
-                    self.loadCount = self.allSongs.count
-                    self.tableView.reloadData()
-                }
-                
-                        
-            }
-
-        }) { error in
-            print(error.localizedDescription)
-        }
         super.viewDidAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
-        }
-        
-        let songsRef = self.database.child("users").child(currentUserID).child("songs")
-        // Now, you can read in the user's songs list
-        songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            for song in self.allSongs {
-                let thisSong = song.convertToJSON()
-                songsList.append(thisSong)
-                // update signed url here
-                let api = ReverbifyAPIHandler(userName: "", view: self)
-                api.getSongRequest(fileName: song.fileName, song: song)
-            }
-            songsRef.setValue(songsList)
-        }) { error in
-            print(error.localizedDescription)
-        }
-   
+        DatabaseClass.saveAllSongs(songList: self.allSongs)
         super.viewWillDisappear(true)
     }
     
+    private func addTapGesture() {
+            tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture!)
+        }
+
+    private func removeTapGesture() {
+        if let tapGesture = tapGesture {
+            view.removeGestureRecognizer(tapGesture)
+            self.tapGesture = nil
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        addTapGesture()
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        removeTapGesture()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    // Dismiss the keyboard when the user taps outside of the search bar
+    @objc private func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredSongs.count
     }
@@ -134,7 +122,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Present the next view controller
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
-
+        
         let thisSong = self.filteredSongs[indexPath.row]
         playSongVC.song = thisSong
         var index = 0
@@ -144,6 +132,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
             }
             index += 1
         }
+        print("ABOUT TO PLAY SONG")
         playSongVC.localSongQueue = SongPlayer(index: index, songQueue: allSongs)
         playSongVC.localCurPlayList = "allSongs"
         playSongVC.song?.lastPlayed = Date().timeIntervalSinceReferenceDate
@@ -153,7 +142,19 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     // Deleting Song from downloaded
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let songToDelete = filteredSongs[indexPath.row]
             filteredSongs.remove(at: indexPath.row)
+            var index = 0
+            for song in allSongs {
+                if song == songToDelete {
+                    break
+                }
+                index += 1
+            }
+            allSongs.remove(at: index)
+            // delete song from allSongs
+            
+            
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

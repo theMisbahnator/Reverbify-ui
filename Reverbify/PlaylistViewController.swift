@@ -6,9 +6,6 @@
 //  Created by Pawan K Somavarpu on 3/25/23.
 //
 import UIKit
-import FirebaseDatabase
-import FirebaseAuth
-
 class PlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
@@ -18,13 +15,10 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var playlistImageView: UIImageView!
     
     var indexInDB: Int!
-    var database: DatabaseReference!
-    
     var playlist: Playlist!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "SongTableCell", bundle: nil), forCellReuseIdentifier: "SongTableCell")
@@ -35,6 +29,9 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     func everyLoad() {
         playlistName.text = playlist.title
         numberSongs.text = playlist.songs.count == 1 ? "\(playlist.songs.count) song" : "\(playlist.songs.count) songs"
+        if self.playlist.songs.count >= 1 {
+            self.playlist.thumbnailString = self.playlist.songs[0].thumbnail
+        }
         if let url = URL(string: playlist.thumbnailString) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
@@ -62,54 +59,16 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
-        print("VIEW DID APPEAR FOR PLAYLIST")
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
-        }
-        
-        let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
-        // Now, you can read in the user's songs list
-        playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var playlistList: [[String: Any]] = []
-            if let existingPlaylist = snapshot.value as? [[String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                playlistList = existingPlaylist
-            }
-            self.playlist = Playlist(body: playlistList[self.playlist.indexInDB], index: self.playlist.indexInDB)
+        DatabaseClass.getAllPlaylists { playlistList in
+            self.playlist = playlistList[self.playlist.indexInDB]
             self.everyLoad()
-            
-        }) { error in
-            print(error.localizedDescription)
         }
-   
         super.viewDidAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
-        }
-        
-        let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
-        // Now, you can read in the user's songs list
-        playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var playlistList: [[String: Any]] = []
-            if let existingPlaylist = snapshot.value as? [[String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                playlistList = existingPlaylist
-            }
-            if self.playlist.songs.count >= 1 {
-                self.playlist.thumbnailString = self.playlist.songs[0].thumbnail
-            }
-            playlistList[self.playlist.indexInDB] = self.playlist.convertToJSON()
-            playlistsRef.setValue(playlistList)
-            
-        }) { error in
-            print(error.localizedDescription)
-        }
-   
+       
+        DatabaseClass.saveThisPlaylist(playlist: self.playlist)
         super.viewWillDisappear(true)
     }
     
@@ -119,6 +78,8 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
             vc.playlist = self.playlist
         }
     }
+    
+    
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

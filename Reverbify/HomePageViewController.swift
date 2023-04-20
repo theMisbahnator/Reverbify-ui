@@ -7,20 +7,13 @@
 //
 
 import UIKit
-import FirebaseDatabase
-import FirebaseAuth
 
 var songLists:[SongData] = []
 var playlistLists:[PlaylistData] = []
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var myTable: UITableView!
-    
-    var database: DatabaseReference!
-
-
     override func viewDidLoad() {
-        self.database = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,74 +48,46 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let dispatchGroup = DispatchGroup()
         
         // Enter the Dispatch Group
-//        dispatchGroup.enter()
+        dispatchGroup.enter()
         
         // pull data
         let section_titles = ["Recently Played Songs", "Recently Downloaded", "Recently Played Playlist"]
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            // If the user isn't logged in, you can handle that error here
-            return
-        }
         songLists = []
+        playlistLists = []
         for section_title in section_titles {
+            dispatchGroup.enter()
             if section_title == "Recently Played Playlist" {
-                dispatchGroup.enter()
-                let playlistsRef = self.database.child("users").child(currentUserID).child("playlists")
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
-                
-               playlistLists = []
-                // Now, you can read in the user's songs list
-                playlistsRef.observeSingleEvent(of: .value, with: { snapshot in
-                    var playlistList: [[String: Any]] = []
-                    if let existingPlaylist = snapshot.value as? [[String: Any]] {
-                        // If the user's songs list already exists, append the new song to it
-                        playlistList = existingPlaylist
-                        var i = 0
-                        for playlist in playlistList {
-                            playListData.playlistLst.append(Playlist(body: playlist, index: i))
-                            i = i + 1
-                        }
-                        playListData.playlistLst.sort(by: {$0.lastPlayed > $1.lastPlayed })
-                        playlistLists.append(playListData)
-                        
-                    }
+                DatabaseClass.getAllPlaylists { playlistList in
+                    var lst = playlistList
+                    lst.sort(by: {$0.lastPlayed > $1.lastPlayed })
+                    playListData.playlistLst = lst
+                    playlistLists.append(playListData)
                     dispatchGroup.leave()
-                }) { error in
-                    dispatchGroup.leave() // leave
-                    print(error.localizedDescription)
                 }
             }
             else {
-                let songsRef = self.database.child("users").child(currentUserID).child("songs")
-                
-                var songlist:[Song] = []
-                // Now, you can read in the user's songs list
-                dispatchGroup.enter() // enter the Dispatch Group
-                songsRef.observeSingleEvent(of: .value, with: { snapshot in
-                    if let existingSongs = snapshot.value as? [[String: Any]] {
-                        for song in existingSongs {
-                            songlist.append(Song(body: song))
-                        }
-                        if section_title == "Recently Downloaded" {
-                            songlist.reverse()
-                        }
-                        else if section_title == "Recently Played Songs"{
-                            songlist.sort(by: {$0.lastPlayed > $1.lastPlayed })
-                        }
-                        songLists.append(SongData(sectionType: section_title, songlst: songlist))
+                DatabaseClass.getAllSongs { songs in
+                    var actualSongList = songs
+                    if section_title == "Recently Downloaded" {
+                        actualSongList.reverse()
                     }
-                    dispatchGroup.leave() // leave the Dispatch Group
-                }) { error in
-                    print(error.localizedDescription)
-                    dispatchGroup.leave() // leave the Dispatch Group in case of an error
+                    else if section_title == "Recently Played Songs"{
+                        actualSongList.sort(by: {$0.lastPlayed > $1.lastPlayed })
+                       
+                    }
+                    songLists.append(SongData(sectionType: section_title, songlst: actualSongList))
+                    dispatchGroup.leave()
                 }
             }
-//        let section_title = "Recently Played Playlist"
             
         }
+        
+        dispatchGroup.leave()
         // Wait for the Dispatch Group to finish
         dispatchGroup.notify(queue: DispatchQueue.main) {
             // All async tasks are done
+            
             if playlistLists.count == 0 && songLists.count == 0 {
                 let alertController = UIAlertController(title: "Welcome To Reverbify!", message: "Would you like to download your first song?", preferredStyle: .alert)
                 
