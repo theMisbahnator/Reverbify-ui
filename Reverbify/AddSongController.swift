@@ -32,6 +32,10 @@ class AddSongController: UIViewController, UITextFieldDelegate {
         optionalArtist.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        clearFields()
+        super.viewWillAppear(animated)
+    }
     
     @IBAction func onPitchChange(_ sender: Any) {
         pitchLabel.text = String(round(pitchSlider.value * 100) / 100)

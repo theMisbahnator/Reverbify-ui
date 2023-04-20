@@ -179,7 +179,6 @@ class SettingsController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        print("GOT HERE")
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
             return

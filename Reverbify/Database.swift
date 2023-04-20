@@ -28,14 +28,11 @@ class DatabaseClass {
             if let existingSongs = snapshot.value as? [String: [String: Any]] {
                 // If the user's songs list already exists, append the new song to it
                 songsList = existingSongs
-                print(songsList)
                 for key in songsList.keys {
                     if key == "count" {
                         continue
                     }
                     let song = songsList[key]!
-                    print("ABOUT TO PRINT SONG")
-                    print(song)
                     let thisSong = Song(body: song)
                     storage[key] = thisSong
                 }
@@ -58,34 +55,36 @@ class DatabaseClass {
         // Now, you can read in the user's songs list
         songsRef.observeSingleEvent(of: .value, with: { snapshot in
             var songsToSave: [String: [String: Any]] = [:]
-            var oldCount = 0
-            var oldLength = 0
+            var maxKey = 0
             for key in songList.keys {
                 if key == "count" {
                     continue
                 }
                 let song = songList[key]!
                 songsToSave[key] = song.convertToJSON()
+                maxKey = max(maxKey, Int(key)!)
             }
-            if let existingSongs = snapshot.value as? [String: [String: Any]] {
-                // If the user's songs list already exists, append the new song to it
-                if var countObject = songsToSave["count"] as? [String: Int] {
-                    if let temp = countObject["count"]  {
-                        oldCount = temp
-                        oldLength = existingSongs.count - 1
-                        songsToSave["count"] = ["count": oldCount + songsToSave.count - 1 - oldLength]
-                    }
-                    else {
-                        songsToSave["count"] = ["count": songsToSave.count]
-                    }
-                }
-                else {
-                    songsToSave["count"] = ["count": songsToSave.count]
-                }
-            }
+//            if let existingSongs = snapshot.value as? [String: [String: Any]] {
+//                // If the user's songs list already exists, append the new song to it
+//                if let countObject = songsToSave["count"] as? [String: Int] {
+//                    if let oldCount = countObject["count"]  {
+//                        print("GOT TO FOUDN COUNT")
+//                        let difference = max(0, songsToSave.count - existingSongs.count - 1)
+//                        songsToSave["count"] = ["count": oldCount + difference + 1]
+//                    }
+//                    else {
+//                        print("GOT TO NOT FOUND COUNT 1")
+//                        songsToSave["count"] = ["count": songsToSave.count]
+//                    }
+//                }
+//                else {
+//                    print("GOT TO NOT FOUND COUNT 2")
+//                    songsToSave["count"] = ["count": songsToSave.count]
+//                }
+//            }
             
             
-            
+            songsToSave["count"] = ["count" : maxKey + 1]
             songsRef.setValue(songsToSave)
             completion?()
         }) { error in
@@ -107,17 +106,21 @@ class DatabaseClass {
                 // If the user's songs list already exists, append the new song to it
                 songsList = existingSongs
             }
+            print("ABOUT TO PRINT NEW SONG SAVE")
+            print(songsList)
             if var countObject = songsList["count"] as? [String: Int] {
                 if let count = countObject["count"] {
+                    print("GOT TO CORRECT COUNT: \(count)")
                     songsList[String(count)] = body
                     countObject["count"] = count + 1
-                    songsList["count"] = countObject
+                    songsList["count"] = ["count": count + 1]
                 }
             } else {
                 songsList["count"] = ["count": 1]
                 songsList["0"] = body
             }
-            
+            print("FINAL SONG LIST")
+            print(songsList)
             // Finally, update the user's songs list in Firebase
             songsRef.setValue(songsList)
             

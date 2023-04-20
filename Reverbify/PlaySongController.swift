@@ -79,6 +79,10 @@ class PlaySongController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         setShuffleImage()
         setRepeatImage()
+//
+//        DatabaseClass.getAllSongs { song in
+//            SongReference.allSongs = song
+//        }
         super.viewWillAppear(animated)
     }
     
@@ -361,7 +365,7 @@ class PlaySongController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        DatabaseClass.saveAllSongs(songList: SongReference.allSongs)
+//        DatabaseClass.saveAllSongs(songList: SongReference.allSongs)
         super.viewWillDisappear(animated)
     }
     

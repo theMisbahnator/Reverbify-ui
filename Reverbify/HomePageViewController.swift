@@ -68,8 +68,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if section_title == "Recently Played Playlist" {
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
                 DatabaseClass.getAllPlaylists { playlistList in
-                    print("GOT TO 72")
-                    print(playlistList)
                     if playlistList.isEmpty {
                         return
                         
@@ -87,8 +85,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let actualSongDict = songs
                     var orderedDict:OrderedDictionary<String, Song> = [:]
                     SongReference.allSongs = songs
-                    print("GOT TO 86")
-                    print(songs)
                     if songs.isEmpty {
                         dispatchGroup.leave()
                         return

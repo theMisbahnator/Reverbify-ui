@@ -241,7 +241,7 @@ class ReverbifyAPIHandler {
     
     func transitionAllSongs(body : [String: Any], alertController: UIAlertController) {
         DispatchQueue.main.async {
-            print(body)
+
 //            let title = body["title"] as? String
 //            let author = body["author"] as? String
 //            let duration = body["duration"] as? String
@@ -252,12 +252,18 @@ class ReverbifyAPIHandler {
 //
             // create segue
             let tabBarVC = self.view.tabBarController
-            
+            if let tabBarController = self.view.tabBarController {
+                for navController in tabBarController.viewControllers as! [UINavigationController] {
+                    navController.popToRootViewController(animated: false)
+                }
+            }
 //            let s = Song(title: title!, author: author!, duration: duration!, signedUrl: signedUrl!, fileName: fileName!, timeStamp: timestamp!, thumbnail: thumbnail!)
 //            
 //            allSongs.append(s)
             
             // DO DATABASE
+            print("DO DATBASE")
+            print(SongReference.allSongs)
             DatabaseClass.saveNewSong(body:body) {
                 // close pop up and transition
                 alertController.dismiss(animated: true) {
@@ -276,7 +282,7 @@ class ReverbifyAPIHandler {
             message: msg,
             preferredStyle: .alert)
         
-        controller.addAction(UIAlertAction(title: "OK", style: .default))
+        controller.addAction(UIAlertAction(title: "OK", style: .destructive))
         
         view.present(controller, animated: true)
     }

@@ -70,9 +70,6 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         
         cell.author.text = currentPlaylist.getCountMatch()
         cell.author.numberOfLines = 3
-        
-        print(currentPlaylist.toString())
-        
         return cell
     }
     
