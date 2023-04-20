@@ -152,6 +152,7 @@ class DatabaseClass {
             }
         }) { error in
             print(error.localizedDescription)
+            completion(listOfPlaylists)
         }
     }
     
@@ -232,6 +233,7 @@ class DatabaseClass {
             playlistsRef.setValue(playlistList)
             completion()
         }) { error in
+            completion()
             print(error.localizedDescription)
         }
     }

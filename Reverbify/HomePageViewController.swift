@@ -64,13 +64,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         songLists = []
         playlistLists = []
         for section_title in section_titles {
-     
+
             if section_title == "Recently Played Playlist" {
-                dispatchGroup.enter()
+               
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
                 DatabaseClass.getAllPlaylists { playlistList in
+                    print("GOT TO 72")
+                    print(playlistList)
                     if playlistList.isEmpty {
-                        dispatchGroup.leave()
                         return
                         
                     }
@@ -78,7 +79,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     lst.sort(by: {$0.lastPlayed > $1.lastPlayed })
                     playListData.playlistLst = lst
                     playlistLists.append(playListData)
-                    dispatchGroup.leave()
                 }
             }
             else {
