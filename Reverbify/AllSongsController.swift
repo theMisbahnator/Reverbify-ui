@@ -78,7 +78,11 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         songsRef.observeSingleEvent(of: .value, with: { snapshot in
             var songsList: [[String: Any]] = []
             for song in self.allSongs {
-                songsList.append(song.convertToJSON())
+                let thisSong = song.convertToJSON()
+                songsList.append(thisSong)
+                // update signed url here
+                let api = ReverbifyAPIHandler(userName: "", view: self)
+                api.getSongRequest(fileName: song.fileName, song: song)
             }
             songsRef.setValue(songsList)
         }) { error in

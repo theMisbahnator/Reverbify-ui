@@ -78,13 +78,11 @@ class PlaySongController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         setShuffleImage()
         setRepeatImage()
-       
-        
         super.viewWillAppear(animated)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,7 +94,6 @@ class PlaySongController: UIViewController {
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
         songSlider.minimumValue = 0
         songSlider.maximumValue = song?.seconds ?? 0
-        let time = player?.currentTime()
         
         songSlider.value = 0
         queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
@@ -136,31 +133,41 @@ class PlaySongController: UIViewController {
             task.resume()
         }
         
-        // update signed url here
-        let api = ReverbifyAPIHandler(userName: "", view: self)
-        api.getSongRequest(fileName: song!.fileName, song: song!)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if let signedUrl = self.song?.signedUrl {
-                let url = NSURL(string: signedUrl)
-                self.localPlayerItem = AVPlayerItem(url: url! as URL)
-                self.localPlayer = AVPlayer(playerItem: self.localPlayerItem!)
-            }
+        if let signedUrl = self.song?.signedUrl {
+            let url = NSURL(string: signedUrl)
+            self.localPlayerItem = AVPlayerItem(url: url! as URL)
+            self.localPlayer = AVPlayer(playerItem: self.localPlayerItem!)
         }
     }
     
     
     @IBAction func onSliderChange(_ sender: Any) {
-        print(songSlider.value)
-        currentTime = Double(songSlider.value)
-        let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
-        player?.seek(to: targetTime)
-        makeTimeLabel()
+        // the idea is that when no player is loaded, switching to a particular time doesnt work
+        // since the song is loaded in the local player
+        if currentSong != song?.title {
+            if let signedUrl = self.song?.signedUrl {
+                let url = NSURL(string: signedUrl)
+                let playerItem = AVPlayerItem(url: url! as URL)
+                player = AVPlayer(playerItem: playerItem)
+            }
+            currentSong = song!.title
+            currentTime = Double(songSlider.value)
+            let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
+            player?.seek(to: targetTime)
+            makeTimeLabel()
+            songSlider.minimumValue = 0
+            songSlider.maximumValue = song?.seconds ?? 0
+        } else {
+            currentTime = Double(songSlider.value)
+            let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
+            player?.seek(to: targetTime)
+            makeTimeLabel()
+        }
     }
     
     func makeTimeLabel() {
         let time = player?.currentTime().seconds ?? 0
-        self.songTime.text = transformTime(time: time) + " / " + transformTime(time: maxTime)
+        self.songTime.text = transformTime(time: time) + " / " + transformTime(time: Double(song?.seconds ?? 0.0))
     }
     
     func transformTime(time: Double) -> String {
@@ -192,9 +199,11 @@ class PlaySongController: UIViewController {
     
     @IBAction func nextHit(_ sender: Any) {
         pauseSound()
-        nextSong()
+        self.nextSong()
+        print(currentSong)
         // load graphical details
         loadDetails()
+        isPlaying = true
         playSound()
     }
     
@@ -204,24 +213,31 @@ class PlaySongController: UIViewController {
         prevSong()
         // load graphical details
         loadDetails()
+        isPlaying = true
         playSound()
     }
     
     func loadDetails() {
+        // update signed url here
+        let api = ReverbifyAPIHandler(userName: "", view: self)
+        api.getSongRequest(fileName: song!.fileName, song: song!)
+
+        if let signedUrl = self.song?.signedUrl {
+            let url = NSURL(string: signedUrl)
+            playerItem = AVPlayerItem(url: url! as URL)
+            player = AVPlayer(playerItem: playerItem!)
+        }
+        
         songTitle.text = song?.title
         songAuthor.text = song?.author
         songTimeStamp.text = song?.timeStamp
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
         songSlider.minimumValue = 0
         songSlider.maximumValue = song?.seconds ?? 0
-        let time = player?.currentTime()
         
         songSlider.value = 0
         queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
-        queue.async {
-            self.countUp()
-        }
         
         playSong.setImage(UIImage(named: "pausesvg"), for: .normal)
         
@@ -244,17 +260,6 @@ class PlaySongController: UIViewController {
             task.resume()
         }
         
-        // update signed url here
-        let api = ReverbifyAPIHandler(userName: "", view: self)
-        api.getSongRequest(fileName: song!.fileName, song: song!)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if let signedUrl = self.song?.signedUrl {
-                let url = NSURL(string: signedUrl)
-                playerItem = AVPlayerItem(url: url! as URL)
-                player = AVPlayer(playerItem: playerItem!)
-            }
-        }
     }
     
     
@@ -271,6 +276,7 @@ class PlaySongController: UIViewController {
             songQueue = localSongQueue!
         }
         song = songQueue.prevSong()
+        currentSong = song!.title
     }
     
     func playSound() {
@@ -295,12 +301,10 @@ class PlaySongController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // inView = false
     }
     
     func countUp() {
-        var switchSongs = false
-        while isPlaying && (player?.currentTime().seconds ?? 0) < maxTime && inView {
+        while isPlaying && (player?.currentTime().seconds ?? 0) < Double(song?.seconds ?? 0.0) {
             if (player?.currentTime().seconds ?? 0) != 0 {
                 usleep(1000000)
                 DispatchQueue.main.async {
@@ -313,10 +317,10 @@ class PlaySongController: UIViewController {
                 case .paused:
                     print("Player is paused")
                     isPlaying = false
-                case .playing:
-                    print("Player is playing")
                 case .waitingToPlayAtSpecifiedRate:
                     print("Player is waiting to begin playback")
+                case .playing:
+                    isPlaying = true
                 @unknown default:
                     fatalError("Unexpected time control status")
                 }

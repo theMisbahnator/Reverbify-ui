@@ -27,10 +27,11 @@ class SongPlayer {
     }
     
     func nextSong() -> Song {
-        var song = nextSongNormal()
         if isRepeat {
             return songList[index]
-        } else if forwardHistory.count > 0 {
+        } 
+        var song = nextSongNormal()
+        if forwardHistory.count > 0 {
             return forwardHistory.removeLast()
         } else if isRandom {
             song = nextSongRandom()
@@ -43,10 +44,12 @@ class SongPlayer {
         if isRepeat {
             return songList[index]
         }
+        index -= 1
         var song = songList[index]
         if isRandom {
             song = songList[shuffledIndices[randIndex]]
         }
+        
         forwardHistory.append(song)
         
         if history.count == 0 {
