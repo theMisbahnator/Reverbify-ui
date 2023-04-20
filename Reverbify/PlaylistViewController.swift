@@ -28,10 +28,10 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     
     func everyLoad() {
         playlistName.text = playlist.title
-        numberSongs.text = playlist.songs.count == 1 ? "\(playlist.songs.count) song" : "\(playlist.songs.count) songs"
-        if self.playlist.songs.count >= 1 {
-            self.playlist.thumbnailString = self.playlist.songs[0].thumbnail
-        }
+        let count = playlist.calculateCount()
+        numberSongs.text = count == 1 ? "\(count) song" : "\(count) songs"
+        playlist.resetThumbnail()
+        
         if let url = URL(string: playlist.thumbnailString) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
@@ -58,12 +58,12 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         }
         tableView.reloadData()
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         DatabaseClass.getAllPlaylists { playlistList in
             self.playlist = playlistList[self.playlist.indexInDB]
             self.everyLoad()
         }
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,16 +80,29 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    
+    func calculateCount() -> Int {
+        var subtract = 0
+        
+        for key in playlist.songs {
+            if SongReference.getSong(key: key).isEmpty() {
+                subtract += 1
+            }
+        }
+        
+        return playlist.songs.count - subtract
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playlist.songs.count
+        return playlist.calculateCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongTableCell", for: indexPath) as! SongTableCell
-        let song = playlist.songs[indexPath.row]
+        let song = SongReference.getSong(key: playlist.songs[indexPath.row])
         
+        if song.isEmpty() {
+            return cell
+        }
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         cell.title.text = song.title
@@ -99,7 +112,7 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
 
         //cell.thumbnail.image = image
         
-        if let url = URL(string: playlist.songs[indexPath.row].thumbnail) {
+        if let url = URL(string: song.thumbnail) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error downloading image: \(error.localizedDescription)")
@@ -125,7 +138,7 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         // Present the next view controller
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
 
-        playSongVC.song = playlist.songs[indexPath.row]
+        playSongVC.song = SongReference.getSong(key: playlist.songs[indexPath.row])
         playSongVC.localSongQueue = SongPlayer(index: indexPath.row, songQueue: playlist.songs)
         playSongVC.localCurPlayList = playlist.title
         playlist.lastPlayed = Date().timeIntervalSinceReferenceDate

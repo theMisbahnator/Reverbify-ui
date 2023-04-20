@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import OrderedCollections
+import FirebaseAuth
 
 var songLists:[SongData] = []
 var playlistLists:[PlaylistData] = []
+
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var myTable: UITableView!
     override func viewDidLoad() {
+//        do {
+//            try Auth.auth().signOut()
+//            self.performSegue(withIdentifier: "logoutSegue", sender: nil)
+//        } catch {
+//            print("Sign out error")
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,7 +52,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.tintColor = .white
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // Create a Dispatch Group
         let dispatchGroup = DispatchGroup()
         
@@ -55,29 +64,49 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         songLists = []
         playlistLists = []
         for section_title in section_titles {
-            dispatchGroup.enter()
+
             if section_title == "Recently Played Playlist" {
+               
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
                 DatabaseClass.getAllPlaylists { playlistList in
+                    print("GOT TO 72")
+                    print(playlistList)
+                    if playlistList.isEmpty {
+                        return
+                        
+                    }
                     var lst = playlistList
                     lst.sort(by: {$0.lastPlayed > $1.lastPlayed })
                     playListData.playlistLst = lst
                     playlistLists.append(playListData)
-                    dispatchGroup.leave()
+                    self.myTable.reloadData()
                 }
             }
             else {
+                dispatchGroup.enter()
                 DatabaseClass.getAllSongs { songs in
-                    var actualSongList = songs
+                    let actualSongDict = songs
+                    var orderedDict:OrderedDictionary<String, Song> = [:]
+                    SongReference.allSongs = songs
+                    print("GOT TO 86")
+                    print(songs)
+                    if songs.isEmpty {
+                        dispatchGroup.leave()
+                        return
+                    }
                     if section_title == "Recently Downloaded" {
-                        actualSongList.reverse()
+                       let sortedArray = actualSongDict.sorted(by: {$0.key > $1.key})
+                       orderedDict =  OrderedDictionary(uniqueKeysWithValues: sortedArray)
+                    
                     }
                     else if section_title == "Recently Played Songs"{
-                        actualSongList.sort(by: {$0.lastPlayed > $1.lastPlayed })
+                       let sortedArray = actualSongDict.sorted(by: {$0.value.lastPlayed > $1.value.lastPlayed })
+                       orderedDict = OrderedDictionary(uniqueKeysWithValues: sortedArray)
                        
                     }
-                    songLists.append(SongData(sectionType: section_title, songlst: actualSongList))
+                    songLists.append(SongData(sectionType: section_title, songlst: orderedDict))
                     dispatchGroup.leave()
+                    self.myTable.reloadData()
                 }
             }
             
@@ -87,7 +116,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Wait for the Dispatch Group to finish
         dispatchGroup.notify(queue: DispatchQueue.main) {
             // All async tasks are done
-            
+            print("COUNTS")
+            print(playlistLists.count)
+            print(songLists.count)
             if playlistLists.count == 0 && songLists.count == 0 {
                 let alertController = UIAlertController(title: "Welcome To Reverbify!", message: "Would you like to download your first song?", preferredStyle: .alert)
                 
@@ -108,14 +139,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.myTable.reloadData()
         }
         
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "playSong" {
             if let nextVC = segue.destination as? PlaySongController {
-                let song = sender as! Song
-                let singleSong : [Song] = [song]
-                nextVC.song = song
+                let song = sender as! String
+                let singleSong : [String] = [song]
+                nextVC.song = SongReference.getSong(key: song)
                 nextVC.localSongQueue = SongPlayer(index: 0, songQueue: singleSong)
                 nextVC.localCurPlayList = "home page"
             }

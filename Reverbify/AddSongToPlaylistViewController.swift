@@ -10,10 +10,9 @@ import UIKit
 class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableView: UITableView!
-    var allSongs : [Song] = []
     var loadCount = 0
-    var selectedSongs : [Song] = []
-    
+    var selectedSongs : [String] = []
+    var availableSongs: [String] = []
     var playlist : Playlist!
     
     override func viewDidLoad() {
@@ -26,7 +25,14 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
     
     override func viewWillAppear(_ animated: Bool) {
         DatabaseClass.getAllSongs { songs in
-            self.allSongs = songs
+            SongReference.allSongs = songs
+            let currentKeys = self.playlist.songs
+            for key in songs.keys {
+                if !currentKeys.contains(key) {
+                    self.availableSongs.append(key)
+                }
+                    
+            }
             self.tableView.reloadData()
         }
         
@@ -41,19 +47,20 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allSongs.count
+        return availableSongs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongTableCell", for: indexPath as IndexPath) as! SongTableCell
         let row = indexPath.row
-        
+    
+        var song = SongReference.getSong(key: availableSongs[row])
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        cell.title.text = self.allSongs[row].title
+        cell.title.text = song.title
         cell.title.numberOfLines = 2
         
-        if let url = URL(string: self.allSongs[row].thumbnail) {
+        if let url = URL(string: song.thumbnail) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error downloading image: \(error.localizedDescription)")
@@ -73,7 +80,7 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         }
         
         
-        cell.author.text = self.allSongs[row].author
+        cell.author.text = song.author
         cell.author.numberOfLines = 3
         
         return cell
@@ -82,16 +89,14 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.selectionStyle = .default
-        selectedSongs.append(allSongs[indexPath.row])
+        selectedSongs.append(availableSongs[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-        let index = selectedSongs.firstIndex(of: allSongs[indexPath.row])
+        let index = selectedSongs.firstIndex(of: availableSongs[indexPath.row])
         selectedSongs.remove(at: index!)
-        
-        
     }
     
 

@@ -1,3 +1,4 @@
+import Foundation
 class Song: Equatable {
     static func == (lhs: Song, rhs: Song) -> Bool {
         return lhs.title == rhs.title && lhs.author == rhs.author && lhs.duration == rhs.duration && lhs.signedUrl == rhs.signedUrl && lhs.fileName == rhs.fileName
@@ -14,6 +15,13 @@ class Song: Equatable {
     
     var lastPlayed = 0.0
     
+    func isEmpty() -> Bool {
+        return title.isEmpty && author.isEmpty && duration.isEmpty && signedUrl.isEmpty && fileName.isEmpty && timeStamp.isEmpty && thumbnail.isEmpty
+    }
+    
+    func setLastPlayed() {
+        lastPlayed = Date().timeIntervalSinceReferenceDate
+    }
     init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
         self.title = title
         self.author = author

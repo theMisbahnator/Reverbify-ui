@@ -81,6 +81,8 @@
 		C9BE070029B165C0006A6ABD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */; };
 		C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D3A9C229B84A2F00817F16 /* RegisterController.swift */; };
 		C9F8935329F0741E0045E5AF /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8935229F0741E0045E5AF /* Database.swift */; };
+		C9F8935529F0C3140045E5AF /* SongReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8935429F0C3140045E5AF /* SongReference.swift */; };
+		C9F8935829F0C9370045E5AF /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = C9F8935729F0C9370045E5AF /* OrderedCollections */; };
 		D200038D29ADF4B0001F8105 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200038C29ADF4B0001F8105 /* LoginViewController.swift */; };
 		D2162D6029CD167B006D4527 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2162D5F29CD167B006D4527 /* AVFoundation.framework */; };
 		D23E58D829ADC08D00D17EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23E58D729ADC08D00D17EA7 /* SceneDelegate.swift */; };
@@ -149,6 +151,7 @@
 		C9BE06FF29B165C0006A6ABD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9D3A9C229B84A2F00817F16 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		C9F8935229F0741E0045E5AF /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		C9F8935429F0C3140045E5AF /* SongReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongReference.swift; sourceTree = "<group>"; };
 		D200038C29ADF4B0001F8105 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2162D5F29CD167B006D4527 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D23E58D229ADC08D00D17EA7 /* Reverbify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reverbify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +187,7 @@
 				C92E55CD29B105290032428B /* FirebaseFunctionsCombine-Community in Frameworks */,
 				C92E55C529B105290032428B /* FirebaseFirestore in Frameworks */,
 				C92E55B129B105290032428B /* FirebaseAnalyticsSwift in Frameworks */,
+				C9F8935829F0C9370045E5AF /* OrderedCollections in Frameworks */,
 				C92E55AD29B105290032428B /* FirebaseAnalytics in Frameworks */,
 				C92E55AF29B105290032428B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				C92E55D529B105290032428B /* FirebaseMLModelDownloader in Frameworks */,
@@ -295,6 +299,7 @@
 				D200038C29ADF4B0001F8105 /* LoginViewController.swift */,
 				C99B6D7629B7EFA9004864B5 /* SettingsController.swift */,
 				C9F8935229F0741E0045E5AF /* Database.swift */,
+				C9F8935429F0C3140045E5AF /* SongReference.swift */,
 				C98B30F929DA029700EEF45C /* ChangePasswordController.swift */,
 				C92E55ED29B137230032428B /* GothicA1-Black.ttf */,
 				C92E55EB29B137230032428B /* GothicA1-Bold.ttf */,
@@ -386,6 +391,7 @@
 				C92E55DC29B105290032428B /* FirebaseRemoteConfigSwift */,
 				C92E55DE29B105290032428B /* FirebaseStorage */,
 				C92E55E029B105290032428B /* FirebaseStorageCombine-Community */,
+				C9F8935729F0C9370045E5AF /* OrderedCollections */,
 			);
 			productName = Reverbify;
 			productReference = D23E58D229ADC08D00D17EA7 /* Reverbify.app */;
@@ -461,6 +467,7 @@
 			mainGroup = D23E58C929ADC08D00D17EA7;
 			packageReferences = (
 				C92E55AB29B105290032428B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C9F8935629F0C9370045E5AF /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = D23E58D329ADC08D00D17EA7 /* Products */;
 			projectDirPath = "";
@@ -540,6 +547,7 @@
 				C98B30FA29DA029700EEF45C /* ChangePasswordController.swift in Sources */,
 				C9D3A9C329B84A2F00817F16 /* RegisterController.swift in Sources */,
 				1914B58629B82446002D08B4 /* ItemCell.swift in Sources */,
+				C9F8935529F0C3140045E5AF /* SongReference.swift in Sources */,
 				35BC817429D15E150046C0EC /* PlaylistViewController.swift in Sources */,
 				19AAF87B29D0D49200BDAB02 /* MyCollectionViewCell.swift in Sources */,
 				C98B30F829D9E98100EEF45C /* SliderTableViewCell.swift in Sources */,
@@ -918,6 +926,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		C9F8935629F0C9370045E5AF /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1055,6 +1071,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C92E55AB29B105290032428B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		C9F8935729F0C9370045E5AF /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9F8935629F0C9370045E5AF /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 /* End XCSwiftPackageProductDependency section */
 
