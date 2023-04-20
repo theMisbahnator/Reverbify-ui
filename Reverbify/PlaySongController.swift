@@ -152,6 +152,7 @@ class PlaySongController: UIViewController {
                 player = AVPlayer(playerItem: playerItem)
             }
             currentSong = song!.title
+            currentPlayList = localCurPlayList!
             currentTime = Double(songSlider.value)
             let targetTime = CMTime(seconds: Double(songSlider.value), preferredTimescale: 1)
             player?.seek(to: targetTime)
@@ -264,16 +265,75 @@ class PlaySongController: UIViewController {
     
     
     func nextSong() {
-        if localCurPlayList! != currentPlayList {
-            songQueue = localSongQueue!
+        if songQueue.isRepeat {
+            songSlider.minimumValue = 0
+            songSlider.maximumValue = song?.seconds ?? 0
+            songSlider.value = 0
+            currentTime = Double(songSlider.value)
+            let targetTime = CMTime(seconds: Double(0), preferredTimescale: 1)
+            player?.seek(to: targetTime)
+            makeTimeLabel()
+            if localCurPlayList! != currentPlayList {
+                songQueue = localSongQueue!
+            }
+            return 
+        }
+        if (localCurPlayList ?? "") != currentPlayList {
+            songQueue.index = localSongQueue!.index
+            songQueue.isRandom = localSongQueue!.isRandom
+            songQueue.isRepeat = localSongQueue!.isRepeat
+            songQueue.randIndex = localSongQueue!.randIndex
+            songQueue.shuffledIndices = localSongQueue!.shuffledIndices
+            songQueue.songList = localSongQueue!.songList
+            songQueue.startingIndex = localSongQueue!.startingIndex
+        } else {
+            if songQueue.songList.count == 0 {
+                songQueue.index = localSongQueue!.index
+                songQueue.isRandom = localSongQueue!.isRandom
+                songQueue.isRepeat = localSongQueue!.isRepeat
+                songQueue.randIndex = localSongQueue!.randIndex
+                songQueue.shuffledIndices = localSongQueue!.shuffledIndices
+                songQueue.songList = localSongQueue!.songList
+                songQueue.startingIndex = localSongQueue!.startingIndex
+            }
         }
         song = songQueue.nextSong()
         currentSong = song!.title
     }
     
     func prevSong() {
-        if localCurPlayList! != currentPlayList {
-            songQueue = localSongQueue!
+        if songQueue.isRepeat {
+            songSlider.minimumValue = 0
+            songSlider.maximumValue = song?.seconds ?? 0
+            songSlider.value = 0
+            currentTime = Double(songSlider.value)
+            let targetTime = CMTime(seconds: Double(0), preferredTimescale: 1)
+            player?.seek(to: targetTime)
+            makeTimeLabel()
+            if localCurPlayList! != currentPlayList {
+                songQueue = localSongQueue!
+            }
+            return
+        }
+        
+        if (localCurPlayList ?? "") != currentPlayList {
+            songQueue.index = localSongQueue!.index
+            songQueue.isRandom = localSongQueue!.isRandom
+            songQueue.isRepeat = localSongQueue!.isRepeat
+            songQueue.randIndex = localSongQueue!.randIndex
+            songQueue.shuffledIndices = localSongQueue!.shuffledIndices
+            songQueue.songList = localSongQueue!.songList
+            songQueue.startingIndex = localSongQueue!.startingIndex
+        } else {
+            if songQueue.songList.count == 0 {
+                songQueue.index = localSongQueue!.index
+                songQueue.isRandom = localSongQueue!.isRandom
+                songQueue.isRepeat = localSongQueue!.isRepeat
+                songQueue.randIndex = localSongQueue!.randIndex
+                songQueue.shuffledIndices = localSongQueue!.shuffledIndices
+                songQueue.songList = localSongQueue!.songList
+                songQueue.startingIndex = localSongQueue!.startingIndex
+            }
         }
         song = songQueue.prevSong()
         currentSong = song!.title
@@ -283,6 +343,7 @@ class PlaySongController: UIViewController {
         if currentSong != songTitle.text {
             player = localPlayer
         }
+        currentPlayList = localCurPlayList!
         isPlaying = true
         maxTime = Double(song?.seconds ?? 0.0)
         currentSong = songTitle.text ?? ""

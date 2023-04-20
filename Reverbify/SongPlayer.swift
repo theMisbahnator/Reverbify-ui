@@ -8,8 +8,6 @@
 class SongPlayer {
     var songList: [String]
     var shuffledIndices: [Int]
-    var forwardHistory: [Song] = []
-    var history: [Song] = []
     var startingIndex: Int = 0
     var index: Int = 0
     var randIndex: Int = 0
@@ -27,38 +25,30 @@ class SongPlayer {
     }
     
     func nextSong() -> Song {
-        var song = nextSongNormal()
+        print(isRepeat)
+        print(index)
         if isRepeat {
             return SongReference.getSong(key: songList[index])
-        } else if forwardHistory.count > 0 {
-            return forwardHistory.removeLast()
-        } else if isRandom {
-            song = nextSongRandom()
         }
-        history.append(song)
-        return song
+        if isRandom {
+            return nextSongRandom()
+        }
+        return nextSongNormal()
     }
     
     func prevSong() -> Song {
         if isRepeat {
             return SongReference.getSong(key: songList[index])
         }
-        index -= 1
-        var song = SongReference.getSong(key: songList[index])
         if isRandom {
-            song = SongReference.getSong(key: songList[shuffledIndices[randIndex]])
+            return prevSongRandom()
         }
         
-        forwardHistory.append(song)
-        
-        if history.count == 0 {
-            return song
-        }
-        
-        return history.removeLast()
+        return prevSongNormal()
     }
     
     func nextSongNormal() -> Song {
+        print(songList)
         let song = SongReference.getSong(key: songList[index])
         index += 1
         if (index >= songList.count) {
@@ -72,6 +62,24 @@ class SongPlayer {
         randIndex += 1
         if randIndex == shuffledIndices.count {
             shuffleIndices()
+        }
+        return song
+    }
+    
+    func prevSongRandom() -> Song {
+        let song = SongReference.getSong(key: songList[shuffledIndices[randIndex]])
+        randIndex -= 1
+        if randIndex < 0 {
+            shuffleIndices()
+        }
+        return song
+    }
+    
+    func prevSongNormal() -> Song {
+        let song = SongReference.getSong(key: songList[index])
+        index -= 1
+        if (index < 0) {
+            index = songList.count - 1
         }
         return song
     }
