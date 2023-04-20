@@ -361,6 +361,7 @@ class PlaySongController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        DatabaseClass.saveAllSongs(songList: SongReference.allSongs)
         super.viewWillDisappear(animated)
     }
     
@@ -385,6 +386,8 @@ class PlaySongController: UIViewController {
                     print("Player is waiting to begin playback")
                 case .playing:
                     isPlaying = true
+                    song?.setLastPlayed()
+                    //DatabaseClass.saveAllSongs(songList: SongReference.allSongs)
                 @unknown default:
                     fatalError("Unexpected time control status")
                 }

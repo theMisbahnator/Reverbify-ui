@@ -47,7 +47,7 @@ class DatabaseClass {
         }
     }
 
-    
+
     static func saveAllSongs(songList: OrderedDictionary<String, Song>, completion: (() -> Void)? = nil) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
@@ -92,7 +92,6 @@ class DatabaseClass {
             print(error.localizedDescription)
         }
     }
-    
     static func saveNewSong(body: [String:Any], completion: (() -> Void)? = nil) {
         // Then, you'll want to get a reference to the user's songs list
         guard let currentUserID = Auth.auth().currentUser?.uid else {

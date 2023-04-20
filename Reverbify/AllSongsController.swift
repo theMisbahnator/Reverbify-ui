@@ -32,8 +32,10 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
 //       view.addGestureRecognizer(tapGesture)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-
+    override func viewWillAppear(_ animated: Bool) {
+        if let searchBarTextField = searchBar.value(forKey: "searchField") as? UITextField {
+            searchBarTextField.text = ""
+        }
         DatabaseClass.getAllSongs { songs in
             let sortedArray = songs.sorted(by: {$0.key > $1.key})
             let orderedDict = OrderedDictionary(uniqueKeysWithValues: sortedArray)
@@ -42,7 +44,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
             self.tableView.reloadData()
         }
 
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -136,7 +138,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         }
         playSongVC.localSongQueue = SongPlayer(index: index, songQueue: Array(SongReference.allSongs.keys))
         playSongVC.localCurPlayList = "allSongs"
-        playSongVC.song?.lastPlayed = Date().timeIntervalSinceReferenceDate
+        playSongVC.song?.setLastPlayed()
         navigationController?.pushViewController(playSongVC, animated: true)
     }
     
@@ -154,7 +156,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        self.filteredSongs = [:]
         for key in SongReference.allSongs.keys {
             if key == "count" {
                 continue

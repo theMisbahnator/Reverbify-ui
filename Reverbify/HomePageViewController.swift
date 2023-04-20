@@ -52,7 +52,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.tintColor = .white
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // Create a Dispatch Group
         let dispatchGroup = DispatchGroup()
         
@@ -79,6 +79,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     lst.sort(by: {$0.lastPlayed > $1.lastPlayed })
                     playListData.playlistLst = lst
                     playlistLists.append(playListData)
+                    self.myTable.reloadData()
                 }
             }
             else {
@@ -105,6 +106,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                     songLists.append(SongData(sectionType: section_title, songlst: orderedDict))
                     dispatchGroup.leave()
+                    self.myTable.reloadData()
                 }
             }
             
@@ -137,7 +139,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.myTable.reloadData()
         }
         
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "playSong" {

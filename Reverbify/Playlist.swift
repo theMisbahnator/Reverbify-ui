@@ -1,5 +1,5 @@
 import UIKit
-class Playlist {
+class Playlist: Equatable {
     let defaultPlaylistImage = "music-solid"
     var title : String
 //    var thumbnail: UIImage
@@ -8,6 +8,13 @@ class Playlist {
     var indexInDB: Int = 0
     var lastPlayed = 0.0
     var nextSongNumber = 0
+    
+    static func == (lhs: Playlist, rhs: Playlist) -> Bool {
+        lhs.resetThumbnail()
+        rhs.resetThumbnail()
+        return lhs.title == rhs.title && lhs.thumbnailString == rhs.thumbnailString && lhs.songs == rhs.songs && lhs.indexInDB == rhs.indexInDB
+    }
+    
     init(title: String, thumbnail: String, songs: [String]) {
         self.title = title
 //        self.thumbnail = UIImage(named: defaultPlaylistImage)!
@@ -16,7 +23,9 @@ class Playlist {
         
 //        getThumbnail(thumbnail: thumbnailString)
     }
-    
+    func getCountMatch() -> String {
+        return "\(self.calculateCount()) songs"
+    }
     func calculateCount() -> Int {
         var toRemove:[String] = []
         for key in self.songs {
