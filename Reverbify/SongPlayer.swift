@@ -43,10 +43,12 @@ class SongPlayer {
         if isRepeat {
             return SongReference.getSong(key: songList[index])
         }
+        index -= 1
         var song = SongReference.getSong(key: songList[index])
         if isRandom {
             song = SongReference.getSong(key: songList[shuffledIndices[randIndex]])
         }
+        
         forwardHistory.append(song)
         
         if history.count == 0 {

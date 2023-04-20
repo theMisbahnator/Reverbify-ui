@@ -13,6 +13,9 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
     var allPlaylists : [Playlist] = []
     private var tapGesture: UITapGestureRecognizer?
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +23,9 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(nib, forCellReuseIdentifier: "SongTableCell")
         tableView.delegate = self
         tableView.dataSource = self
+        
+        searchBar.layer.borderColor = UIColor.white.cgColor
+        searchBar.layer.borderWidth = 0
         // Do any additional setup after loading the view.
     }
     
