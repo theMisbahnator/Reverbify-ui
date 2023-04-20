@@ -19,14 +19,8 @@ class AddPlaylistViewController: UIViewController {
     
     
     @IBAction func addPlaylist(_ sender: Any) {
-        
-        let newPlaylist: [String: Any] = [
-            "title": playlistName.text!,
-            "thumbnail": "",
-            "songs": []
-        ]
-
-        DatabaseClass.addNewPlaylist(newPlaylist: newPlaylist) {
+        var playlist = Playlist(title: playlistName.text!, thumbnail: "", songs: [])
+        DatabaseClass.addNewPlaylist(newPlaylist: playlist) {
             self.navigationController?.popViewController(animated: true)
         }
     }

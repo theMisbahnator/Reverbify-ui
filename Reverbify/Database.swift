@@ -9,40 +9,46 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import UIKit
-
+import OrderedCollections
 class DatabaseClass {
     static var database: DatabaseReference! = Database.database(url: "https://reverbify-b9e19-default-rtdb.firebaseio.com/").reference()
     
-    static func getAllSongs(completion: @escaping ([Song]) -> Void) {
+    static func getAllSongs(completion: @escaping (OrderedDictionary<String,Song>) -> Void) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
-            completion([])
+            completion([:])
             return
         }
         
         let songsRef = self.database.child("users").child(currentUserID).child("songs")
-        var storage: [Song] = []
+        var storage: OrderedDictionary<String, Song> = [:]
         // Now, you can read in the user's songs list
         songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            if let existingSongs = snapshot.value as? [[String: Any]] {
+            var songsList: [String: [String: Any]] = [:]
+            if let existingSongs = snapshot.value as? [String: [String: Any]] {
                 // If the user's songs list already exists, append the new song to it
                 songsList = existingSongs
                 print(songsList)
-                for song in songsList {
+                for key in songsList.keys {
+                    if key == "count" {
+                        continue
+                    }
+                    let song = songsList[key]!
+                    print("ABOUT TO PRINT SONG")
+                    print(song)
                     let thisSong = Song(body: song)
-                    storage.append(thisSong)
+                    storage[key] = thisSong
                 }
             }
             completion(storage)
         }) { error in
             print(error.localizedDescription)
-            completion([])
+            completion([:])
         }
     }
 
     
-    static func saveAllSongs(songList: [Song], completion: (() -> Void)? = nil) {
+    static func saveAllSongs(songList: OrderedDictionary<String, Song>, completion: (() -> Void)? = nil) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
             return
@@ -51,11 +57,36 @@ class DatabaseClass {
         let songsRef = self.database.child("users").child(currentUserID).child("songs")
         // Now, you can read in the user's songs list
         songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            for song in songList {
-                songsList.append(song.convertToJSON())
+            var songsToSave: [String: [String: Any]] = [:]
+            var oldCount = 0
+            var oldLength = 0
+            for key in songList.keys {
+                if key == "count" {
+                    continue
+                }
+                let song = songList[key]!
+                songsToSave[key] = song.convertToJSON()
             }
-            songsRef.setValue(songsList)
+            if let existingSongs = snapshot.value as? [String: [String: Any]] {
+                // If the user's songs list already exists, append the new song to it
+                if var countObject = songsToSave["count"] as? [String: Int] {
+                    if let temp = countObject["count"]  {
+                        oldCount = temp
+                        oldLength = existingSongs.count - 1
+                        songsToSave["count"] = ["count": oldCount + songsToSave.count - 1 - oldLength]
+                    }
+                    else {
+                        songsToSave["count"] = ["count": songsToSave.count]
+                    }
+                }
+                else {
+                    songsToSave["count"] = ["count": songsToSave.count]
+                }
+            }
+            
+            
+            
+            songsRef.setValue(songsToSave)
             completion?()
         }) { error in
             print(error.localizedDescription)
@@ -72,12 +103,22 @@ class DatabaseClass {
 
         // Now, you can read in the user's songs list
         songsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var songsList: [[String: Any]] = []
-            if let existingSongs = snapshot.value as? [[String: Any]] {
+            var songsList: [String: [String: Any]] = [:]
+            if let existingSongs = snapshot.value as? [String: [String: Any]] {
                 // If the user's songs list already exists, append the new song to it
                 songsList = existingSongs
             }
-            songsList.append(body)
+            if var countObject = songsList["count"] as? [String: Int] {
+                if let count = countObject["count"] {
+                    songsList[String(count)] = body
+                    countObject["count"] = count + 1
+                    songsList["count"] = countObject
+                }
+            } else {
+                songsList["count"] = ["count": 1]
+                songsList["0"] = body
+            }
+            
             // Finally, update the user's songs list in Firebase
             songsRef.setValue(songsList)
             
@@ -115,7 +156,7 @@ class DatabaseClass {
     }
     
     
-    static func addSongstoPlaylist(selectedSongs: [Song], playlistIndex: Int, completion: (() -> Void)? = nil) {
+    static func addSongstoPlaylist(selectedSongs: [String], playlistIndex: Int, completion: (() -> Void)? = nil) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
             return
@@ -129,13 +170,13 @@ class DatabaseClass {
                 // If the user's songs list already exists, append the new song to it
                 playlistsList = existingPlaylist
                 let currPlaylist = playlistsList[playlistIndex]
-                var currSongs = []
-                if let songs = currPlaylist["songs"] as? Array<[String: Any]> {
+                var currSongs:[String] = []
+                if let songs = currPlaylist["songs"] as? [String] {
                     currSongs = songs
                 }
                
                 for song in selectedSongs {
-                    currSongs.append(song.convertToJSON())
+                    currSongs.append(song)
                 }
                 
                 playlistsList[playlistIndex]["songs"] = currSongs
@@ -168,7 +209,7 @@ class DatabaseClass {
         }
     }
     
-    static func addNewPlaylist(newPlaylist:[String: Any], completion: @escaping (() -> Void)) {
+    static func addNewPlaylist(newPlaylist: Playlist, completion: @escaping (() -> Void)) {
         // Then, you'll want to get a reference to the user's songs list
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             // If the user isn't logged in, you can handle that error here
@@ -185,7 +226,7 @@ class DatabaseClass {
                 // If the user's songs list already exists, append the new song to it
                 playlistList = existingPlaylist
             }
-            playlistList.append(newPlaylist)
+            playlistList.append(newPlaylist.convertToJSON())
 
             // Finally, update the user's songs list in Firebase
             playlistsRef.setValue(playlistList)

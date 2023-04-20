@@ -6,7 +6,7 @@
 //
 
 class SongPlayer {
-    var songList: [Song]
+    var songList: [String]
     var shuffledIndices: [Int]
     var forwardHistory: [Song] = []
     var history: [Song] = []
@@ -16,7 +16,7 @@ class SongPlayer {
     var isRandom: Bool
     var isRepeat : Bool
     
-    init(index: Int, songQueue: [Song]) {
+    init(index: Int, songQueue: [String]) {
         self.startingIndex = index
         self.index = index
         self.songList = songQueue
@@ -29,7 +29,7 @@ class SongPlayer {
     func nextSong() -> Song {
         var song = nextSongNormal()
         if isRepeat {
-            return songList[index]
+            return SongReference.getSong(key: songList[index])
         } else if forwardHistory.count > 0 {
             return forwardHistory.removeLast()
         } else if isRandom {
@@ -41,11 +41,11 @@ class SongPlayer {
     
     func prevSong() -> Song {
         if isRepeat {
-            return songList[index]
+            return SongReference.getSong(key: songList[index])
         }
-        var song = songList[index]
+        var song = SongReference.getSong(key: songList[index])
         if isRandom {
-            song = songList[shuffledIndices[randIndex]]
+            song = SongReference.getSong(key: songList[shuffledIndices[randIndex]])
         }
         forwardHistory.append(song)
         
@@ -57,7 +57,7 @@ class SongPlayer {
     }
     
     func nextSongNormal() -> Song {
-        let song = songList[index]
+        let song = SongReference.getSong(key: songList[index])
         index += 1
         if (index >= songList.count) {
             index = 0
@@ -66,7 +66,7 @@ class SongPlayer {
     }
     
     func nextSongRandom() -> Song {
-        let song = songList[shuffledIndices[randIndex]]
+        let song = SongReference.getSong(key: songList[shuffledIndices[randIndex]])
         randIndex += 1
         if randIndex == shuffledIndices.count {
             shuffleIndices()

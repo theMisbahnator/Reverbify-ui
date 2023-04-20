@@ -31,7 +31,11 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         }
         if myCollectionView.tag == 0 {
             var count = 0
-            for song in songLists[myCollectionView.tag].songlst {
+            for key in songLists[myCollectionView.tag].songlst.keys {
+                if key == "count" {
+                    continue
+                }
+                let song = SongReference.getSong(key: key)
                 if song.lastPlayed != 0 {
                     count += 1
                 }
@@ -78,7 +82,7 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         }
         else {
             // get image from internet
-            let currentSong = songLists[myCollectionView.tag].songlst[indexPath.row]
+            let currentSong = SongReference.getSong(key: songLists[myCollectionView.tag].songlst.elements[indexPath.row].key)
             if let url = URL(string: currentSong.thumbnail) {
                 let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                     if let error = error {
@@ -113,9 +117,8 @@ class MyTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionVi
             self.parentViewController.performSegue(withIdentifier: "playPlaylist", sender: currentPlaylist)
         }
         else {
-            let currentSong = songLists[myCollectionView.tag].songlst[indexPath.row]
-            
-            self.parentViewController.performSegue(withIdentifier: "playSong", sender: currentSong)
+//            let currentSong = SongReference.getSong(key: songLists[myCollectionView.tag].songlst.elements[indexPath.row].key)
+            self.parentViewController.performSegue(withIdentifier: "playSong", sender: songLists[myCollectionView.tag].songlst.elements[indexPath.row].key)
         }
        
         

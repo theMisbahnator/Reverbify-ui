@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
-
+import OrderedCollections
 
 class AllSongsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -16,8 +16,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var searchBar: UISearchBar!
     
     var loadCount = 0
-    var allSongs : [Song] = []
-    var filteredSongs: [Song] = []
+    var filteredSongs: OrderedDictionary<String, Song> = [:]
     private var tapGesture: UITapGestureRecognizer?
     
     override func viewDidLoad() {
@@ -36,18 +35,18 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidAppear(_ animated: Bool) {
 
         DatabaseClass.getAllSongs { songs in
-            self.allSongs = songs
-        }
-        DatabaseClass.getAllSongs { songs in
-            self.filteredSongs = songs
+            let sortedArray = songs.sorted(by: {$0.key > $1.key})
+            let orderedDict = OrderedDictionary(uniqueKeysWithValues: sortedArray)
+            SongReference.allSongs = songs
+            self.filteredSongs = orderedDict
             self.tableView.reloadData()
         }
-        
+
         super.viewDidAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        DatabaseClass.saveAllSongs(songList: self.allSongs)
+        DatabaseClass.saveAllSongs(songList: SongReference.allSongs)
         super.viewWillDisappear(true)
     }
     
@@ -87,13 +86,13 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongTableCell", for: indexPath as IndexPath) as! SongTableCell
         let row = indexPath.row
-        
+        let currSong = SongReference.getSong(key: self.filteredSongs.elements[row].key)
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        cell.title.text = self.filteredSongs[row].title
+        cell.title.text = currSong.title
         cell.title.numberOfLines = 2
         
-        if let url = URL(string: self.filteredSongs[row].thumbnail) {
+        if let url = URL(string: currSong.thumbnail) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error downloading image: \(error.localizedDescription)")
@@ -113,7 +112,7 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        cell.author.text = self.filteredSongs[row].author
+        cell.author.text = currSong.author
         cell.author.numberOfLines = 3
 
         return cell
@@ -122,18 +121,20 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Present the next view controller
         let playSongVC = self.storyboard?.instantiateViewController(withIdentifier: "playSong") as! PlaySongController
-        
-        let thisSong = self.filteredSongs[indexPath.row]
+        let thisSong = SongReference.getSong(key: self.filteredSongs.elements[indexPath.row].key)
         playSongVC.song = thisSong
         var index = 0
-        for song in allSongs {
+        for key in SongReference.allSongs.keys {
+            if key == "count" {
+                continue
+            }
+            let song = SongReference.getSong(key: key)
             if song.title == thisSong.title && song.author == thisSong.author {
                 break
             }
             index += 1
         }
-        print("ABOUT TO PLAY SONG")
-        playSongVC.localSongQueue = SongPlayer(index: index, songQueue: allSongs)
+        playSongVC.localSongQueue = SongPlayer(index: index, songQueue: Array(SongReference.allSongs.keys))
         playSongVC.localCurPlayList = "allSongs"
         playSongVC.song?.lastPlayed = Date().timeIntervalSinceReferenceDate
         navigationController?.pushViewController(playSongVC, animated: true)
@@ -142,32 +143,30 @@ class AllSongsController: UIViewController, UITableViewDelegate, UITableViewData
     // Deleting Song from downloaded
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let songToDelete = filteredSongs[indexPath.row]
-            filteredSongs.remove(at: indexPath.row)
-            var index = 0
-            for song in allSongs {
-                if song == songToDelete {
-                    break
-                }
-                index += 1
-            }
-            allSongs.remove(at: index)
-            // delete song from allSongs
-            
-            
+            let keyForSongToDelete = filteredSongs.elements[indexPath.row].key
+            filteredSongs.removeValue(forKey: keyForSongToDelete)
+            SongReference.allSongs.removeValue(forKey: keyForSongToDelete)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredSongs = allSongs.filter({ song in
+        
+        for key in SongReference.allSongs.keys {
+            if key == "count" {
+                continue
+            }
+            let song = SongReference.getSong(key: key)
             let titleMatch = song.title.lowercased().contains(searchText.lowercased())
             let authorMatch = song.author.lowercased().contains(searchText.lowercased())
-            return titleMatch || authorMatch || searchText == ""
-        })
-        
+            if titleMatch || authorMatch || searchText == "" {
+                filteredSongs[key] = song
+            }
+            
+        }
         tableView.reloadData()
     }
     

@@ -22,9 +22,6 @@ class SliderTableViewCell: UITableViewCell {
     var delegate: SliderCellDelegate?
     
     @IBAction func sliderValueChanged(_ sender: UISwitch) {
-        print("GOT TO THIS:")
-        print("GOT TO THIS: \(sender.isOn)")
-
         delegate?.sliderValueChanged(sender.isOn, forCell: self)
     }
     

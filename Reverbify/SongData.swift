@@ -6,10 +6,10 @@
 //
 
 import Foundation
-
+import OrderedCollections
 struct SongData {
     let sectionType:String
-    var songlst:[Song]
+    var songlst: OrderedDictionary<String, Song>
 }
 
 struct PlaylistData {

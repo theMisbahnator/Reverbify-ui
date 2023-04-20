@@ -35,6 +35,7 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         cell.title.text = allPlaylists[row].title
+        allPlaylists[row].resetThumbnail()
         if let url = URL(string: allPlaylists[row].thumbnailString) {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
@@ -60,7 +61,7 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
             cell.thumbnail.image = UIImage(named:"music-solid")
         }
         
-        cell.author.text = "\(allPlaylists[row].songs.count) songs"
+        cell.author.text = "\(allPlaylists[row].calculateCount()) songs"
         cell.author.numberOfLines = 3
         
         print(allPlaylists[row].toString())

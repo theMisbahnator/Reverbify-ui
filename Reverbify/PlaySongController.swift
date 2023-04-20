@@ -11,7 +11,7 @@ import AVFoundation
 var player: AVPlayer?
 var playerItem: AVPlayerItem?
 var songQueue = SongPlayer(index: 0, songQueue: [])
-var isPlaying: Bool = true
+var isPlaying: Bool = false
 var currentSong: String = ""
 var currentPlayList: String = ""
 var currentTime: Double = 0.0
@@ -89,6 +89,8 @@ class PlaySongController: UIViewController {
         super.viewDidLoad()
         
         song = localSongQueue?.nextSong()
+        print("92")
+        print(song!)
         songTitle.text = song?.title
         songAuthor.text = song?.author
         songTimeStamp.text = song?.timeStamp
@@ -96,8 +98,8 @@ class PlaySongController: UIViewController {
         songTime.text = transformTime(time: Double(song?.seconds ?? 0.0))
         songSlider.minimumValue = 0
         songSlider.maximumValue = song?.seconds ?? 0
-        let time = player?.currentTime()
-        
+//        let time = player?.currentTime()
+        player?.rate = 1.0
         songSlider.value = 0
         queue = DispatchQueue(label: "myQueue", qos:.userInteractive)
         
@@ -138,11 +140,14 @@ class PlaySongController: UIViewController {
         
         // update signed url here
         let api = ReverbifyAPIHandler(userName: "", view: self)
+//        print("141")
+//        print(song?.convertToJSON())
         api.getSongRequest(fileName: song!.fileName, song: song!)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             if let signedUrl = self.song?.signedUrl {
                 let url = NSURL(string: signedUrl)
+                print("setting signedURL: \(url!)")
                 self.localPlayerItem = AVPlayerItem(url: url! as URL)
                 self.localPlayer = AVPlayer(playerItem: self.localPlayerItem!)
             }
@@ -316,6 +321,9 @@ class PlaySongController: UIViewController {
                 case .playing:
                     print("Player is playing")
                 case .waitingToPlayAtSpecifiedRate:
+                    if let reason = player.reasonForWaitingToPlay {
+                        print("Player is waiting for: \(reason)")
+                    }
                     print("Player is waiting to begin playback")
                 @unknown default:
                     fatalError("Unexpected time control status")

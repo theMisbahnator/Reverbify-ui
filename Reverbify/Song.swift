@@ -14,6 +14,10 @@ class Song: Equatable {
     
     var lastPlayed = 0.0
     
+    func isEmpty() -> Bool {
+        return title.isEmpty && author.isEmpty && duration.isEmpty && signedUrl.isEmpty && fileName.isEmpty && timeStamp.isEmpty && thumbnail.isEmpty
+    }
+    
     init(title: String, author: String, duration: String, signedUrl: String, fileName: String, timeStamp: String, thumbnail: String) {
         self.title = title
         self.author = author
