@@ -139,7 +139,7 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
 //        
 //    }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if let searchBarTextField = searchBar.value(forKey: "searchField") as? UITextField {
             searchBarTextField.text = ""
         }
@@ -150,7 +150,7 @@ class AllPlaylistsViewController: UIViewController, UITableViewDelegate, UITable
             self.tableView.reloadData()
         }
         
-        super.viewWillAppear(true);
+        super.viewDidAppear(true);
         
         
     }

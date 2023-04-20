@@ -58,12 +58,12 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         }
         tableView.reloadData()
     }
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         DatabaseClass.getAllPlaylists { playlistList in
             self.playlist = playlistList[self.playlist.indexInDB]
             self.everyLoad()
         }
-        super.viewWillAppear(true)
+        super.viewDidAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

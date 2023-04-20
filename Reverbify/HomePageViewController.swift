@@ -52,7 +52,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.tintColor = .white
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         // Create a Dispatch Group
         let dispatchGroup = DispatchGroup()
         
@@ -66,7 +66,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         for section_title in section_titles {
 
             if section_title == "Recently Played Playlist" {
-               
                 var playListData = PlaylistData(sectionType: section_title, playlistLst: [])
                 DatabaseClass.getAllPlaylists { playlistList in
                     print("GOT TO 72")
@@ -95,7 +94,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         return
                     }
                     if section_title == "Recently Downloaded" {
-                       let sortedArray = actualSongDict.sorted(by: {$0.key > $1.key})
+                       let sortedArray = actualSongDict.sorted(by: {Int($0.key)! > Int($1.key)!})
                        orderedDict =  OrderedDictionary(uniqueKeysWithValues: sortedArray)
                     
                     }
@@ -116,9 +115,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Wait for the Dispatch Group to finish
         dispatchGroup.notify(queue: DispatchQueue.main) {
             // All async tasks are done
-            print("COUNTS")
-            print(playlistLists.count)
-            print(songLists.count)
             if playlistLists.count == 0 && songLists.count == 0 {
                 let alertController = UIAlertController(title: "Welcome To Reverbify!", message: "Would you like to download your first song?", preferredStyle: .alert)
                 
@@ -139,7 +135,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.myTable.reloadData()
         }
         
-        super.viewWillAppear(true)
+        super.viewDidAppear(true)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "playSong" {

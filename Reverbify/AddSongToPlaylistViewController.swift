@@ -42,7 +42,6 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
     @IBAction func addSongsToPlaylist(_ sender: Any) {
 
         DatabaseClass.addSongstoPlaylist(selectedSongs: selectedSongs, playlistIndex: self.playlist.indexInDB)
-
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -54,7 +53,7 @@ class AddSongToPlaylistViewController: UIViewController, UITableViewDelegate, UI
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongTableCell", for: indexPath as IndexPath) as! SongTableCell
         let row = indexPath.row
     
-        var song = SongReference.getSong(key: availableSongs[row])
+        let song = SongReference.getSong(key: availableSongs[row])
         cell.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         cell.title.text = song.title
