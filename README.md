@@ -1,21 +1,12 @@
 # Reverbify README
 
-Group number: 15
+Group number: 15 
+
 Team members: Vu Bui, Misbah Imtiaz, Ayush Patel, Pawan Somavarpu
+
 Name of project: Reverbify
-Dependencies: Xcode 10.2, Swift 4
-Special Instructions:
-• You have to open the file DragonWar.xcworkspace (as opposed to the file
-DragonWar.xcodeprog).
-• Use an iPhone 8+ Simulator
-o Before running the app, run "pod install" inside the DragonWar folder
-where the podfile is located
-o To login with Facebook, use this test account:
-email: DragonWarTest@gmail.com
-password: DragonWar
-o To test the connection between two players, you need to set two player
-mode on, and you need to run it on an iPhone and a simulator at the same
-time (or 2 simulators)
+
+Dependencies: Xcode 14.3, Swift 5.8, AVFoundationFramework
 
 | Feature | Description | Release Planned | Release Actual | Deviations if any | who/percentage worked on |
 | --- | --- | --- | --- | --- | --- |
@@ -41,6 +32,10 @@ time (or 2 simulators)
 
 
 
+
+
+
+# From old read me's for alpha
 
 ## Contributions
 
