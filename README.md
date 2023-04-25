@@ -6,7 +6,7 @@ Team members: Vu Bui, Misbah Imtiaz, Ayush Patel, Pawan Somavarpu
 
 Name of project: Reverbify
 
-Dependencies: Xcode 14.3, Swift 5.8, AVFoundationFramework
+Dependencies: Xcode 14.3, Swift 5.8, AVFoundationFramework, firebase
 
 | Feature | Description | Release Planned | Release Actual | Deviations if any | who/percentage worked on |
 | --- | --- | --- | --- | --- | --- |
