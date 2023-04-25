@@ -63,27 +63,7 @@ class DatabaseClass {
                 let song = songList[key]!
                 songsToSave[key] = song.convertToJSON()
                 maxKey = max(maxKey, Int(key)!)
-            }
-//            if let existingSongs = snapshot.value as? [String: [String: Any]] {
-//                // If the user's songs list already exists, append the new song to it
-//                if let countObject = songsToSave["count"] as? [String: Int] {
-//                    if let oldCount = countObject["count"]  {
-//                        print("GOT TO FOUDN COUNT")
-//                        let difference = max(0, songsToSave.count - existingSongs.count - 1)
-//                        songsToSave["count"] = ["count": oldCount + difference + 1]
-//                    }
-//                    else {
-//                        print("GOT TO NOT FOUND COUNT 1")
-//                        songsToSave["count"] = ["count": songsToSave.count]
-//                    }
-//                }
-//                else {
-//                    print("GOT TO NOT FOUND COUNT 2")
-//                    songsToSave["count"] = ["count": songsToSave.count]
-//                }
-//            }
-            
-            
+            }            
             songsToSave["count"] = ["count" : maxKey + 1]
             songsRef.setValue(songsToSave)
             completion?()
